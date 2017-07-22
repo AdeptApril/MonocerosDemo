@@ -42,6 +42,7 @@ public class UsingProcessing extends PApplet{
     PShape coneOnCube;
     PShape cup;
     PShape horseShape;
+    PShape narwhalShape;
     
     public static void main(String[] args) {
         PApplet.main(new String[]{UsingProcessing.class.getName()}); 
@@ -65,9 +66,8 @@ public class UsingProcessing extends PApplet{
     public void setup() {
         coneOnCube = loadShape("coneoncube.obj");
         cup = loadShape("cup.obj");
-        horseShape = loadShape("horse_test_10.obj");
-        //cup = loadShape("coneoncube.obj");
-        //coneOnCube = loadShape("teapot.obj");
+        horseShape = loadShape("horse_final_no_fur_1.obj");
+        narwhalShape = loadShape("narwhal_test.obj");
         frameRate(30);
         // we pass this to Minim so that it can load files from the data directory
         minim = new Minim(this);
@@ -76,18 +76,27 @@ public class UsingProcessing extends PApplet{
         // this means you can find files that are in the data folder and the 
         // sketch folder. you can also pass an absolute path, or a URL.
         player = minim.loadFile("Monoceros.mp3");
-        player.play();
-        player.loop();
     }
     
     public void settings() {
         fullScreen();
-        size(640, 480, P3D);
+        size(1920, 1080, P3D);
     }       
     
     public void draw() {
         framesIntoScene++;
-        switch(state) {
+        stateMachine();
+        if (keyPressed) {
+            stateSwitch(key);
+        }
+    }
+    
+    /**
+     * Gets hit each time through, and goes to a different place depending on
+     * how the "state" variable is currently set.
+     */
+    public void stateMachine() {
+        switch (state) {
             case "END":
                 player.close();
                 minim.stop();
@@ -96,38 +105,41 @@ public class UsingProcessing extends PApplet{
                 break;
             case "HORSE":
                 horseScene();
-                if (framesIntoScene > 226) {
+                if (framesIntoScene > 228) {
                     horseCount++;
-                    //TODO: Make this have the correct progression of scenes
-                    if (horseCount < 2)
+                    if (horseCount < 2) {
                         state = "NARWHAL";
-                    else
-                        state = "NARWHALRAINBOWAPPROACH"; 
+                    } else {
+                        state = "NARWHALRAINBOWAPPROACH";
+                    }
                     resetVars();
                 }
                 break;
             case "NARWHAL":
+                if (framesIntoScene == 1 && narwhalCount == 0) {
+                    player.cue(0);
+                    player.play();
+                }
                 narwhalScene();
                 if (framesIntoScene > 226) {
                     narwhalCount++;
                     //TODO: Make this have the correct progression of scenes
-                    if (narwhalCount <= 2)
+                    if (narwhalCount <= 2) {
                         state = "HORSE";
+                    }
                     resetVars();
                 }
                 break;
             case "HORSERAINBOWAPPROACH":
                 horseRainbowApproach();
-                if (framesIntoScene > 226 )
-                {
+                if (framesIntoScene > 226) {
                     state = "SCROLLER";
                     resetVars();
                 }
                 break;
             case "NARWHALRAINBOWAPPROACH":
                 narwhalRainbowApproach();
-                if (framesIntoScene > 226 )
-                {
+                if (framesIntoScene > 228) {
                     state = "HORSERAINBOWAPPROACH";
                     resetVars();
                 }
@@ -152,44 +164,55 @@ public class UsingProcessing extends PApplet{
             default:
                 break;
         }
-        if (keyPressed) {
-            switch (key) {
-                case ESC:
-                case 'q':
-                    state = "END";
-                    resetVars();
-                    break;
-                case 'e':
-                    state = "ENDSCENE";
-                    resetVars();
-                    break;
-                case 'h':
-                    state = "HORSESCENE";
-                    resetVars();
-                    break;
-                case 'n':
-                    state = "NARWHAL";
-                    resetVars();
-                    break;
-                case 'o':
-                    state = "HORSERAINBOWAPPROACH";
-                    resetVars();
-                    break;
-                case 'r':
-                    state = "SCROLLER";
-                    resetVars();
-                    break;
-                case 's':
-                    state = "SHADER";
-                    resetVars();
-                    break;
-                case 'w':
-                    state = "NARWHALRAINBOWAPPROACH";
-                    resetVars();
-                    break;
-                default:
-                    break;
-            }
+    }
+    
+    /**
+     * If a key is hit, it changes the state. Well, as long as it's in the list.
+     * @param key - which key was hit
+     */
+    public void stateSwitch(char key) {
+        switch (key) {
+            case ESC:
+            case 'q':
+                state = "END";
+                resetVars();
+                break;
+            case 'e':
+                state = "ENDSCENE";
+                resetVars();
+                break;
+            case 'h':
+                state = "HORSE";
+                horseCount = 0;
+                player.cue(7700);
+                resetVars();
+                break;
+            case 'n':
+                state = "NARWHAL";
+                narwhalCount = 0;
+                player.cue(0);
+                resetVars();
+                break;
+            case 'o':
+                state = "HORSERAINBOWAPPROACH";
+                player.cue(38333);
+                resetVars();
+                break;
+            case 'r':
+                state = "SCROLLER";
+                resetVars();
+                break;
+            case 's':
+                state = "SHADER";
+                resetVars();
+                break;
+            case 'w':
+                state = "NARWHALRAINBOWAPPROACH";
+                player.cue(30733);
+                resetVars();
+                break;
+            default:
+                break;
         }
     }
     
@@ -286,34 +309,40 @@ public class UsingProcessing extends PApplet{
     }
     
     public void horseScene() {
-        int lowVolume = (int) (abs(player.left.get(0)) * 100);
-        if (lowVolume > 10 && decay < 100) //lowVolume only used once, so could just lookup here.
-        {
-            decay += 150;
-        }
-
-        decay = (int) (decay / 1.5);
-        
+//        int lowVolume = (int) (abs(player.left.get(0)) * 100);
+//        if (lowVolume > 10 && decay < 100) //lowVolume only used once, so could just lookup here.
+//        {
+//            decay += 150;
+//        }
+//
+//        decay = (int) (decay / 1.5);
+//        
         background(0);
-        //drawText("Now a shader!", 400, 100);
-        camera(width / 2, height / 2, 150, width / 2, height / 2, 0, 0, 1, 0);
-//default camera(width/2.0, height/2.0, (height/2.0) / tan(PI*30.0 / 180.0), width/2.0, height/2.0, 0, 0, 1, 0
+        text(framesIntoScene, width/2, height/2); // show value of variable, if wanted
+        pushMatrix();
+        fill(255);
+        //camera(width / 2, height / 2, 150, width / 2, height / 2, 0, 0, 1, 0);
+//default camera(width / 2, height / 2, (height/2) / tan((float) (PI*30.0 / 180.0)), height / 2, 0, 0, 1, 0);
+        camera(width / 2, height / 2, (height/2) / tan((float) (PI*30.0 / 180.0)), width / 2, height / 2, 0, 0, 1, 0);
         pointLight(200, 200, 200, width / 2, height / 2, 200);
+        
 
         translate(width / 2, height / 2);
         rotateY(radians(90));
         rotateZ(radians(180));
         translate(translateX, translateY, translateZ);
-
-        scale(16);
+        //horseShape.setFill(color(205,133,63));
+        horseShape.setFill(color(255));
+        scale(96);
         shape(horseShape);
-        //fill(255);
-        scale((float)1/16);
-        text(framesIntoScene, 0, 0); // show value of variable, if wanted
-        //drawText("Hello", 60, 60);
+        
+        popMatrix();
+        scale(16);
+        fill(255);
+        //scale((float)1/16);
         //angle += 0.01;
-        translateZ += 1;
-        translateY += sin(framesIntoScene) * 5;
+        translateZ += 5;
+        translateY += sin(framesIntoScene) * 25;
     }
     
     public void narwhalScene() {
@@ -326,41 +355,40 @@ public class UsingProcessing extends PApplet{
         decay = (int) (decay / 1.5);
         
         background(0);
-        //drawText("Now a shader!", 400, 100);
-        camera(width / 2, height / 2, 150, width / 2, height / 2, 0, 0, 1, 0);
+        pushMatrix();
+        text(framesIntoScene, width/4, height/2); // show value of variable, if wanted
+        //text(player.length(), width/2, height/2); //Show total length of song in ms. Last check was over 65k
+        //text(width, width/2, height/2); //Show width
+        //camera(width / 2, height / 2, 150, width / 2, height / 2, 0, 0, 1, 0);
+        camera(width / 2, height / 2, (height/2) / tan((float) (PI*30.0 / 180.0)), width / 2, height / 2, 0, 0, 1, 0);
 
         pointLight(200, 200, 200, width / 2, height / 2, 200);
 
-        translate(width / 2, height / 2);
-        //rotateY(angle);
-        //rotateX(angle);
-        rotateZ(radians(180));
-        translate(translateX, translateY);
+        translate(width, height / 2);
+        rotateY(radians(90));
+        rotateX(radians(180));
+        //rotateZ(radians(180));
+        translate(translateX, translateY, translateZ);
 
-        coneOnCube.setFill(color(50 + decay, 50, 150));
-        //cup.setFill(color(50 + decay, 50, 150));
-        scale(4);
-        shape(coneOnCube);
-        //fill(255);
-        scale((float)1/4);
-        rotateZ(radians(-180));
-        text(framesIntoScene, 60, 60); // show value of variable, if wanted
-        //drawText("Hello", 60, 60);
-        
-        translateX += 1;
+        narwhalShape.setFill(color(50 + decay, 50, 150));
+        scale(64);
+        shape(narwhalShape);
+        popMatrix();
+
+        translateZ += 5;
     }    
     
     public void narwhalRainbowApproach()
     {
         background(0);
         pushMatrix();
-        camera(width / 2, height / 2, 150, width / 2, height / 2, 0, 0, 1, 0);
+        //camera(width / 2, height / 2, 150, width / 2, height / 2, 0, 0, 1, 0);
         pointLight(200, 200, 200, width / 2, height / 2, 200);
         translate((float)((width * 0.39)+translateX), (float)(height *0.52));
         rotateZ(radians(180));
-        coneOnCube.setFill(color(50 + decay, 50, 150));
+        narwhalShape.setFill(color(50 + decay, 50, 150));
         scale(4);
-        shape(coneOnCube);
+        shape(narwhalShape);
         
         //rotate and scale back to default
         popMatrix();
@@ -370,7 +398,7 @@ public class UsingProcessing extends PApplet{
         text(framesIntoScene, 425, 275); // show value of variable, if wanted
 
         //Display the rainbow, slowly scrolling it onto the screen (and then stopping)
-        rainbow(900-translateX,375);
+        rainbow(width-translateX,375);
         if(translateX < 200 )
             translateX++;
     }
