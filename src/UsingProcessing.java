@@ -11,6 +11,7 @@ import processing.core.*;
 import processing.sound.*;
 import ddf.minim.*;
 
+//TODO: Try/catch around object loading. the program should fail anyway, so it doesn't seem hugely important, but good style and all
 
 /**
  *
@@ -22,6 +23,8 @@ public class UsingProcessing extends PApplet{
     AudioPlayer player;
 
     int framesIntoScene = 0;
+    int timeIntoScene = 0; //Time in milliseconds.
+    int startTimer; //startTimer = millis() at the beginning of any scene
     int y = 80;
     int secondLine = 88;
     int thirdLine = 96;
@@ -37,12 +40,20 @@ public class UsingProcessing extends PApplet{
     int horseCount = 0;
     int narwhalCount = 0;
     
+    int tempx = 0; //TODO: Delete anything that uses this, then delete this.
+    int tempy = 0;
+    int tempz = 0;
+    
     float angle;
     
     PShape coneOnCube;
     PShape cup;
     PShape horseShape;
+    PShape horseRainbowShape;
     PShape narwhalShape;
+    PShape narwhalRainbowShape;
+    PShape backgroundLandShape;
+    PShape backgroundWaterShape;
     
     public static void main(String[] args) {
         PApplet.main(new String[]{UsingProcessing.class.getName()}); 
@@ -54,6 +65,7 @@ public class UsingProcessing extends PApplet{
         translateY = 0;
         translateZ = 0;
         tempNum = 0;
+        startTimer = millis();
         //y = 80;
         //secondLine = 88;
         //thirdLine = 96;
@@ -66,9 +78,16 @@ public class UsingProcessing extends PApplet{
     public void setup() {
         coneOnCube = loadShape("coneoncube.obj");
         cup = loadShape("cup.obj");
-        horseShape = loadShape("horse_final_no_fur_1.obj");
-        narwhalShape = loadShape("narwhal_test.obj");
+        horseShape = loadShape("horse_no_hair_w_color_2.obj");
+        horseRainbowShape = loadShape("horse_rainbow.obj");
+        narwhalShape = loadShape("narwhal.obj");
+        //narwhalShape = loadShape("narwhal_final.obj");
+        narwhalRainbowShape = loadShape("narwhal_rainbow.obj");
+        backgroundLandShape = loadShape("backgroud_grass_sky.obj"); 
+        backgroundWaterShape = loadShape("backgroud_water_sky.obj");
         frameRate(30);
+        //Perhaps camera could be moved around, but this is assuming that the seen scene is screen sized
+        camera(width / 2, height / 2, (height/2) / tan((float) (PI*30.0 / 180.0)), width / 2, height / 2, 0, 0, 1, 0);
         // we pass this to Minim so that it can load files from the data directory
         minim = new Minim(this);
   
@@ -105,7 +124,7 @@ public class UsingProcessing extends PApplet{
                 break;
             case "HORSE":
                 horseScene();
-                if (framesIntoScene > 228) {
+                if (millis() - startTimer > 7700){//framesIntoScene > 228) {
                     horseCount++;
                     if (horseCount < 2) {
                         state = "NARWHAL";
@@ -115,13 +134,15 @@ public class UsingProcessing extends PApplet{
                     resetVars();
                 }
                 break;
-            case "NARWHAL":
+            case "NARWHAL": ////7700, *2, *3, 30733, 38333, 46100 (narwhal suck), 
+                //start the music playing at the beginning, but otherwise only set cues when there's keyboard input
                 if (framesIntoScene == 1 && narwhalCount == 0) {
                     player.cue(0);
+                    startTimer = millis();
                     player.play();
                 }
                 narwhalScene();
-                if (framesIntoScene > 226) {
+                if (millis() - startTimer > 7700){//framesIntoScene > 228) {
                     narwhalCount++;
                     //TODO: Make this have the correct progression of scenes
                     if (narwhalCount <= 2) {
@@ -132,15 +153,36 @@ public class UsingProcessing extends PApplet{
                 break;
             case "HORSERAINBOWAPPROACH":
                 horseRainbowApproach();
-                if (framesIntoScene > 226) {
-                    state = "SCROLLER";
+                if (millis() - startTimer > 7666){//framesIntoScene > 226) {
+                    state = "NARWHALSUCK";
                     resetVars();
                 }
                 break;
             case "NARWHALRAINBOWAPPROACH":
                 narwhalRainbowApproach();
-                if (framesIntoScene > 228) {
+                if (millis() - startTimer > 7666){//framesIntoScene > 226) {
                     state = "HORSERAINBOWAPPROACH";
+                    resetVars();
+                }
+                break;
+            case "NARWHALSUCK":
+                narwhalSuck();
+                if (millis() - startTimer > 5500){//framesIntoScene > 226) {
+                    player.pause(); //resyncing the demo during a pause into the next scene
+                    state = "HORSESUCK";
+                    resetVars();
+                }
+                break;
+            case "HORSESUCK":
+                if (framesIntoScene == 1) {
+                    //resyncing the demo, since there's a pause in the music.
+                    player.cue(51400);
+                    //resetVars();
+                    player.play();
+                }
+                horseSuck();
+                if (millis() - startTimer > 5500){//framesIntoScene > 226) {
+                    state = "SCROLLER";
                     resetVars();
                 }
                 break;
@@ -177,24 +219,24 @@ public class UsingProcessing extends PApplet{
                 state = "END";
                 resetVars();
                 break;
-            case 'e':
+            case 'z':
                 state = "ENDSCENE";
                 resetVars();
                 break;
-            case 'h':
+            case 'b':
                 state = "HORSE";
                 horseCount = 0;
                 player.cue(7700);
                 resetVars();
                 break;
-            case 'n':
+            case 'a':
                 state = "NARWHAL";
                 narwhalCount = 0;
                 player.cue(0);
                 resetVars();
                 break;
-            case 'o':
-                state = "HORSERAINBOWAPPROACH";
+            case 'd':
+                state = "HORSERAINBOWAPPROACH"; 
                 player.cue(38333);
                 resetVars();
                 break;
@@ -206,7 +248,17 @@ public class UsingProcessing extends PApplet{
                 state = "SHADER";
                 resetVars();
                 break;
-            case 'w':
+            case 'e':
+                state = "NARWHALSUCK";
+                player.cue(46100);
+                resetVars();
+                break;
+            case 'f':
+                state = "HORSESUCK";
+                player.cue(51400);
+                resetVars();
+                break;
+            case 'c':
                 state = "NARWHALRAINBOWAPPROACH";
                 player.cue(30733);
                 resetVars();
@@ -290,7 +342,6 @@ public class UsingProcessing extends PApplet{
         
         background(0);
         drawText("Now a shader!", 400, 100);
-        camera(width / 2, height / 2, 300, width / 2, height / 2, 0, 0, 1, 0);
 
         pointLight(200, 200, 200, width / 2, height / 2, 200);
 
@@ -309,36 +360,35 @@ public class UsingProcessing extends PApplet{
     }
     
     public void horseScene() {
-//        int lowVolume = (int) (abs(player.left.get(0)) * 100);
-//        if (lowVolume > 10 && decay < 100) //lowVolume only used once, so could just lookup here.
-//        {
-//            decay += 150;
-//        }
-//
-//        decay = (int) (decay / 1.5);
-//        
+        //background(0x87, 0xce, 0xff); //sky blue
         background(0);
         text(framesIntoScene, width/2, height/2); // show value of variable, if wanted
-        pushMatrix();
-        fill(255);
-        //camera(width / 2, height / 2, 150, width / 2, height / 2, 0, 0, 1, 0);
-//default camera(width / 2, height / 2, (height/2) / tan((float) (PI*30.0 / 180.0)), height / 2, 0, 0, 1, 0);
-        camera(width / 2, height / 2, (height/2) / tan((float) (PI*30.0 / 180.0)), width / 2, height / 2, 0, 0, 1, 0);
-        pointLight(200, 200, 200, width / 2, height / 2, 200);
         
-
+        pushMatrix();
+        
+        //Light is supposed to be mostly from above, with a fair amount of scattered light
+        lightFromAbove();
+        
+        translate(width / 2, height);
+        //rotateY(radians(90));
+        rotateZ(radians(180));
+        scale(128);
+        shape(backgroundLandShape);
+        popMatrix();
+        pushMatrix();
+        
         translate(width / 2, height / 2);
         rotateY(radians(90));
         rotateZ(radians(180));
         translate(translateX, translateY, translateZ);
         //horseShape.setFill(color(205,133,63));
-        horseShape.setFill(color(255));
+        //horseShape.setFill(color(255));
         scale(96);
         shape(horseShape);
         
         popMatrix();
         scale(16);
-        fill(255);
+        //fill(255);
         //scale((float)1/16);
         //angle += 0.01;
         translateZ += 5;
@@ -346,31 +396,56 @@ public class UsingProcessing extends PApplet{
     }
     
     public void narwhalScene() {
-        int lowVolume = (int) (abs(player.left.get(0)) * 100);
-        if (lowVolume > 10 && decay < 100) //lowVolume only used once, so could just lookup here.
-        {
-            decay += 150;
-        }
-
-        decay = (int) (decay / 1.5);
+//        int lowVolume = (int) (abs(player.left.get(0)) * 100);
+//        if (lowVolume > 10 && decay < 100) //lowVolume only used once, so could just lookup here.
+//        {
+//            decay += 150;
+//        }
+//
+//        decay = (int) (decay / 1.5);
         
+        //background(0x54, 0xff, 0x9f); // sea green
         background(0);
         pushMatrix();
+        scale(2);
         text(framesIntoScene, width/4, height/2); // show value of variable, if wanted
+        //TODO: Remove all this displaying text stuff.
+        text("Number of vertices: " + narwhalShape.getVertexCount(), width/2, height/2); // How many vertices
+        text("Number of children: " + narwhalShape.getChildCount(), width/2, height/2+100);
+        int childVertixCount = 0;
+        for(int i =0; i < narwhalShape.getChildCount(); i++ )
+        {
+            if(narwhalShape.getChild(i).getVertexCount() > 1)
+                childVertixCount++;
+            if(narwhalShape.getChild(i).getName() != null && narwhalShape.getChild(i).getName().toLowerCase().contains("tail") )
+               text("Found it!", width/2, height/2+150); 
+        }
+        text("Number of children with 2 or more vertices: " + childVertixCount, width/2, height/2+200);
         //text(player.length(), width/2, height/2); //Show total length of song in ms. Last check was over 65k
         //text(width, width/2, height/2); //Show width
-        //camera(width / 2, height / 2, 150, width / 2, height / 2, 0, 0, 1, 0);
-        camera(width / 2, height / 2, (height/2) / tan((float) (PI*30.0 / 180.0)), width / 2, height / 2, 0, 0, 1, 0);
 
-        pointLight(200, 200, 200, width / 2, height / 2, 200);
+        //Light is supposed to be mostly from above, with a fair amount of scattered light
+        lightFromAbove();
+        
+        popMatrix();
+        pushMatrix();
+        
+        translate(width / 2, (float)(height*0.5), -50);
+        //rotateY(radians(90));
+        rotateZ(radians(180));
+        scale(64);
+        shape(backgroundWaterShape);
+        popMatrix(); //end of background water
+        pushMatrix();
 
-        translate(width, height / 2);
+        //beginning of Narwhal
+        translate(width, height * 6 / 8 );
         rotateY(radians(90));
         rotateX(radians(180));
         //rotateZ(radians(180));
         translate(translateX, translateY, translateZ);
 
-        narwhalShape.setFill(color(50 + decay, 50, 150));
+        //narwhalShape.setFill(color(50 + decay, 50, 150));
         scale(64);
         shape(narwhalShape);
         popMatrix();
@@ -380,96 +455,85 @@ public class UsingProcessing extends PApplet{
     
     public void narwhalRainbowApproach()
     {
-        background(0);
+        background(0x54, 0xff, 0x9f); // sea green
         pushMatrix();
-        //camera(width / 2, height / 2, 150, width / 2, height / 2, 0, 0, 1, 0);
-        pointLight(200, 200, 200, width / 2, height / 2, 200);
-        translate((float)((width * 0.39)+translateX), (float)(height *0.52));
-        rotateZ(radians(180));
+        //Light is supposed to be mostly from above, with a fair amount of scattered light
+        lightFromAbove();
+        
+        //Brighten the rainbow a bit
+        //spotLight(v1, v2, v3, x, y, z, nx, ny, nz, angle, concentration)
+        //So it's fairly far out to get a wider spotlight
+        spotLight(51, 102, 126, 50, 50, 5000, 0, 0, -1, PI/16, 600); 
+        translate((float)(width-translateX*3), (float)(height/2));
+        
+        //Narwhal faces left
+        rotateY(radians(90));
+        rotateX(radians(-180));
+        //rotateZ(radians(180));
+        
         narwhalShape.setFill(color(50 + decay, 50, 150));
-        scale(4);
+        scale(32);
         shape(narwhalShape);
         
         //rotate and scale back to default
         popMatrix();
-        
+        pushMatrix();
         scale(2);
         fill(255);
-        text(framesIntoScene, 425, 275); // show value of variable, if wanted
+        text(framesIntoScene, width/2, height/2); // show value of variable, if wanted
+        popMatrix();
+        scale(2);
 
         //Display the rainbow, slowly scrolling it onto the screen (and then stopping)
-        rainbow(width-translateX,375);
-        if(translateX < 200 )
-            translateX++;
+        //width*0.4 might be a bit early with translateX*3. Set the number a bit higher, maybe?
+        rainbow(-(int)(width*0.4)+translateX*3,height/2);
+        if(translateX < height/2 )
+            translateX += 1;
     }
     
     public void horseRainbowApproach()
     {
-        background(0);
+        background(0x87, 0xce, 0xff); //sky blue
         pushMatrix();
-        camera(width / 2, height / 2, 150, width / 2, height / 2, 0, 0, 1, 0);
-        pointLight(200, 200, 200, width / 2, height / 2, 200);
+
+        //Light is supposed to be mostly from above, with a fair amount of scattered light
+        lightFromAbove();
         translate((float)(width * 0.39), height / 2);
         rotateY(radians(90));
         rotateZ(radians(180));
         translate(0, translateY, translateZ);
 
-        scale(16);
+        scale(96);
         shape(horseShape);
         
         //rotate and scale back to default
         popMatrix();
-        
+        pushMatrix();
         scale(2);
         fill(255);
-        text(framesIntoScene, 425, 275); // show value of variable, if wanted
+        text(framesIntoScene, 0, 275); // show value of variable, if wanted
 
+        popMatrix();
         //Display the rainbow, slowly scrolling it onto the screen (and then stopping)
-        rainbow(700,375);
+        scale(2);
+        rainbow(1080,height/2);
         if(translateZ < 200 )
         {
             translateZ += 5;
             translateY += sin(framesIntoScene) * 5;
         }
     }   
-    
-    public void rainbow2(int centerX, int centerY) {
-        fill(0); //black
-        ellipse(centerX, centerY, 430, 430);
 
-        fill(255, 0, 0); //red
-        ellipse(centerX, centerY, 425, 425);
-
-        fill(257, 127, 0); //orange
-        ellipse(centerX, centerY, 412, 412);
-
-        fill(255, 255, 0); //yellow
-        ellipse(centerX, centerY, 400, 400);
-
-        fill(0, 255, 0); //green
-        ellipse(centerX, centerY, 387, 387);
-
-        fill(0, 0, 255); //blue
-        ellipse(centerX, centerY, 375, 375);
-
-        fill(75, 0, 130); //indigo
-        ellipse(centerX, centerY, 362, 362);
-
-        fill(148, 0, 211); //violet
-        ellipse(centerX, centerY, 350, 350);
-
-        fill(0); //black
-        ellipse(centerX, centerY, 337, 337);
-
-    }
-    
     public void rainbow(int centerX, int centerY) {
-        int speedMultiplier = 14;
+        int speedMultiplier = 24; //how quickly to go through the rainbow
+        int ellipseSizeMultiplier = 8; //I think this, combined with i < height/x, 
+            //have to come out to height/2 (or whatever the size of the black inner ellipse is
+            //And the bigger the multiplier, the faster the loading, but the less smooth the rainbow transition
         int rainbowState = 0;
         int r = 255;
         int rainbowG = 0;
         int b = 0;
-        for (int i = 0; i < 93; i++) { //93 is the difference between the outer ellipse and the black inner elipse (430-337)
+        for (int i = 0; i < height/16; i++) { //93 is the difference between the outer ellipse and the black inner elipse (430-337)
             if (rainbowState == 0) {
                 rainbowG += speedMultiplier;
                 if (rainbowG >= 255) {
@@ -507,11 +571,141 @@ public class UsingProcessing extends PApplet{
                 }
             }
             fill(r, rainbowG, b);
-            stroke(r, rainbowG, b);
-            ellipse(centerX, centerY, 430 - i, 430 - i);
+            stroke(r, rainbowG, b, 5); //Stroke should follow the rainbow. Opacity number is a guess. Will likely change if lighting changes.
+            ellipse(centerX, centerY, height - i *ellipseSizeMultiplier, height - i*ellipseSizeMultiplier);
         }
         fill(0); //black
-        ellipse(centerX, centerY, 337, 337);
+        ellipse(centerX, centerY, height/2, height/2);
+    }
+
+    public void narwhalSuck()
+    {
+        background(0);
+        pushMatrix();
+        
+        //Light is supposed to be mostly from above, with a fair amount of scattered light
+        lightFromAbove();
+        
+        popMatrix();
+        pushMatrix();
+        
+        //Display background
+        translate(width / 2, (float)(height*0.5), -50);
+        //rotateY(radians(90));
+        rotateZ(radians(180));
+        scale(64);
+        shape(backgroundWaterShape);
+        popMatrix(); //end of background water
+        pushMatrix();
+
+        //beginning of Narwhal
+        translate(width, height * 6 / 8 );
+        rotateY(radians(90));
+        rotateX(radians(180));
+        //rotateZ(radians(180));
+        translateZ = 610;
+        translate(translateX, translateY, translateZ);
+
+        //narwhalShape.setFill(color(50 + decay, 50, 150));
+        scale(64);
+        if(framesIntoScene < 130)
+            shape(narwhalShape);
+        else
+            shape(narwhalRainbowShape);
+        
+        popMatrix();
+        rainbowTriangle(width/2, height/2+210, -1, 60);
+    }
+    
+    public void horseSuck()
+    {
+        background(0);
+        pushMatrix();
+        
+        //Light is supposed to be mostly from above, with a fair amount of scattered light
+        lightFromAbove();
+        
+        translate(width / 2, height);
+        //rotateY(radians(90));
+        rotateZ(radians(180));
+        scale(128);
+        shape(backgroundLandShape);
+        popMatrix();
+        pushMatrix();
+        
+        translate(width / 2, height / 2);
+        rotateY(radians(90));
+        rotateZ(radians(180));
+        translate(translateX, translateY, translateZ);
+        //horseShape.setFill(color(205,133,63));
+        //horseShape.setFill(color(255));
+        scale(96);
+        shape(horseShape);
+        popMatrix();
+        
+        rainbowTriangle(width/2, height/2, 1, 50);
+    }
+    
+    /**
+     * Creates a rainbow triangle that fades in, going to the passed start point.
+     * @param startX
+     * @param startY 
+     */
+    public void rainbowTriangle(int startX, int startY, int direction, int frameDelay)
+    { //-1 makes it come in from the left. 1 from the right Well, theoretically would be, if that's done. So TODO.
+        if(framesIntoScene < frameDelay)
+            return;
+        int speedMultiplier = millis() % 8 + 8;//16; //how quickly to go through the rainbow
+        int rainbowState = 0;
+        int r = 255;
+        int rainbowG = 0;
+        int b = 0;
+        for (int i = 1000; i >= 0 ; i--) { //Not sure if height/16 makes any sense at all for an end
+            if (rainbowState == 0) {
+                rainbowG += speedMultiplier;
+                if (rainbowG >= 255) {
+                    rainbowState = 1;
+                }
+            }
+            if (rainbowState == 1) {
+                r -= speedMultiplier;
+                if (r <= 0) {
+                    rainbowState = 2;
+                }
+            }
+            if (rainbowState == 2) {
+                b += speedMultiplier;
+                if (b >= 255) {
+                    rainbowState = 3;
+                }
+            }
+            if (rainbowState == 3) {
+                rainbowG -= speedMultiplier;
+                if (rainbowG == 0) {
+                    rainbowState = 4;
+                }
+            }
+            if (rainbowState == 4) {
+                r += speedMultiplier;
+                if (r >= 255) {
+                    rainbowState = 5;
+                }
+            }
+            if (rainbowState == 5) {
+                b -= speedMultiplier;
+                if (b <= 0) {
+                    rainbowState = 0;
+                }
+            }
+            stroke(r, rainbowG, b);
+            if(100 - framesIntoScene < i/30)
+            {
+                //stroke(0);
+                //line(x1, y1, x2, y2)
+                line(startX+i*direction, startY-(i/4), startX+i*direction, startY-i);
+                //line(startX+i, startY-(i/4), startX+i, startY-i);
+            }
+        }
     }
 
     
@@ -526,6 +720,29 @@ public class UsingProcessing extends PApplet{
             framesIntoScene = 0;
         }
     }
-
+    
+    public void lightFromAbove() {
+        //directionalLight(v1, v2, v3, nx, ny, nz)
+        //Light is supposed to be mostly from above, with a fair amount of scattered light
+        //pointLight(255, 255, 255, 0, -height, -200);
+        //pointLight(255, 255, 255, 0, -height, 200);
+        //directionalLight(255, 255, 255, 0, -height, 200);
+        //ambientLight(255,255,255);
+        lightFalloff((float)0.5, 0, 0);
+        ambientLight(64, 64, 64);
+        //pointLight(255, 255, 255, 0 + tempx, -1000 + tempy, 1000 + tempz);
+        tempx += 0;
+        tempy += 0;
+        tempz += 0;
+        
+        //The following, with a tempz -= 5; leads to a solid sunset (well, dusk, anyway; no sun) effect
+        //pointLight(255, 255, 255, 0 + tempx, -1000 + tempy, 1000 + tempz);
+        pointLight(255, 255, 255, 0 + tempx, -1000 + tempy, 1000 + tempz);
+        //default light values
+        //ambientLight(128, 128, 128);
+        directionalLight(200, 200, 200, 0, 0, -1); 
+        //lightFalloff(1, 0, 0);
+        lightSpecular(0, 0, 0);        
+    }
     
 }
