@@ -55,6 +55,8 @@ public class UsingProcessing extends PApplet{
     PShape backgroundLandShape;
     PShape backgroundWaterShape;
     
+    //TODO: Remove all the temporary showing frames-into-scenes text (or other debug text)
+    
     public static void main(String[] args) {
         PApplet.main(new String[]{UsingProcessing.class.getName()}); 
     }
@@ -181,7 +183,7 @@ public class UsingProcessing extends PApplet{
                     player.play();
                 }
                 horseSuck();
-                if (millis() - startTimer > 5500){//framesIntoScene > 226) {
+                if (millis() - startTimer > 5600){//framesIntoScene > 226) {
                     state = "SCROLLER";
                     resetVars();
                 }
@@ -460,19 +462,31 @@ public class UsingProcessing extends PApplet{
         //Light is supposed to be mostly from above, with a fair amount of scattered light
         lightFromAbove();
         
+        popMatrix();
+        pushMatrix();
+        
+        translate(width / 2, (float)(height*0.5), -50);
+        //rotateY(radians(90));
+        rotateZ(radians(180));
+        scale(64);
+        shape(backgroundWaterShape);
+        popMatrix(); //end of background water
+        pushMatrix();
+        
         //Brighten the rainbow a bit
         //spotLight(v1, v2, v3, x, y, z, nx, ny, nz, angle, concentration)
         //So it's fairly far out to get a wider spotlight
+        //TODO: Does this actually help anything? Perhaps delete.
         spotLight(51, 102, 126, 50, 50, 5000, 0, 0, -1, PI/16, 600); 
-        translate((float)(width-translateX*3), (float)(height/2));
+        translate((float)(width-translateX*3), (float)(height * 6 / 8));
         
         //Narwhal faces left
         rotateY(radians(90));
         rotateX(radians(-180));
         //rotateZ(radians(180));
         
-        narwhalShape.setFill(color(50 + decay, 50, 150));
-        scale(32);
+        //narwhalShape.setFill(color(50 + decay, 50, 150));
+        scale(64);
         shape(narwhalShape);
         
         //rotate and scale back to default
@@ -486,7 +500,7 @@ public class UsingProcessing extends PApplet{
 
         //Display the rainbow, slowly scrolling it onto the screen (and then stopping)
         //width*0.4 might be a bit early with translateX*3. Set the number a bit higher, maybe?
-        rainbow(-(int)(width*0.4)+translateX*3,height/2);
+        rainbow(-(int)(width*0.9)+translateX*5,height/2);
         if(translateX < height/2 )
             translateX += 1;
     }
@@ -498,6 +512,17 @@ public class UsingProcessing extends PApplet{
 
         //Light is supposed to be mostly from above, with a fair amount of scattered light
         lightFromAbove();
+        popMatrix();
+        pushMatrix();
+        
+        translate(width / 2, height);
+        //rotateY(radians(90));
+        rotateZ(radians(180));
+        scale(128);
+        shape(backgroundLandShape);
+        popMatrix();
+        pushMatrix();
+        
         translate((float)(width * 0.39), height / 2);
         rotateY(radians(90));
         rotateZ(radians(180));
@@ -514,9 +539,9 @@ public class UsingProcessing extends PApplet{
         text(framesIntoScene, 0, 275); // show value of variable, if wanted
 
         popMatrix();
-        //Display the rainbow, slowly scrolling it onto the screen (and then stopping)
+        //Display the rainbow. This should be the stopping point for the rainbow in the narwhal scene
         scale(2);
-        rainbow(1080,height/2);
+        rainbow(width-400,height/2);
         if(translateZ < 200 )
         {
             translateZ += 5;
@@ -525,15 +550,16 @@ public class UsingProcessing extends PApplet{
     }   
 
     public void rainbow(int centerX, int centerY) {
-        int speedMultiplier = 24; //how quickly to go through the rainbow
-        int ellipseSizeMultiplier = 8; //I think this, combined with i < height/x, 
-            //have to come out to height/2 (or whatever the size of the black inner ellipse is
+        //TODO: Make rainbow thicker, with speed multiplier working better, and center not being black.
+        int speedMultiplier = 18; //how quickly to go through the rainbow
+        int ellipseSizeMultiplier = 16; //I think this, combined with i < height/x, 
+            //have to come out to height/2 (or whatever the size of the inner ellipse is. multiplier 8, height/16 works for height/2
             //And the bigger the multiplier, the faster the loading, but the less smooth the rainbow transition
         int rainbowState = 0;
         int r = 255;
         int rainbowG = 0;
         int b = 0;
-        for (int i = 0; i < height/16; i++) { //93 is the difference between the outer ellipse and the black inner elipse (430-337)
+        for (int i = 0; i < height/16; i++) {
             if (rainbowState == 0) {
                 rainbowG += speedMultiplier;
                 if (rainbowG >= 255) {
@@ -572,9 +598,10 @@ public class UsingProcessing extends PApplet{
             }
             fill(r, rainbowG, b);
             stroke(r, rainbowG, b, 5); //Stroke should follow the rainbow. Opacity number is a guess. Will likely change if lighting changes.
-            ellipse(centerX, centerY, height - i *ellipseSizeMultiplier, height - i*ellipseSizeMultiplier);
+            ellipse(centerX, centerY, height*2 - i *ellipseSizeMultiplier, height*2 - i*ellipseSizeMultiplier);
         }
-        fill(0); //black
+        //fill(0x87, 0xce, 0xff); //Sky blue center
+        fill(0x33, 0xce, 0xee); //Sky blue center
         ellipse(centerX, centerY, height/2, height/2);
     }
 
@@ -640,7 +667,11 @@ public class UsingProcessing extends PApplet{
         //horseShape.setFill(color(205,133,63));
         //horseShape.setFill(color(255));
         scale(96);
-        shape(horseShape);
+        if(framesIntoScene < 130)
+            shape(horseShape);
+        else
+            shape(horseRainbowShape);
+        //shape(horseShape);
         popMatrix();
         
         rainbowTriangle(width/2, height/2, 1, 50);
