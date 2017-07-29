@@ -54,6 +54,7 @@ public class UsingProcessing extends PApplet{
     PShape narwhalRainbowShape;
     PShape backgroundLandShape;
     PShape backgroundWaterShape;
+    PShape babyUnicornShape;
     
     //TODO: Remove all the temporary showing frames-into-scenes text (or other debug text)
     
@@ -87,6 +88,7 @@ public class UsingProcessing extends PApplet{
         narwhalRainbowShape = loadShape("narwhal_rainbow.obj");
         backgroundLandShape = loadShape("backgroud_grass_sky.obj"); 
         backgroundWaterShape = loadShape("backgroud_water_sky.obj");
+        babyUnicornShape = loadShape("baby_unicorn_final.obj");
         frameRate(30);
         //Perhaps camera could be moved around, but this is assuming that the seen scene is screen sized
         camera(width / 2, height / 2, (height/2) / tan((float) (PI*30.0 / 180.0)), width / 2, height / 2, 0, 0, 1, 0);
