@@ -37,8 +37,8 @@ public class UsingProcessing extends PApplet{
     int translateY = 0;
     int translateZ = 0;
     
-    int horseCount = 0;
-    int narwhalCount = 0;
+    int horseCount = 1;
+    int narwhalCount = 1;
     
     int tempx = 0; //TODO: Delete anything that uses this, then delete this.
     int tempy = 0;
@@ -124,22 +124,10 @@ public class UsingProcessing extends PApplet{
                 super.stop();
                 exit();
                 break;
-            case "HORSE":
-                horseScene();
-                if (millis() - startTimer > 7700){//framesIntoScene > 228) {
-                    horseCount++;
-                    if (horseCount < 2) {
-                        state = "NARWHAL";
-                    } else {
-                        state = "NARWHALRAINBOWAPPROACH";
-                    }
-                    resetVars();
-                }
-                break;
             case "NARWHAL": ////7700, *2, *3, 30733, 38333, 46100 (narwhal suck), 
                 //start the music playing at the beginning, but otherwise only set cues when there's keyboard input
-                if (framesIntoScene == 1 && narwhalCount == 0) {
-                    player.cue(0);
+                if (framesIntoScene == 1 && narwhalCount == 1) {
+                    player.cue(15400);
                     startTimer = millis();
                     player.play();
                 }
@@ -152,11 +140,16 @@ public class UsingProcessing extends PApplet{
                     }
                     resetVars();
                 }
-                break;
-            case "HORSERAINBOWAPPROACH":
-                horseRainbowApproach();
-                if (millis() - startTimer > 7666){//framesIntoScene > 226) {
-                    state = "NARWHALSUCK";
+                break;                
+            case "HORSE":
+                horseScene();
+                if (millis() - startTimer > 7700){//framesIntoScene > 228) {
+                    horseCount++;
+                    if (horseCount < 2) {
+                        state = "NARWHAL";
+                    } else {
+                        state = "NARWHALRAINBOWAPPROACH";
+                    }
                     resetVars();
                 }
                 break;
@@ -164,6 +157,13 @@ public class UsingProcessing extends PApplet{
                 narwhalRainbowApproach();
                 if (millis() - startTimer > 7666){//framesIntoScene > 226) {
                     state = "HORSERAINBOWAPPROACH";
+                    resetVars();
+                }
+                break;
+            case "HORSERAINBOWAPPROACH":
+                horseRainbowApproach();
+                if (millis() - startTimer > 7666){//framesIntoScene > 226) {
+                    state = "NARWHALSUCK";
                     resetVars();
                 }
                 break;
@@ -225,29 +225,26 @@ public class UsingProcessing extends PApplet{
                 state = "ENDSCENE";
                 resetVars();
                 break;
+            case 'a':
+                state = "NARWHAL";
+                narwhalCount = 0;
+                player.cue(0);
+                resetVars();
+                break;                
             case 'b':
                 state = "HORSE";
                 horseCount = 0;
                 player.cue(7700);
                 resetVars();
                 break;
-            case 'a':
-                state = "NARWHAL";
-                narwhalCount = 0;
-                player.cue(0);
+            case 'c':
+                state = "NARWHALRAINBOWAPPROACH";
+                player.cue(30733);
                 resetVars();
                 break;
             case 'd':
                 state = "HORSERAINBOWAPPROACH"; 
                 player.cue(38333);
-                resetVars();
-                break;
-            case 'r':
-                state = "SCROLLER";
-                resetVars();
-                break;
-            case 's':
-                state = "SHADER";
                 resetVars();
                 break;
             case 'e':
@@ -260,9 +257,12 @@ public class UsingProcessing extends PApplet{
                 player.cue(51400);
                 resetVars();
                 break;
-            case 'c':
-                state = "NARWHALRAINBOWAPPROACH";
-                player.cue(30733);
+            case 'r':
+                state = "SCROLLER";
+                resetVars();
+                break;
+            case 's':
+                state = "SHADER";
                 resetVars();
                 break;
             default:
