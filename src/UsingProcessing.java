@@ -46,6 +46,7 @@ public class UsingProcessing extends PApplet{
     
     float angle;
     
+    PImage img;
     PShape coneOnCube;
     PShape cup;
     PShape horseShape;
@@ -55,6 +56,7 @@ public class UsingProcessing extends PApplet{
     PShape backgroundLandShape;
     PShape backgroundWaterShape;
     PShape babyUnicornShape;
+    PShape massiveObject;
     
     //TODO: Remove all the temporary showing frames-into-scenes text (or other debug text)
     
@@ -79,6 +81,9 @@ public class UsingProcessing extends PApplet{
     
     
     public void setup() {
+        img = loadImage("loadingScreenTemp.jpg");
+        image(img, 0, 0);
+        massiveObject = loadShape("horse_draft.obj");
         coneOnCube = loadShape("coneoncube.obj");
         cup = loadShape("cup.obj");
         horseShape = loadShape("horse_no_hair_w_color_2.obj");
