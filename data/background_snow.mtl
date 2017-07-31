@@ -1,11 +1,11 @@
-# Blender MTL File: 'backgroud_water_sky.blend'
+# Blender MTL File: 'background_snow.blend'
 # Material Count: 2
 
 newmtl Material
-Ns 56.862745
+Ns 96.078431
 Ka 1.000000 1.000000 1.000000
-Kd 0.001452 0.002457 0.215221
-Ks 0.101181 0.782822 1.000000
+Kd 0.640000 0.640000 0.640000
+Ks 0.500000 0.500000 0.500000
 Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
