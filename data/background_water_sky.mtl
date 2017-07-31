@@ -1,11 +1,11 @@
-# Blender MTL File: 'backgroud_grass_sky.blend'
+# Blender MTL File: 'background_water_sky.blend'
 # Material Count: 2
 
-newmtl Material.002
-Ns 96.078431
+newmtl Material
+Ns 56.862745
 Ka 1.000000 1.000000 1.000000
-Kd 0.012803 0.055982 0.002063
-Ks 0.072717 0.500000 0.012050
+Kd 0.001452 0.002457 0.215221
+Ks 0.101181 0.782822 1.000000
 Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000

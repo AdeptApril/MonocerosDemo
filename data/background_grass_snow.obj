@@ -1,6 +1,6 @@
-# Blender v2.78 (sub 0) OBJ File: 'backgroud_grass_snow.blend'
+# Blender v2.78 (sub 0) OBJ File: 'background_grass_snow.blend'
 # www.blender.org
-mtllib backgroud_grass_snow.mtl
+mtllib background_grass_snow.mtl
 o Snow_Plane.002
 v -20.592020 0.941241 9.102221
 v -10.539790 0.909947 9.122472

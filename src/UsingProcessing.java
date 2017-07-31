@@ -56,7 +56,17 @@ public class UsingProcessing extends PApplet{
     PShape backgroundLandShape;
     PShape backgroundWaterShape;
     PShape babyUnicornShape;
-    PShape massiveObject;
+    PShape backgroundLandSnowShape;
+    PShape backgroundSnowShape;
+    PShape backgroundSnowWaterShape;
+    PShape birdShape;
+    PShape cloudShape;
+    PShape fishShape;
+    PShape flowerShape;
+    PShape iceShelfShape;
+    PShape icebergShape;
+    PShape poopShape;
+    PShape treeShape;
     
     //TODO: Remove all the temporary showing frames-into-scenes text (or other debug text)
     
@@ -83,7 +93,6 @@ public class UsingProcessing extends PApplet{
     public void setup() {
         img = loadImage("loadingScreenTemp.jpg");
         image(img, 0, 0);
-        massiveObject = loadShape("horse_draft.obj");
         coneOnCube = loadShape("coneoncube.obj");
         cup = loadShape("cup.obj");
         horseShape = loadShape("horse_no_hair_w_color_2.obj");
@@ -91,9 +100,21 @@ public class UsingProcessing extends PApplet{
         narwhalShape = loadShape("narwhal.obj");
         //narwhalShape = loadShape("narwhal_final.obj");
         narwhalRainbowShape = loadShape("narwhal_rainbow.obj");
-        backgroundLandShape = loadShape("backgroud_grass_sky.obj"); 
-        backgroundWaterShape = loadShape("backgroud_water_sky.obj");
+        backgroundLandShape = loadShape("background_grass_sky.obj"); 
+        backgroundWaterShape = loadShape("background_water_sky.obj");
         babyUnicornShape = loadShape("baby_unicorn_final.obj");
+        backgroundLandSnowShape = loadShape("background_grass_snow.obj");
+        backgroundSnowShape = loadShape("background_snow.obj");
+        backgroundSnowWaterShape = loadShape("background_snow_water.obj");
+        birdShape = loadShape("bird.obj");
+        cloudShape = loadShape("cloud.obj");
+        fishShape = loadShape("fish.obj");
+        flowerShape = loadShape("flower.obj");
+        iceShelfShape = loadShape("ice_shelf.obj");
+        icebergShape = loadShape("iceberg.obj");
+        poopShape = loadShape("poop.obj");
+        treeShape = loadShape("tree.obj");
+        
         frameRate(30);
         //Perhaps camera could be moved around, but this is assuming that the seen scene is screen sized
         camera(width / 2, height / 2, (height/2) / tan((float) (PI*30.0 / 180.0)), width / 2, height / 2, 0, 0, 1, 0);
@@ -191,9 +212,23 @@ public class UsingProcessing extends PApplet{
                 }
                 horseSuck();
                 if (millis() - startTimer > 5600){//framesIntoScene > 226) {
-                    state = "SCROLLER";
+                    state = "SHADER";
                     resetVars();
                 }
+                break;
+            case "NARWHALSEARCH":
+                break;
+            case "HORSESEARCH":
+                break;
+            case "HORSENARWHALMEETING":
+                break;
+            case "ICESHELFBREAK":
+                break;
+            case "SEXYTIMES":
+                break;
+            case "BABYUNICORN":
+                break;
+            case "CREDITS":
                 break;
             case "SCROLLER":
                 scrollerScene();
@@ -396,12 +431,85 @@ public class UsingProcessing extends PApplet{
         shape(horseShape);
         
         popMatrix();
+        pushMatrix();
         scale(16);
         //fill(255);
         //scale((float)1/16);
         //angle += 0.01;
         translateZ += 5;
         translateY += sin(framesIntoScene) * 25;
+        
+        popMatrix();
+        pushMatrix();
+        
+        translate(width-translateZ*2, height / 2);
+        rotateY(radians(90));
+        rotateZ(radians(180));
+        birdShape.setFill(color(72,119,160));
+        scale(96);
+        
+        shape(birdShape);
+        
+        scale(16);
+        
+        popMatrix();
+        
+        pushMatrix();
+        
+        translate(width-translateZ*2-50, height / 2-45);
+        rotateY(radians(90));
+        rotateZ(radians(180));
+        birdShape.setFill(color(26,73,114));
+        scale(96);
+        
+        shape(birdShape);
+        
+        scale(16);
+        
+        popMatrix();
+        pushMatrix();
+        
+        translate(width-translateZ*2-65, height / 2+30);
+        rotateY(radians(90));
+        rotateZ(radians(180));
+        birdShape.setFill(color(178,87,145));
+        scale(96);
+        
+        shape(birdShape);
+        
+        scale(16);
+        
+        popMatrix();
+        pushMatrix();
+        
+        translate(width / 3, height / 2);
+        rotateY(radians(90));
+        rotateZ(radians(180));
+        scale(96);
+        
+        shape(cloudShape);
+        
+        popMatrix();
+        pushMatrix();
+        
+        translate(width * 3 / 4, height / 3);
+        //rotateY(radians(90));
+        rotateZ(radians(180));
+        scale(86);
+        
+        shape(cloudShape);
+        
+        popMatrix();
+        pushMatrix();
+        
+        translate(width / 3, height * 3 / 4);
+        //rotateY(radians(90));
+        rotateZ(radians(180));
+        scale(50);
+        
+        shape(flowerShape);
+        
+        popMatrix();
     }
     
     public void narwhalScene() {
@@ -460,6 +568,67 @@ public class UsingProcessing extends PApplet{
         popMatrix();
 
         translateZ += 5;
+        
+        pushMatrix();
+        
+        translate(width / 4, height / 2);
+        //rotateY(radians(90));
+        rotateZ(radians(180));
+        scale(96);
+        
+        shape(cloudShape);
+        
+        popMatrix();
+        pushMatrix();
+        
+        translate(width * 3 / 5, height / 3);
+        rotateY(radians(180));
+        rotateZ(radians(180));
+        scale(86);
+        
+        shape(cloudShape);
+        
+        popMatrix();
+        pushMatrix();
+        
+        translate(translateZ*2, height * 6 / 7);
+        rotateY(radians(270));
+        rotateZ(radians(180));
+        fishShape.setFill(color(72,119,160));
+        scale(96);
+        
+        shape(fishShape);
+        
+        scale(16);
+        
+        popMatrix();
+        
+        pushMatrix();
+        
+        translate(translateZ*2-25, height -(sin(framesIntoScene/5) * 5)+50);
+        rotateY(radians(270));
+        rotateZ(radians(180));
+        fishShape.setFill(color(26,73,114));
+        scale(96);
+        
+        shape(fishShape);
+        
+        scale(16);
+        
+        popMatrix();
+        pushMatrix();
+        
+        translate(translateZ*2-50, height -(sin((framesIntoScene-30)/5) * 10));
+        rotateY(radians(270));
+        rotateZ(radians(180));
+        fishShape.setFill(color(178,87,145));
+        scale(96);
+        
+        shape(fishShape);
+        
+        scale(16);
+        
+        popMatrix();
     }    
     
     public void narwhalRainbowApproach()
@@ -682,6 +851,90 @@ public class UsingProcessing extends PApplet{
         popMatrix();
         
         rainbowTriangle(width/2, height/2, 1, 50);
+    }
+    
+    public void narwhalSearch()
+    {
+        background(0);
+        pushMatrix();
+        
+        //Light is supposed to be mostly from above, with a fair amount of scattered light
+        lightFromAbove();
+        
+        popMatrix();
+        pushMatrix();
+    }
+    
+    public void horseSearch()
+    {
+        background(0);
+        pushMatrix();
+        
+        //Light is supposed to be mostly from above, with a fair amount of scattered light
+        lightFromAbove();
+        
+        popMatrix();
+        pushMatrix();
+    }
+    
+    public void horseNarwhalMeeting()
+    {
+        background(0);
+        pushMatrix();
+        
+        //Light is supposed to be mostly from above, with a fair amount of scattered light
+        lightFromAbove();
+        
+        popMatrix();
+        pushMatrix();
+    }
+    
+    public void iceShelfBreak()
+    {
+        background(0);
+        pushMatrix();
+        
+        //Light is supposed to be mostly from above, with a fair amount of scattered light
+        lightFromAbove();
+        
+        popMatrix();
+        pushMatrix();
+    }
+    
+    public void sexyTimes()
+    {
+        background(0);
+        pushMatrix();
+        
+        //Light is supposed to be mostly from above, with a fair amount of scattered light
+        lightFromAbove();
+        
+        popMatrix();
+        pushMatrix();
+    }
+    
+    public void babyUnicorn()
+    {
+        background(0);
+        pushMatrix();
+        
+        //Light is supposed to be mostly from above, with a fair amount of scattered light
+        lightFromAbove();
+        
+        popMatrix();
+        pushMatrix();
+    }
+    
+    public void credits()
+    {
+        background(0);
+        pushMatrix();
+        
+        //Light is supposed to be mostly from above, with a fair amount of scattered light
+        lightFromAbove();
+        
+        popMatrix();
+        pushMatrix();
     }
     
     /**

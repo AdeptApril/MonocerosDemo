@@ -1,6 +1,6 @@
-# Blender v2.78 (sub 0) OBJ File: 'backgroud_snow.blend'
+# Blender v2.78 (sub 0) OBJ File: 'background_snow.blend'
 # www.blender.org
-mtllib backgroud_snow.mtl
+mtllib background_snow.mtl
 o Sky_Plane.001
 v -22.027609 -21.763470 -11.445317
 v 22.173414 -21.763470 -11.445317

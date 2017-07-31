@@ -1,6 +1,6 @@
-# Blender v2.78 (sub 0) OBJ File: 'backgroud_water_sky.blend'
+# Blender v2.78 (sub 0) OBJ File: 'background_water_sky.blend'
 # www.blender.org
-mtllib backgroud_water_sky.mtl
+mtllib background_water_sky.mtl
 o Under_Water_Plane.003
 v -42.831928 -23.176443 -10.767505
 v 42.910538 -23.176443 -10.767505
