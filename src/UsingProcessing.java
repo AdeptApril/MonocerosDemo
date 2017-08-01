@@ -471,115 +471,6 @@ public class UsingProcessing extends PApplet{
         angle += 0.01 + decay *0.001 ;
     }
     
-    public void horseScene() {
-        //background(0x87, 0xce, 0xff); //sky blue
-        background(0);
-        text(framesIntoScene, width/2, height/2); // show value of variable, if wanted
-        
-        pushMatrix();
-        
-        //Light is supposed to be mostly from above, with a fair amount of scattered light
-        lightFromAbove();
-        
-        translate(width / 2, height);
-        //rotateY(radians(90));
-        rotateZ(radians(180));
-        scale(128);
-        shape(backgroundLandShape);
-        popMatrix();
-        pushMatrix();
-        
-        translate(width / 2, height / 2);
-        rotateY(radians(90));
-        rotateZ(radians(180));
-        translate(translateX, translateY, translateZ);
-        //horseShape.setFill(color(205,133,63));
-        //horseShape.setFill(color(255));
-        scale(96);
-        shape(horseShape);
-        
-        popMatrix();
-        pushMatrix();
-        scale(16);
-        //fill(255);
-        //scale((float)1/16);
-        //angle += 0.01;
-        translateZ += 5;
-        translateY += sin(framesIntoScene) * 25;
-        
-        popMatrix();
-        pushMatrix();
-        
-        translate(width-translateZ*2, height / 2);
-        rotateY(radians(90));
-        rotateZ(radians(180));
-        birdShape.setFill(color(72,119,160));
-        scale(96);
-        
-        shape(birdShape);
-        
-        scale(16);
-        
-        popMatrix();
-        
-        pushMatrix();
-        
-        translate(width-translateZ*2-50, height / 2-45);
-        rotateY(radians(90));
-        rotateZ(radians(180));
-        birdShape.setFill(color(26,73,114));
-        scale(96);
-        
-        shape(birdShape);
-        
-        scale(16);
-        
-        popMatrix();
-        pushMatrix();
-        
-        translate(width-translateZ*2-65, height / 2+30);
-        rotateY(radians(90));
-        rotateZ(radians(180));
-        birdShape.setFill(color(178,87,145));
-        scale(96);
-        
-        shape(birdShape);
-        
-        scale(16);
-        
-        popMatrix();
-        pushMatrix();
-        
-        translate(width / 3, height / 2);
-        rotateY(radians(90));
-        rotateZ(radians(180));
-        scale(96);
-        
-        shape(cloudShape);
-        
-        popMatrix();
-        pushMatrix();
-        
-        translate(width * 3 / 4, height / 3);
-        //rotateY(radians(90));
-        rotateZ(radians(180));
-        scale(86);
-        
-        shape(cloudShape);
-        
-        popMatrix();
-        pushMatrix();
-        
-        translate(width / 3, height * 3 / 4);
-        //rotateY(radians(90));
-        rotateZ(radians(180));
-        scale(50);
-        
-        shape(flowerShape);
-        
-        popMatrix();
-    }
-    
     public void narwhalScene() {
 //        int lowVolume = (int) (abs(player.left.get(0)) * 100);
 //        if (lowVolume > 10 && decay < 100) //lowVolume only used once, so could just lookup here.
@@ -698,6 +589,115 @@ public class UsingProcessing extends PApplet{
         
         popMatrix();
     }    
+    
+    public void horseScene() {
+        //background(0x87, 0xce, 0xff); //sky blue
+        background(0);
+        text(framesIntoScene, width/2, height/2); // show value of variable, if wanted
+        
+        pushMatrix();
+        
+        //Light is supposed to be mostly from above, with a fair amount of scattered light
+        lightFromAbove();
+        
+        translate(width / 2, height);
+        //rotateY(radians(90));
+        rotateZ(radians(180));
+        scale(128);
+        shape(backgroundLandShape);
+        popMatrix();
+        pushMatrix();
+        
+        translate(width / 2, height / 2);
+        rotateY(radians(90));
+        rotateZ(radians(180));
+        translate(translateX, translateY, translateZ);
+        //horseShape.setFill(color(205,133,63));
+        //horseShape.setFill(color(255));
+        scale(96);
+        shape(horseShape);
+        
+        popMatrix();
+        pushMatrix();
+        scale(16);
+        //fill(255);
+        //scale((float)1/16);
+        //angle += 0.01;
+        translateZ += 5;
+        translateY += sin(framesIntoScene) * 25;
+        
+        popMatrix();
+        pushMatrix();
+        
+        translate(width-translateZ*2, height / 2);
+        rotateY(radians(90));
+        rotateZ(radians(180));
+        birdShape.setFill(color(72,119,160));
+        scale(96);
+        
+        shape(birdShape);
+        
+        scale(16);
+        
+        popMatrix();
+        
+        pushMatrix();
+        
+        translate(width-translateZ*2-50, height / 2-45);
+        rotateY(radians(90));
+        rotateZ(radians(180));
+        birdShape.setFill(color(26,73,114));
+        scale(96);
+        
+        shape(birdShape);
+        
+        scale(16);
+        
+        popMatrix();
+        pushMatrix();
+        
+        translate(width-translateZ*2-65, height / 2+30);
+        rotateY(radians(90));
+        rotateZ(radians(180));
+        birdShape.setFill(color(178,87,145));
+        scale(96);
+        
+        shape(birdShape);
+        
+        scale(16);
+        
+        popMatrix();
+        pushMatrix();
+        
+        translate(width / 3, height / 2);
+        rotateY(radians(90));
+        rotateZ(radians(180));
+        scale(96);
+        
+        shape(cloudShape);
+        
+        popMatrix();
+        pushMatrix();
+        
+        translate(width * 3 / 4, height / 3);
+        //rotateY(radians(90));
+        rotateZ(radians(180));
+        scale(86);
+        
+        shape(cloudShape);
+        
+        popMatrix();
+        pushMatrix();
+        
+        translate(width / 3, height * 3 / 4);
+        //rotateY(radians(90));
+        rotateZ(radians(180));
+        scale(50);
+        
+        shape(flowerShape);
+        
+        popMatrix();
+    }
     
     public void narwhalRainbowApproach()
     {
