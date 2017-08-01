@@ -4,11 +4,7 @@
  * and open the template in the editor.
  */
 
-import java.io.File;
-import processing.core.*;
-	
-
-import processing.sound.*;
+import processing.core.*;	
 import ddf.minim.*;
 
 //TODO: Try/catch around object loading. the program should fail anyway, so it doesn't seem hugely important, but good style and all
@@ -28,7 +24,7 @@ public class UsingProcessing extends PApplet{
     int y = 80;
     int secondLine = 88;
     int thirdLine = 96;
-    String state = "NARWHAL";
+    String state = "LOADINGSTART";
     int textX = 400;
     int textY = 200;
     int tempNum = 0;
@@ -44,10 +40,13 @@ public class UsingProcessing extends PApplet{
     int tempy = 0;
     int tempz = 0;
     
+    boolean batch1Loaded = false;
+    boolean batch2Loaded = false;
+    boolean batch3Loaded = false;
+    
     float angle;
     
     PImage img;
-    PShape coneOnCube;
     PShape cup;
     PShape horseShape;
     PShape horseRainbowShape;
@@ -91,29 +90,6 @@ public class UsingProcessing extends PApplet{
     
     
     public void setup() {
-        img = loadImage("loadingScreenTemp.jpg");
-        image(img, 0, 0);
-        coneOnCube = loadShape("coneoncube.obj");
-        cup = loadShape("cup.obj");
-        horseShape = loadShape("horse_no_hair_w_color_2.obj");
-        horseRainbowShape = loadShape("horse_rainbow.obj");
-        narwhalShape = loadShape("narwhal.obj");
-        //narwhalShape = loadShape("narwhal_final.obj");
-        narwhalRainbowShape = loadShape("narwhal_rainbow.obj");
-        backgroundLandShape = loadShape("background_grass_sky.obj"); 
-        backgroundWaterShape = loadShape("background_water_sky.obj");
-        babyUnicornShape = loadShape("baby_unicorn_final.obj");
-        backgroundLandSnowShape = loadShape("background_grass_snow.obj");
-        backgroundSnowShape = loadShape("background_snow.obj");
-        backgroundSnowWaterShape = loadShape("background_snow_water.obj");
-        birdShape = loadShape("bird.obj");
-        cloudShape = loadShape("cloud.obj");
-        fishShape = loadShape("fish.obj");
-        flowerShape = loadShape("flower.obj");
-        iceShelfShape = loadShape("ice_shelf.obj");
-        icebergShape = loadShape("iceberg.obj");
-        poopShape = loadShape("poop.obj");
-        treeShape = loadShape("tree.obj");
         
         frameRate(30);
         //Perhaps camera could be moved around, but this is assuming that the seen scene is screen sized
@@ -151,6 +127,21 @@ public class UsingProcessing extends PApplet{
                 minim.stop();
                 super.stop();
                 exit();
+                break;
+            case "LOADINGSTART":
+                if (framesIntoScene == 1) {
+                    //Load picture
+                    img = loadImage("loadingScreenTemp.jpg");
+                    image(img, 0, 0);
+                }
+                if (framesIntoScene == 2) {
+                    //Load models
+                    loadBatch1();
+                }
+                if (framesIntoScene > 2) {
+                    state = "NARWHAL";
+                    resetVars();
+                }
                 break;
             case "NARWHAL": ////7700, *2, *3, 30733, 38333, 46100 (narwhal suck), 
                 //start the music playing at the beginning, but otherwise only set cues when there's keyboard input
@@ -199,6 +190,18 @@ public class UsingProcessing extends PApplet{
                 narwhalSuck();
                 if (millis() - startTimer > 5500){//framesIntoScene > 226) {
                     player.pause(); //resyncing the demo during a pause into the next scene
+                    state = "LOADINGMIDDLE";
+                    resetVars();
+                }
+                break;
+            case "LOADINGMIDDLE":
+                if (framesIntoScene == 1)
+                {
+                    //Do loading
+                    loadBatch2();
+                }
+                if (framesIntoScene == 2)
+                {
                     state = "HORSESUCK";
                     resetVars();
                 }
@@ -212,6 +215,18 @@ public class UsingProcessing extends PApplet{
                 }
                 horseSuck();
                 if (millis() - startTimer > 5600){//framesIntoScene > 226) {
+                    state = "LOADINGMIDDLE2";
+                    resetVars();
+                }
+                break;
+            case "LOADINGMIDDLE2":
+                if (framesIntoScene == 1)
+                {
+                    //Do loading
+                    loadBatch3();
+                }
+                if (framesIntoScene == 2)
+                {
                     state = "SHADER";
                     resetVars();
                 }
@@ -268,38 +283,60 @@ public class UsingProcessing extends PApplet{
                 resetVars();
                 break;
             case 'a':
+                if(!batch1Loaded) //TODO: Possibly replace all these if statements
+                    //With a, "loadNeededFiles(char case)", passing along
+                    // the curret point in the demo.
+                    loadBatch1();
                 state = "NARWHAL";
                 narwhalCount = 0;
                 player.cue(0);
                 resetVars();
                 break;                
             case 'b':
+                if(!batch1Loaded)
+                    loadBatch1();
                 state = "HORSE";
                 horseCount = 0;
                 player.cue(7700);
                 resetVars();
                 break;
             case 'c':
+                if(!batch1Loaded)
+                    loadBatch1();
                 state = "NARWHALRAINBOWAPPROACH";
                 player.cue(30733);
                 resetVars();
                 break;
             case 'd':
+                if(!batch1Loaded)
+                    loadBatch1();
                 state = "HORSERAINBOWAPPROACH"; 
                 player.cue(38333);
                 resetVars();
                 break;
             case 'e':
+                if(!batch1Loaded)
+                    loadBatch1();
                 state = "NARWHALSUCK";
                 player.cue(46100);
                 resetVars();
                 break;
             case 'f':
+                if(!batch1Loaded)
+                    loadBatch1();
+                if(!batch2Loaded)
+                    loadBatch2();
                 state = "HORSESUCK";
                 player.cue(51400);
                 resetVars();
                 break;
             case 'r':
+                if(!batch1Loaded)
+                    loadBatch1();
+                if(!batch2Loaded)
+                    loadBatch2();
+                if(!batch3Loaded)
+                    loadBatch3();
                 state = "SCROLLER";
                 resetVars();
                 break;
@@ -310,6 +347,37 @@ public class UsingProcessing extends PApplet{
             default:
                 break;
         }
+    }
+    
+    public void loadBatch1() {
+        horseShape = loadShape("horse_no_hair_w_color_2.obj");
+        narwhalShape = loadShape("narwhal.obj");
+        narwhalRainbowShape = loadShape("narwhal_rainbow.obj");
+        backgroundLandShape = loadShape("background_grass_sky.obj");
+        backgroundWaterShape = loadShape("background_water_sky.obj");
+        birdShape = loadShape("bird.obj");
+        cloudShape = loadShape("cloud.obj");
+        fishShape = loadShape("fish.obj");
+        flowerShape = loadShape("flower.obj");
+        treeShape = loadShape("tree.obj");
+        batch1Loaded = true;
+    }
+    
+    public void loadBatch2() {
+        horseRainbowShape = loadShape("horse_rainbow.obj");
+        batch2Loaded = true;
+    }
+    
+    public void loadBatch3() {
+        cup = loadShape("cup.obj");
+        babyUnicornShape = loadShape("baby_unicorn_final.obj");
+        backgroundLandSnowShape = loadShape("background_grass_snow.obj");
+        backgroundSnowShape = loadShape("background_snow.obj");
+        backgroundSnowWaterShape = loadShape("background_snow_water.obj");
+        iceShelfShape = loadShape("ice_shelf.obj");
+        icebergShape = loadShape("iceberg.obj");
+        poopShape = loadShape("poop.obj");
+        batch3Loaded = true;
     }
     
     public void scrollerScene()
