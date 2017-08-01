@@ -6,6 +6,7 @@
 
 import processing.core.*;	
 import ddf.minim.*;
+import java.util.Random;
 
 //TODO: Try/catch around object loading. the program should fail anyway, so it doesn't seem hugely important, but good style and all
 
@@ -17,6 +18,8 @@ public class UsingProcessing extends PApplet{
     
     Minim minim;
     AudioPlayer player;
+    
+    Random rand = new Random();
 
     int framesIntoScene = 0;
     int timeIntoScene = 0; //Time in milliseconds.
@@ -550,8 +553,8 @@ public class UsingProcessing extends PApplet{
         popMatrix();
         pushMatrix();
         
-        translate(translateZ*2, height * 6 / 7);
-        rotateY(radians(270));
+        translate(translateZ*2+25, height -(sin((framesIntoScene + 90)/5) * 5)-50);
+        rotateY(radians(270 + cos(framesIntoScene) * 5));
         rotateZ(radians(180));
         fishShape.setFill(color(72,119,160));
         scale(96);
@@ -565,7 +568,7 @@ public class UsingProcessing extends PApplet{
         pushMatrix();
         
         translate(translateZ*2-25, height -(sin(framesIntoScene/5) * 5)+50);
-        rotateY(radians(270));
+        rotateY(radians(270 + sin(framesIntoScene) * 5));
         rotateZ(radians(180));
         fishShape.setFill(color(26,73,114));
         scale(96);
@@ -577,8 +580,8 @@ public class UsingProcessing extends PApplet{
         popMatrix();
         pushMatrix();
         
-        translate(translateZ*2-50, height -(sin((framesIntoScene-30)/5) * 10));
-        rotateY(radians(270));
+        translate(translateZ*2-50, height -(cos((framesIntoScene)/5) * 10));
+        rotateY(radians(270 + cos(framesIntoScene) * 7));
         rotateZ(radians(180));
         fishShape.setFill(color(178,87,145));
         scale(96);
@@ -630,8 +633,8 @@ public class UsingProcessing extends PApplet{
         pushMatrix();
         
         translate(width-translateZ*2, height / 2);
-        rotateY(radians(90));
-        rotateZ(radians(180));
+        rotateY(radians(90 + sin(framesIntoScene) * 2));
+        rotateZ(radians(180 + sin(framesIntoScene) * 5));
         birdShape.setFill(color(72,119,160));
         scale(96);
         
@@ -644,8 +647,8 @@ public class UsingProcessing extends PApplet{
         pushMatrix();
         
         translate(width-translateZ*2-50, height / 2-45);
-        rotateY(radians(90));
-        rotateZ(radians(180));
+        rotateY(radians(90 + cos(framesIntoScene) * 1));
+        rotateZ(radians(180 + cos(framesIntoScene) * 7));
         birdShape.setFill(color(26,73,114));
         scale(96);
         
@@ -657,9 +660,9 @@ public class UsingProcessing extends PApplet{
         pushMatrix();
         
         translate(width-translateZ*2-65, height / 2+30);
-        rotateY(radians(90));
-        rotateZ(radians(180));
-        birdShape.setFill(color(178,87,145));
+        rotateY(radians(90 + cos(framesIntoScene) * rand.nextInt(10)));
+        rotateZ(radians(180 + sin(framesIntoScene) * rand.nextInt(10)));
+        birdShape.setFill(color(178,87,145)); //Pink bird
         scale(96);
         
         shape(birdShape);
