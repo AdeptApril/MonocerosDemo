@@ -263,13 +263,23 @@ public class UsingProcessing extends PApplet{
             case "HORSESEARCH2":
                 horseSearch2();
                 if (millis() - startTimer > 3820){
-                    state = "SHADER";
+                    state = "HORSENARWHALMEETING";
                     resetVars();
                 }
                 break;
             case "HORSENARWHALMEETING":
-                break;
+                horseNarwhalMeeting();
+                if (millis() - startTimer > 8088){
+                    state = "ICESHELFBREAK";
+                    resetVars();
+                }
+                break; //These two scenes possibly should be combined.
             case "ICESHELFBREAK":
+                iceShelfBreak();
+                if (millis() - startTimer > 8088){
+                    state = "SHADER";
+                    resetVars();
+                }
                 break;
             case "SEXYTIMES":
                 break;
@@ -370,6 +380,17 @@ public class UsingProcessing extends PApplet{
                 if(!batch3Loaded)
                     loadBatch3();
                 state="NARWHALSEARCH";
+                resetVars();
+                break;
+            case 'h':
+                 if(!batch1Loaded)
+                    loadBatch1();
+                if(!batch2Loaded)
+                    loadBatch2();
+                if(!batch3Loaded)
+                    loadBatch3();
+                state="HORSENARWHALMEETING";
+                player.cue(73200);
                 resetVars();
                 break;
             case 'r':
@@ -1880,8 +1901,67 @@ public class UsingProcessing extends PApplet{
         //Light is supposed to be mostly from above, with a fair amount of scattered light
         lightFromAbove();
         
+        translate(width / 2, (float)(height*0.5), -50);
+        //rotateY(radians(90));
+        rotateX(radians(-10));
+        rotateZ(radians(180));
+        scale(32);
+        shape(backgroundSnowWaterShape);
         popMatrix();
         pushMatrix();
+        
+        translate(width / 2, (float)(height*0.5), +50);
+        rotateX(radians(-10));
+        rotateZ(radians(180));
+        scale(32);
+        shape(iceShelfShape);
+        
+        popMatrix();
+        pushMatrix();
+        
+        //sin(framesIntoScene) * 25 is the hopping
+        if(framesIntoScene * 5 < width/2)
+            translate(width, height / 2 - 200 + (sin(framesIntoScene) * 15), 200);
+        else
+            translate(width, height / 2 - 200, 200);
+        //if(framesIntoScene<20)
+        rotateY(radians(-90));
+        //if(framesIntoScene>=20 && framesIntoScene < 55)
+        //    rotateY(radians(90-framesIntoScene+19));
+        //if(framesIntoScene>= 55)
+        //    rotateY(radians(90-35));
+        rotateZ(radians(180));
+        //The horse is travelling from width to width/2 in the above section. So probably 1920 to 960
+        if(framesIntoScene * 5 < width/2)
+            translate(translateX, translateY, framesIntoScene * 5);
+        else
+            translate(translateX, translateY, 960);
+        //horseShape.setFill(color(205,133,63));
+        //horseShape.setFill(color(255));
+        scale(48);
+        shape(horseRainbowShape);
+        
+        popMatrix();
+        pushMatrix();
+        
+        //beginning of Narwhal
+        translate(0, height * 6 / 8 );
+        rotateY(radians(-90));
+        rotateX(radians(180));
+        //rotateZ(radians(180));
+        if(framesIntoScene < 30)
+            translate(0, framesIntoScene, (framesIntoScene * 5)); //-(sin((framesIntoScene + 90)/5) * 5)
+        else if(framesIntoScene >= 30 && framesIntoScene < 60 )
+            translate(0, -framesIntoScene+60, framesIntoScene + 120);
+        else if(framesIntoScene >= 60)
+            translate(0, translateY, (framesIntoScene) + 150);
+        
+        //narwhalShape.setFill(color(50 + decay, 50, 150));
+        scale(64);
+        shape(narwhalRainbowShape);
+        
+        popMatrix();
+        //pushMatrix();
     }
     
     public void iceShelfBreak()
@@ -1892,8 +1972,65 @@ public class UsingProcessing extends PApplet{
         //Light is supposed to be mostly from above, with a fair amount of scattered light
         lightFromAbove();
         
+        translate(width / 2, (float)(height*0.5), -50);
+        //rotateY(radians(90));
+        rotateX(radians(-10));
+        rotateZ(radians(180));
+        scale(32);
+        shape(backgroundSnowWaterShape);
         popMatrix();
         pushMatrix();
+        
+        if(framesIntoScene<50)
+            translate(width / 2, (float)(height*0.5), +50);
+        else
+            translate(width / 2 - framesIntoScene + 49, (float)(height*0.5), +50);
+        rotateX(radians(-10));
+        rotateZ(radians(180));
+        scale(32);
+        shape(iceShelfShape);
+        
+        popMatrix();
+        pushMatrix();
+        
+        translate(width / 2, height / 2 - 200, 200);
+        //if(framesIntoScene<20)
+            rotateY(radians(-90));
+        //if(framesIntoScene>=20 && framesIntoScene < 55)
+        //    rotateY(radians(90-framesIntoScene+19));
+        //if(framesIntoScene>= 55)
+        //    rotateY(radians(90-35));
+        rotateZ(radians(180));
+        if(framesIntoScene<50)
+            translate(0, 0, 0);
+        else
+            translate(0, 0, framesIntoScene-49);
+        //horseShape.setFill(color(205,133,63));
+        //horseShape.setFill(color(255));
+        scale(48);
+        shape(horseRainbowShape);
+        
+        popMatrix();
+        pushMatrix();
+        
+        //beginning of Narwhal
+        translate(0, height * 6 / 8 );
+        rotateY(radians(-90));
+        rotateX(radians(180));
+        //rotateZ(radians(180));
+        if(framesIntoScene < 30)
+            translate(0, framesIntoScene, (framesIntoScene * 5)); //-(sin((framesIntoScene + 90)/5) * 5)
+        else if(framesIntoScene >= 30 && framesIntoScene < 60 )
+            translate(0, -framesIntoScene+60, framesIntoScene + 120);
+        else if(framesIntoScene >= 60)
+            translate(0, translateY, (framesIntoScene) + 150);
+        
+        //narwhalShape.setFill(color(50 + decay, 50, 150));
+        scale(64);
+        shape(narwhalRainbowShape);
+        
+        popMatrix();
+        //pushMatrix();
     }
     
     public void sexyTimes()
