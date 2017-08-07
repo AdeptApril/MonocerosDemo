@@ -184,7 +184,7 @@ public class UsingProcessing extends PApplet{
                 break;
             case "HORSERAINBOWAPPROACH":
                 horseRainbowApproach();
-                if (millis() - startTimer > 7666){//framesIntoScene > 226) {
+                if (millis() - startTimer > 6700){//framesIntoScene > 226) {
                     state = "NARWHALSUCK";
                     resetVars();
                 }
@@ -281,6 +281,27 @@ public class UsingProcessing extends PApplet{
                     resetVars();
                 }
                 break;
+            case "WORRIEDHORSE":
+                //worriedHorse();
+                if (millis() - startTimer > 10088){
+                    state = "SHADER";
+                    resetVars();
+                }
+                break;
+            case "NARWHALSAVE":
+                //narwhalSave();
+                if (millis() - startTimer > 10088){
+                    state = "SHADER";
+                    resetVars();
+                }
+                break;
+            case "LOVEINAIR":
+                //loveInAir();
+                if (millis() - startTimer > 10088){
+                    state = "SHADER";
+                    resetVars();
+                }
+                break;
             case "SEXYTIMES":
                 break;
             case "BABYUNICORN":
@@ -331,7 +352,7 @@ public class UsingProcessing extends PApplet{
                     loadBatch1();
                 state = "NARWHAL";
                 narwhalCount = 0;
-                player.cue(0);
+                player.cue(15360);
                 resetVars();
                 break;                
             case 'b':
@@ -339,28 +360,28 @@ public class UsingProcessing extends PApplet{
                     loadBatch1();
                 state = "HORSE";
                 horseCount = 0;
-                player.cue(7700);
+                player.cue(23040);
                 resetVars();
                 break;
             case 'c':
                 if(!batch1Loaded)
                     loadBatch1();
                 state = "NARWHALRAINBOWAPPROACH";
-                player.cue(30733);
+                player.cue(30720);
                 resetVars();
                 break;
             case 'd':
                 if(!batch1Loaded)
                     loadBatch1();
                 state = "HORSERAINBOWAPPROACH"; 
-                player.cue(38333);
+                player.cue(38400);
                 resetVars();
                 break;
             case 'e':
                 if(!batch1Loaded)
                     loadBatch1();
                 state = "NARWHALSUCK";
-                player.cue(46100);
+                player.cue(45120);
                 resetVars();
                 break;
             case 'f':
@@ -369,7 +390,7 @@ public class UsingProcessing extends PApplet{
                 if(!batch2Loaded)
                     loadBatch2();
                 state = "HORSESUCK";
-                player.cue(51400);
+                player.cue(50640);
                 resetVars();
                 break;
             case 'g':
@@ -380,6 +401,7 @@ public class UsingProcessing extends PApplet{
                 if(!batch3Loaded)
                     loadBatch3();
                 state="NARWHALSEARCH";
+                player.cue(56400);
                 resetVars();
                 break;
             case 'h':
@@ -390,7 +412,7 @@ public class UsingProcessing extends PApplet{
                 if(!batch3Loaded)
                     loadBatch3();
                 state="HORSENARWHALMEETING";
-                player.cue(73200);
+                player.cue(72720);
                 resetVars();
                 break;
             case 'r':
@@ -903,10 +925,13 @@ public class UsingProcessing extends PApplet{
         
         pushMatrix();
         
-        translate((float)(width * 0.39), height / 2);
+        translate((float)(width * 0.1), height / 2);
         rotateY(radians(90));
         rotateZ(radians(180));
-        translate(0, translateY, translateZ);
+        if(framesIntoScene<150)
+            translate(0, sin(framesIntoScene) * 5, framesIntoScene*5);
+        else
+            translate(0, 0, 150*5);
 
         scale(96);
         shape(horseShape);
@@ -915,8 +940,8 @@ public class UsingProcessing extends PApplet{
         popMatrix();
         pushMatrix();
         
-        translate(translateZ*2, height / 2);
-        rotateY(radians(90 + sin(framesIntoScene) * 2));
+        translate(framesIntoScene*10, height / 2, 50);
+        rotateY(radians(-90 + sin(framesIntoScene) * 2));
         rotateZ(radians(180 + sin(framesIntoScene) * 5));
         birdShape.setFill(color(72,119,160));
         scale(96);
@@ -929,8 +954,8 @@ public class UsingProcessing extends PApplet{
         
         pushMatrix();
         
-        translate(translateZ*2-50, height / 2-45);
-        rotateY(radians(90 + cos(framesIntoScene) * 1));
+        translate(framesIntoScene*10-50, height / 2-45, 50);
+        rotateY(radians(-90 + cos(framesIntoScene) * 1));
         rotateZ(radians(180 + cos(framesIntoScene) * 7));
         birdShape.setFill(color(26,73,114));
         scale(96);
@@ -942,8 +967,8 @@ public class UsingProcessing extends PApplet{
         popMatrix();
         pushMatrix();
         
-        translate(translateZ*2-65, height / 2+30);
-        rotateY(radians(90 + cos(framesIntoScene) * rand.nextInt(10)));
+        translate(framesIntoScene*10-65, height / 2+30, 50);
+        rotateY(radians(-90 + cos(framesIntoScene) * rand.nextInt(10)));
         rotateZ(radians(180 + sin(framesIntoScene) * rand.nextInt(10)));
         birdShape.setFill(color(178,87,145)); //Pink bird
         scale(96);
@@ -991,12 +1016,13 @@ public class UsingProcessing extends PApplet{
         popMatrix();
         //Display the rainbow. This should be the stopping point for the rainbow in the narwhal scene
         scale(2);
-        rainbow(width-400,height/2);
-        if(translateZ < 200 )
-        {
-            translateZ += 5;
-            translateY += sin(framesIntoScene) * 5;
-        }
+        if(framesIntoScene < 100)
+            rainbow(width-framesIntoScene*4, height/2);
+        else
+            rainbow(width-400,height/2);
+        /*rainbow(-(int)(width*0.9)+translateX*5,height/2);
+        if(translateX < height/2 )
+            translateX += 1;*/
     }   
 
     public void rainbow(int centerX, int centerY) {
@@ -1581,7 +1607,7 @@ public class UsingProcessing extends PApplet{
         popMatrix();
     }
     
-        public void narwhalSearch2()
+    public void narwhalSearch2()
     {
         background(0);
         pushMatrix();
@@ -1901,6 +1927,7 @@ public class UsingProcessing extends PApplet{
         //Light is supposed to be mostly from above, with a fair amount of scattered light
         lightFromAbove();
         
+        //Background############################################################
         translate(width / 2, (float)(height*0.5), -50);
         //rotateY(radians(90));
         rotateX(radians(-10));
@@ -1910,6 +1937,7 @@ public class UsingProcessing extends PApplet{
         popMatrix();
         pushMatrix();
         
+        //Ice shelf#############################################################
         translate(width / 2, (float)(height*0.5), +50);
         rotateX(radians(-10));
         rotateZ(radians(180));
@@ -1919,6 +1947,7 @@ public class UsingProcessing extends PApplet{
         popMatrix();
         pushMatrix();
         
+        //Horse#################################################################
         //sin(framesIntoScene) * 25 is the hopping
         if(framesIntoScene * 5 < width/2)
             translate(width, height / 2 - 200 + (sin(framesIntoScene) * 15), 200);
@@ -1944,7 +1973,7 @@ public class UsingProcessing extends PApplet{
         popMatrix();
         pushMatrix();
         
-        //beginning of Narwhal
+        //Narwhal###############################################################
         translate(0, height * 6 / 8 );
         rotateY(radians(-90));
         rotateX(radians(180));
