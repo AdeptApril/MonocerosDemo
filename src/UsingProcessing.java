@@ -36,6 +36,10 @@ public class UsingProcessing extends PApplet{
     int translateY = 0;
     int translateZ = 0;
     
+    int textFade = 0;
+    int faderSwitch = 1;
+    int textSwitch = 0;
+    
     int horseCount = 1;
     int narwhalCount = 1;
     
@@ -132,16 +136,11 @@ public class UsingProcessing extends PApplet{
                 exit();
                 break;
             case "LOADINGSTART":
-                if (framesIntoScene == 1) {
-                    //Load picture
-                    img = loadImage("MonocerosLogo.png");
-                    image(img, width*1/4, height*1/4);
-                }
-                if (framesIntoScene == 2) {
+                if (framesIntoScene < 351) {
                     //Load models
-                    loadBatch1();
+                    intro();
                 }
-                if (framesIntoScene > 2) {
+                if (framesIntoScene == 351) {
                     state = "NARWHAL";
                     resetVars();
                 }
@@ -455,7 +454,73 @@ public class UsingProcessing extends PApplet{
                 break;
         }
     }
-    
+
+    public void intro(){
+        background(0);
+        pushMatrix();
+        
+        PFont font = createFont("Kingthings_Calligraphica_2.ttf", 52);
+        img = loadImage("MonocerosLogoWhite.png");
+        
+        //scale(1/2);
+        imageMode(CENTER);
+        image(img, width/2, height/3);
+        textFont(font,64);
+        
+        if (framesIntoScene%50==0){
+            faderSwitch *= -1;
+        }
+        
+        if (framesIntoScene%100 == 0){
+            textSwitch++;
+        }
+        
+        textFade = textFade+(3*faderSwitch);
+        fill(255,255,255,textFade*2);
+        textAlign(CENTER);
+        
+        switch (textSwitch){
+            case 3: 
+                fill(242,100,252,textFade*2);
+                if (framesIntoScene>350) {
+                    fill(242,100,252);
+                }
+                textFont(font,108);
+                text("\"Love Story\"",width/2,(height * 3 /4)+196);
+            case 2: 
+                fill(255,255,255,textFade*2);
+                if (framesIntoScene>250) {
+                    fill(255,255,255);
+                }
+                textFont(font,64);
+                
+                text("for Evoke 2017",width/2,(height * 3 /4)+96);
+            case 1: 
+                fill(255,255,255,textFade*2);
+                if (framesIntoScene>150) {
+                    fill(255,255,255);
+                }
+                textFont(font,64);
+                text("its debut production",width/2,(height * 3 /4)+24);
+            case 0:
+                fill(255,255,255,textFade*2);
+                if (framesIntoScene>50) {
+                    fill(255,255,255);
+                }
+                textFont(font,84);
+                text("Monoceros presents",width/2,(height * 3 /4)-72);
+            
+            
+            
+        }
+        popMatrix();
+        
+        if (framesIntoScene == 350){
+            loadBatch1();
+        }
+        
+    }
+
     public void loadBatch1() {
         //horseShape = loadShape("horse_no_hair_w_color_2.obj");
         narwhalShape = loadShape("narwhal.obj");
