@@ -27,7 +27,8 @@ public class UsingProcessing extends PApplet{
     int y = 80;
     int secondLine = 88;
     int thirdLine = 96;
-    String state = "LOADINGSTART";
+    //String state = "LOADINGSTART";
+    String state = "CREDITS"; //TODO: set state back to LOADINGSTART
     int textX = 400;
     int textY = 200;
     int tempNum = 0;
@@ -39,6 +40,15 @@ public class UsingProcessing extends PApplet{
     int textFade = 0;
     int faderSwitch = 1;
     int textSwitch = 0;
+    int rainbowRate = 0;
+    int redTop=100;
+    int orangeTop=110;
+    int yellowTop=120;
+    int greenTop=130;
+    int blueTop=140;
+    int indigoTop=150;
+    int purpleTop=160;
+    int purpleBottom=170;
     
     int horseCount = 1;
     int narwhalCount = 1;
@@ -299,7 +309,7 @@ public class UsingProcessing extends PApplet{
             case "LOVEINAIR":
                 loveInAir();
                 if (millis() - startTimer > 10088){
-                    state = "SHADER";
+                    state = "CREDITS";
                     resetVars();
                 }
                 break;
@@ -308,21 +318,26 @@ public class UsingProcessing extends PApplet{
             case "BABYUNICORN":
                 break;
             case "CREDITS":
-                break;
-            case "SCROLLER":
-                scrollerScene();
-                if (framesIntoScene > 300) {
-                    state = "SHADER";
-                    framesIntoScene = 0;
-                }
-                break;
-            case "SHADER":
-                shaderScene();
-                if (framesIntoScene > 300) {
+                credits();
+                if (millis() - startTimer > 15000){
                     state = "ENDSCENE";
-                    framesIntoScene = 0;
+                    resetVars();
                 }
                 break;
+//            case "SCROLLER":
+//                scrollerScene();
+//                if (framesIntoScene > 300) {
+//                    state = "SHADER";
+//                    framesIntoScene = 0;
+//                }
+//                break;
+//            case "SHADER":
+//                shaderScene();
+//                if (framesIntoScene > 300) {
+//                    state = "ENDSCENE";
+//                    framesIntoScene = 0;
+//                }
+//                break;
             case "ENDSCENE":
                 endScene();
                 break;
@@ -530,6 +545,8 @@ public class UsingProcessing extends PApplet{
         
         if (framesIntoScene == 350){
             loadBatch1();
+            loadBatch2();
+            loadBatch3();
         }
         
     }
@@ -2574,11 +2591,127 @@ public class UsingProcessing extends PApplet{
         background(0);
         pushMatrix();
         
+        if(framesIntoScene == 1)
+            babyUnicornShape = loadShape("baby_unicorn_final.obj"); //TODO: remove this and load in the proper place
+        
+        PFont font = createFont("Kingthings_Calligraphica_2.ttf", 52);
+        img = loadImage("MonocerosLogoWhite.png");
+        
+        
+        //imageMode(CENTER);
+        scale((float)0.5);
+        image(img, 0, 0);
+        
+        popMatrix();
+        pushMatrix();
+        
+        lightFromAbove();
+        pointLight(200, 200, 200, width / 2, height / 2, 200);
+        pointLight(200, 200, 200, width / 2, height / 4, 200);
+
+        translate(0+(framesIntoScene*20), (height*3)/4);
+        rotateY(radians(270));
+        rotateX(radians(180));
+        
+        scale(75);
+        //shape(coneOnCube);
+        shape(babyUnicornShape);
+        
+        popMatrix();
+        pushMatrix();
+        
+        rainbowRate = 1;
+        colorMode(RGB, 400);
+      
+        if(framesIntoScene>10){
+            redTop -= (rainbowRate*7);  //initial 100
+            orangeTop -= (rainbowRate*5); //initial 110
+            yellowTop -= (rainbowRate*3); //initial 120
+            greenTop -= (rainbowRate); //initial 130 middle color
+            blueTop += (rainbowRate); //initial 140
+            indigoTop += (rainbowRate*3); //initial 150
+            purpleTop += (rainbowRate*5); //initial 160
+            purpleBottom += (rainbowRate*7); //initial 170
+            //red
+            fill(255,0,0);
+            triangle(0, (height/2)+redTop, 0+(framesIntoScene*20)-110, (height/2)+114, 0, (height/2)+orangeTop);
+            //orange
+            fill(255,127,0);
+            triangle(0, (height/2)+orangeTop, 0+(framesIntoScene*20)-110, (height/2)+116, 0, (height/2)+yellowTop);
+            //yellow
+            fill(255,255,0);
+            triangle(0, (height/2)+yellowTop, 0+(framesIntoScene*20)-110, (height/2)+118, 0, (height/2)+greenTop);
+            //green
+            fill(0,255,0);
+            triangle(0, (height/2)+greenTop, 0+(framesIntoScene*20)-110, (height/2)+120, 0, (height/2)+blueTop);
+            //blue
+            fill(0,255,255);
+            triangle(0, (height/2)+blueTop, 0+(framesIntoScene*20)-110, (height/2)+122, 0, (height/2)+indigoTop);
+            //indigo
+            fill(0,127,255);
+            triangle(0, (height/2)+indigoTop, 0+(framesIntoScene*20)-110, (height/2)+124, 0, (height/2)+purpleTop);
+            //purple
+            fill(127,0,255);
+            triangle(0, (height/2)+purpleTop, 0+(framesIntoScene*20)-110, (height/2)+126, 0, (height/2)+purpleBottom);
+        }
+        
+//        strokeWeight(10);
+//        stroke(155,68,240);
+//        line(0, (height*3)/4, 0+(framesIntoScene*20), (height*3)/4);
+//        textFont(font,64);
+        
+//        if (framesIntoScene%50==0){
+//            faderSwitch *= -1;
+//        }
+//        
+//        if (framesIntoScene%100 == 0){
+//            textSwitch++;
+//        }
+//        
+//        textFade = textFade+(3*faderSwitch);
+//        fill(255,255,255,textFade*2);
+//        textAlign(CENTER);
+//        
+//        switch (textSwitch){
+//            case 3: 
+//                fill(242,100,252,textFade*2);
+//                if (framesIntoScene>350) {
+//                    fill(242,100,252);
+//                }
+//                textFont(font,108);
+//                text("\"Love Story\"",width/2,(height * 3 /4)+196);
+//            case 2: 
+//                fill(255,255,255,textFade*2);
+//                if (framesIntoScene>250) {
+//                    fill(255,255,255);
+//                }
+//                textFont(font,64);
+//                
+//                text("for Evoke 2017",width/2,(height * 3 /4)+96);
+//            case 1: 
+//                fill(255,255,255,textFade*2);
+//                if (framesIntoScene>150) {
+//                    fill(255,255,255);
+//                }
+//                textFont(font,64);
+//                text("its debut production",width/2,(height * 3 /4)+24);
+//            case 0:
+//                fill(255,255,255,textFade*2);
+//                if (framesIntoScene>50) {
+//                    fill(255,255,255);
+//                }
+//                textFont(font,84);
+//                text("Monoceros presents",width/2,(height * 3 /4)-72);
+            
+            
+            
+//        }
+      
+        
         //Light is supposed to be mostly from above, with a fair amount of scattered light
         lightFromAbove();
         
         popMatrix();
-        pushMatrix();
     }
     
     /**
@@ -2641,6 +2774,15 @@ public class UsingProcessing extends PApplet{
                 //line(startX+i, startY-(i/4), startX+i, startY-i);
             }
         }
+    }
+    
+    public void rainbowStripe(int startX, int startY, int direction, int frameDelay)
+    { //-1 makes it come in from the left. 1 from the right Well, theoretically would be, if that's done. So TODO.
+        strokeWeight(10);
+        stroke(155,68,240);
+        //line(0, startY, startX+i, startY);
+
+        
     }
 
     
