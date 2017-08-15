@@ -426,6 +426,17 @@ public class UsingProcessing extends PApplet{
                 player.cue(88080);
                 resetVars();
                 break;
+            case 'j':
+                if(!batch1Loaded)
+                    loadBatch1();
+                if(!batch2Loaded)
+                    loadBatch2();
+                if(!batch3Loaded)
+                    loadBatch3();
+                state="NARWHALSAVE";
+                player.cue(98160);
+                resetVars();
+                break;
             case 'r':
                 if(!batch1Loaded)
                     loadBatch1();
@@ -446,10 +457,10 @@ public class UsingProcessing extends PApplet{
     }
     
     public void loadBatch1() {
-        horseShape = loadShape("horse_no_hair_w_color_2.obj");
+        //horseShape = loadShape("horse_no_hair_w_color_2.obj");
         narwhalShape = loadShape("narwhal.obj");
         narwhalRainbowShape = loadShape("narwhal_rainbow.obj");
-        backgroundLandShape = loadShape("background_grass_sky.obj");
+        //backgroundLandShape = loadShape("background_grass_sky.obj");
         backgroundWaterShape = loadShape("background_water_sky.obj");
         birdShape = loadShape("bird.obj");
         cloudShape = loadShape("cloud.obj");
@@ -472,16 +483,16 @@ public class UsingProcessing extends PApplet{
     
     public void loadBatch2() {
         horseRainbowShape = loadShape("horse_rainbow.obj");
-        backgroundSnowShape = loadShape("background_snow.obj");
+        //backgroundSnowShape = loadShape("background_snow.obj");
         backgroundSnowWaterShape = loadShape("background_snow_water.obj");
         iceShelfShape = loadShape("ice_shelf.obj");
-        icebergShape = loadShape("iceberg.obj");
+        //icebergShape = loadShape("iceberg.obj");
         batch2Loaded = true;
     }
     
     public void loadBatch3() {
         babyUnicornShape = loadShape("baby_unicorn_final.obj");
-        backgroundLandSnowShape = loadShape("background_grass_snow.obj");
+        //backgroundLandSnowShape = loadShape("background_grass_snow.obj");
         poopShape = loadShape("poop.obj");
         batch3Loaded = true;
     }
@@ -2204,10 +2215,16 @@ public class UsingProcessing extends PApplet{
         shape(backgroundSnowWaterShape);
         popMatrix();
         pushMatrix();
-        
-        translate(width / 2 - 242 + 49, (float)(height*0.5), +50);
-        rotateX(radians(-10));
-        rotateZ(radians(180));
+        if (framesIntoScene<= 135) {
+            translate(width / 2 - 193, (float)(height*0.5), +50);
+            rotateX(radians(-10));
+            rotateZ(radians(180));
+        } else //if(framesIntoScene<=302) //It should be around that many framesIntoScene. 300 is definitely too few.
+        {
+            translate(width / 2 - 193 + framesIntoScene - 135, (float)(height*0.5), +50);
+            rotateX(radians(-10));
+            rotateZ(radians(180));           
+        }
         scale(32);
         shape(iceShelfShape);
         
@@ -2216,9 +2233,12 @@ public class UsingProcessing extends PApplet{
         
         //Begin Horse
         translate(width / 2, height / 2 - 200, 200);
-        if(framesIntoScene<=500)
+        if(framesIntoScene<=135)
         { //Stop hopping, now facing sort of toward camera.
             translate(-120, 10, 20);
+            rotateY(radians(-290));
+        } else {
+            translate(-120 + framesIntoScene - 135, 10, 20);
             rotateY(radians(-290));
         }
 
@@ -2235,15 +2255,38 @@ public class UsingProcessing extends PApplet{
         {
             //First bubble
             fill(255);
-            ellipse(200, 500, 40, 40); //Draw an ellipse, but change the z dimension?
-            if (framesIntoScene > 5)
-            {}    //Second bubble
-            if (framesIntoScene > 10)
-            {}    //Third bubble
-            if (framesIntoScene > 15)
-            {}    //Fourth (bigger) bubble
-            if (framesIntoScene > 20)
-            {}    //lightbulb
+            stroke(255);
+            if (framesIntoScene > 0 ) {
+                translate(500,625,300);
+                ellipse(0, 0, 10, 10); //Draw an ellipse, but change the z dimension?
+                popMatrix();
+                pushMatrix();
+            }
+            if (framesIntoScene > 5){
+                translate(520,590,300);
+                ellipse(0, 0, 20, 20);
+                popMatrix();
+                pushMatrix();
+            }    //Second bubble
+            if (framesIntoScene > 10){
+                translate(490,560,300);
+                ellipse(0, 0, 30, 30);
+                popMatrix();
+                pushMatrix();
+            }    //Third bubble
+            if (framesIntoScene > 15){
+                translate(520,520,300);
+                ellipse(0, 0, 40, 40);
+                popMatrix();
+                pushMatrix();
+                
+            }    //Fourth (bigger) bubble
+            if (framesIntoScene > 20){
+                translate(500,450,300);
+                ellipse(0, 0, 150, 150);
+                popMatrix();
+                pushMatrix();
+            }    //lightbulb
             popMatrix();
             pushMatrix();
             translate(0, height * 6 / 8);
@@ -2256,12 +2299,24 @@ public class UsingProcessing extends PApplet{
             rotateX(radians(180));
             translate(0, 0, 160);
             rotateX(radians(-framesIntoScene+60));
-        } else if (framesIntoScene <= 500) {
-            translate((framesIntoScene-80)*5, height * 6 / 8 - (framesIntoScene-80)*5);
+        } else if (framesIntoScene <= 115) {
+            translate((framesIntoScene-80)*9, height * 6 / 8 - (framesIntoScene-80)*5);
             rotateY(radians(-90));
             rotateX(radians(180));
             translate(0, 0, 160);
             rotateX(radians(-20));
+        } else if (framesIntoScene<= 135) {
+            translate((115-80)*9, height * 6 / 8 - (115-80)*5); //Same as translate(315, height * 6 / 8 - 175);
+            rotateY(radians(-90));
+            rotateX(radians(180));
+            translate(0, 0, 160);
+            rotateX(radians(-20));
+        } else {
+            translate(315 + framesIntoScene - 135, height * 6 / 8 - 175);
+            rotateY(radians(-90));
+            rotateX(radians(180));
+            translate(0, 0, 160);
+            rotateX(radians(-20)); 
         }
         
         scale(64);
