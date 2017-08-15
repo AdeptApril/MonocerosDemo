@@ -27,8 +27,7 @@ public class UsingProcessing extends PApplet{
     int y = 80;
     int secondLine = 88;
     int thirdLine = 96;
-    //String state = "LOADINGSTART";
-    String state = "CREDITS"; //TODO: set state back to LOADINGSTART
+    String state = "LOADINGSTART";
     int textX = 400;
     int textY = 200;
     int tempNum = 0;
@@ -49,7 +48,7 @@ public class UsingProcessing extends PApplet{
     int indigoTop=150;
     int purpleTop=160;
     int purpleBottom=170;
-    
+
     int horseCount = 1;
     int narwhalCount = 1;
     
@@ -160,12 +159,12 @@ public class UsingProcessing extends PApplet{
             case "NARWHAL": ////7700, *2, *3, 30733, 38333, 46100 (narwhal suck), 
                 //start the music playing at the beginning, but otherwise only set cues when there's keyboard input
                 if (framesIntoScene == 1 && narwhalCount == 1) {
-                    player.cue(15400);
+                    player.cue(15360);
                     startTimer = millis();
                     player.play();
                 }
                 narwhalScene();
-                if (millis() - startTimer > 7700){//framesIntoScene > 228) {
+                if (millis() - startTimer > 7680){//framesIntoScene > 228) {
                     narwhalCount++;
                     //TODO: Make this have the correct progression of scenes
                     if (narwhalCount <= 2) {
@@ -176,7 +175,7 @@ public class UsingProcessing extends PApplet{
                 break;                
             case "HORSE":
                 horseScene();
-                if (millis() - startTimer > 7700){//framesIntoScene > 228) {
+                if (millis() - startTimer > 7680){//framesIntoScene > 228) {
                     horseCount++;
                     if (horseCount < 2) {
                         state = "NARWHAL";
@@ -188,21 +187,21 @@ public class UsingProcessing extends PApplet{
                 break;
             case "NARWHALRAINBOWAPPROACH":
                 narwhalRainbowApproach();
-                if (millis() - startTimer > 7666){//framesIntoScene > 226) {
+                if (millis() - startTimer > 7680){//framesIntoScene > 226) {
                     state = "HORSERAINBOWAPPROACH";
                     resetVars();
                 }
                 break;
             case "HORSERAINBOWAPPROACH":
                 horseRainbowApproach();
-                if (millis() - startTimer > 6700){//framesIntoScene > 226) {
+                if (millis() - startTimer > 7680){//framesIntoScene > 226) {
                     state = "NARWHALSUCK";
                     resetVars();
                 }
                 break;
             case "NARWHALSUCK":
                 narwhalSuck();
-                if (millis() - startTimer > 5500){//framesIntoScene > 226) {
+                if (millis() - startTimer > 5520){//framesIntoScene > 226) {
                     player.pause(); //resyncing the demo during a pause into the next scene
                     state = "LOADINGMIDDLE";
                     resetVars();
@@ -223,12 +222,12 @@ public class UsingProcessing extends PApplet{
             case "HORSESUCK":
                 if (framesIntoScene == 1) {
                     //resyncing the demo, since there's a pause in the music.
-                    player.cue(51400);
+                    player.cue(51600);
                     //resetVars();
                     player.play();
                 }
                 horseSuck();
-                if (millis() - startTimer > 5600){//framesIntoScene > 226) {
+                if (millis() - startTimer > 5760){//framesIntoScene > 226) {
                     state = "LOADINGMIDDLE2";
                     resetVars();
                 }
@@ -248,46 +247,46 @@ public class UsingProcessing extends PApplet{
             case "NARWHALSEARCH":
                 if (framesIntoScene == 1) {
                     //resyncing the demo, since there's a pause in the music.
-                    player.cue(57200);
+                    player.cue(57360);
                     player.play();
                 }
                 narwhalSearch();
-                if (millis() - startTimer > 4500){
+                if (millis() - startTimer > 4800){
                     state = "HORSESEARCH";
                     resetVars();
                 }
                 break;
             case "HORSESEARCH":
                 horseSearch();
-                if (millis() - startTimer > 3820){
+                if (millis() - startTimer > 3840){
                     state = "NARWHALSEARCH2";
                     resetVars();
                 }
                 break;
             case "NARWHALSEARCH2":
                 narwhalSearch2();
-                if (millis() - startTimer > 4320){
+                if (millis() - startTimer > 3840){
                     state = "HORSESEARCH2";
                     resetVars();
                 }
                 break;
             case "HORSESEARCH2":
                 horseSearch2();
-                if (millis() - startTimer > 3820){
+                if (millis() - startTimer > 3840){
                     state = "HORSENARWHALMEETING";
                     resetVars();
                 }
                 break;
             case "HORSENARWHALMEETING":
                 horseNarwhalMeeting();
-                if (millis() - startTimer > 8088){
+                if (millis() - startTimer > 7680){
                     state = "ICESHELFBREAK";
                     resetVars();
                 }
                 break; //These two scenes possibly should be combined.
             case "ICESHELFBREAK":
                 iceShelfBreak();
-                if (millis() - startTimer > 8088){
+                if (millis() - startTimer > 7680){
                     state = "WORRIEDHORSE";
                     resetVars();
                 }
@@ -308,19 +307,36 @@ public class UsingProcessing extends PApplet{
                 break;
             case "LOVEINAIR":
                 loveInAir();
-                if (millis() - startTimer > 10088){
-                    state = "CREDITS";
+                if (millis() - startTimer > 7680){
+                    state = "SEXYTIMES";
                     resetVars();
                 }
                 break;
             case "SEXYTIMES":
+                sexyTimes();
+                if (millis() - startTimer > 7200){
+                    state = "BABYUNICORN";
+                    resetVars();
+                }
                 break;
             case "BABYUNICORN":
+                babyUnicorn();
+                if (millis() - startTimer > 13200){
+                    state = "THEEND";
+                    resetVars();
+                }
+                break;
+            case "THEEND":
+                endScene();
+                if (millis() - startTimer > 3840){
+                    state = "CREDITS";
+                    resetVars();
+                }
                 break;
             case "CREDITS":
                 credits();
-                if (millis() - startTimer > 15000){
-                    state = "ENDSCENE";
+                if (millis() - startTimer > 19200){
+                    state = "END";
                     resetVars();
                 }
                 break;
@@ -338,9 +354,6 @@ public class UsingProcessing extends PApplet{
 //                    framesIntoScene = 0;
 //                }
 //                break;
-            case "ENDSCENE":
-                endScene();
-                break;
             default:
                 break;
         }
@@ -357,127 +370,128 @@ public class UsingProcessing extends PApplet{
                 state = "END";
                 resetVars();
                 break;
-            case 'z':
-                state = "ENDSCENE";
-                resetVars();
-                break;
             case 'a':
-                if(!batch1Loaded) //TODO: Possibly replace all these if statements
+                    //TODO: Possibly replace all these if statements
                     //With a, "loadNeededFiles(char case)", passing along
                     // the curret point in the demo.
-                    loadBatch1();
+                loadBatch1();
                 state = "NARWHAL";
-                narwhalCount = 0;
+                narwhalCount = 1;
                 player.cue(15360);
                 resetVars();
                 break;                
             case 'b':
-                if(!batch1Loaded)
-                    loadBatch1();
+                loadBatch1();
                 state = "HORSE";
-                horseCount = 0;
+                horseCount = 1;
                 player.cue(23040);
                 resetVars();
                 break;
             case 'c':
-                if(!batch1Loaded)
-                    loadBatch1();
+                loadBatch1();
                 state = "NARWHALRAINBOWAPPROACH";
                 player.cue(30720);
                 resetVars();
                 break;
             case 'd':
-                if(!batch1Loaded)
-                    loadBatch1();
+                loadBatch1();
                 state = "HORSERAINBOWAPPROACH"; 
                 player.cue(38400);
                 resetVars();
                 break;
             case 'e':
-                if(!batch1Loaded)
-                    loadBatch1();
+                loadBatch1();
                 state = "NARWHALSUCK";
-                player.cue(45120);
+                player.cue(46080);
                 resetVars();
                 break;
             case 'f':
-                if(!batch1Loaded)
-                    loadBatch1();
-                if(!batch2Loaded)
-                    loadBatch2();
+                loadBatch1();
+                loadBatch2();
                 state = "HORSESUCK";
-                player.cue(50640);
+                player.cue(51600);
                 resetVars();
                 break;
             case 'g':
-                 if(!batch1Loaded)
-                    loadBatch1();
-                if(!batch2Loaded)
-                    loadBatch2();
-                if(!batch3Loaded)
-                    loadBatch3();
+                loadBatch1();
+                loadBatch2();
+                loadBatch3();
                 state="NARWHALSEARCH";
-                player.cue(56400);
+                player.cue(57360);
                 resetVars();
                 break;
             case 'h':
-                if(!batch1Loaded)
-                    loadBatch1();
-                if(!batch2Loaded)
-                    loadBatch2();
-                if(!batch3Loaded)
-                    loadBatch3();
+                loadBatch1();
+                loadBatch2();
+                loadBatch3();
                 state="HORSENARWHALMEETING";
-                player.cue(72720);
+                player.cue(73680);
                 resetVars();
                 break;
             case 'i':
-                if(!batch1Loaded)
-                    loadBatch1();
-                if(!batch2Loaded)
-                    loadBatch2();
-                if(!batch3Loaded)
-                    loadBatch3();
+                loadBatch1();
+                loadBatch2();
+                loadBatch3();
                 state="WORRIEDHORSE";
-                player.cue(88080);
+                player.cue(89040);
                 resetVars();
                 break;
             case 'j':
-                if(!batch1Loaded)
-                    loadBatch1();
-                if(!batch2Loaded)
-                    loadBatch2();
-                if(!batch3Loaded)
-                    loadBatch3();
+                loadBatch1();
+                loadBatch2();
+                loadBatch3();
                 state="NARWHALSAVE";
-                player.cue(98160);
+                player.cue(99120);
                 resetVars();
                 break;
             case 'k':
-                if(!batch1Loaded)
-                    loadBatch1();
-                if(!batch2Loaded)
-                    loadBatch2();
-                if(!batch3Loaded)
-                    loadBatch3();
+                loadBatch1();
+                loadBatch2();
+                loadBatch3();
                 state="LOVEINAIR";
-                player.cue(108240);
+                player.cue(109200);
                 resetVars();
                 break;
-            case 'r':
-                if(!batch1Loaded)
-                    loadBatch1();
-                if(!batch2Loaded)
-                    loadBatch2();
-                if(!batch3Loaded)
-                    loadBatch3();
-                state = "SCROLLER";
+            case 'l':
+                loadBatch1();
+                loadBatch2();
+                loadBatch3();
+                state="SEXYTIMES";
+                player.cue(116880);
                 resetVars();
                 break;
-            case 's':
-                state = "SHADER";
+            case 'm':
+                loadBatch1();
+                loadBatch2();
+                loadBatch3();
+                state="BABYUNICORN";
+                player.cue(124080);
                 resetVars();
                 break;
+            case 'n':
+                state = "THEEND";
+                player.cue(137280);
+                resetVars();
+                break;
+            case 'o':
+                loadBatch1();
+                loadBatch2();
+                loadBatch3();
+                state="CREDITS";
+                player.cue(125760);
+                resetVars();
+                break;
+//            case 'r':
+//                loadBatch1();
+//                loadBatch2();
+//                loadBatch3();
+//                state = "SCROLLER";
+//                resetVars();
+//                break;
+//            case 's':
+//                state = "SHADER";
+//                resetVars();
+//                break;
             default:
                 break;
         }
@@ -552,17 +566,19 @@ public class UsingProcessing extends PApplet{
     }
 
     public void loadBatch1() {
-        //horseShape = loadShape("horse_no_hair_w_color_2.obj");
-        narwhalShape = loadShape("narwhal.obj");
-        narwhalRainbowShape = loadShape("narwhal_rainbow.obj");
-        //backgroundLandShape = loadShape("background_grass_sky.obj");
-        backgroundWaterShape = loadShape("background_water_sky.obj");
-        birdShape = loadShape("bird.obj");
-        cloudShape = loadShape("cloud.obj");
-        fishShape = loadShape("fish.obj");
-        flowerShape = loadShape("flower.obj");
-        treeShape = loadShape("tree.obj");
-        batch1Loaded = true;
+        if (!batch1Loaded) {
+            horseShape = loadShape("horse_no_hair_w_color_2.obj");
+            narwhalShape = loadShape("narwhal.obj");
+            narwhalRainbowShape = loadShape("narwhal_rainbow.obj");
+            backgroundLandShape = loadShape("background_grass_sky.obj");
+            backgroundWaterShape = loadShape("background_water_sky.obj");
+            birdShape = loadShape("bird.obj");
+            cloudShape = loadShape("cloud.obj");
+            fishShape = loadShape("fish.obj");
+            flowerShape = loadShape("flower.obj");
+            treeShape = loadShape("tree.obj");
+            batch1Loaded = true;
+        }
 //        horseRainbowShape = loadShape("horse_rainbow.obj");
 //        batch2Loaded = true;
 //        cup = loadShape("cup.obj");
@@ -577,21 +593,25 @@ public class UsingProcessing extends PApplet{
     }
     
     public void loadBatch2() {
-        horseRainbowShape = loadShape("horse_rainbow.obj");
-        //backgroundSnowShape = loadShape("background_snow.obj");
-        backgroundSnowWaterShape = loadShape("background_snow_water.obj");
-        iceShelfShape = loadShape("ice_shelf.obj");
-        //icebergShape = loadShape("iceberg.obj");
-        batch2Loaded = true;
+        if (!batch2Loaded) {
+            horseRainbowShape = loadShape("horse_rainbow.obj");
+            backgroundSnowShape = loadShape("background_snow.obj");
+            backgroundSnowWaterShape = loadShape("background_snow_water.obj");
+            iceShelfShape = loadShape("ice_shelf.obj");
+            icebergShape = loadShape("iceberg.obj");
+            batch2Loaded = true;
+        }
     }
     
     public void loadBatch3() {
-        lightBulbShape = loadShape("lightbulb.obj");
-        heartShape = loadShape("heart.obj");
-        babyUnicornShape = loadShape("baby_unicorn_final.obj");
-        //backgroundLandSnowShape = loadShape("background_grass_snow.obj");
-        poopShape = loadShape("poop.obj");
-        batch3Loaded = true;
+        if (!batch3Loaded) {
+            lightBulbShape = loadShape("lightbulb.obj");
+            heartShape = loadShape("heart.obj");
+            babyUnicornShape = loadShape("baby_unicorn_final.obj");
+            backgroundLandSnowShape = loadShape("background_grass_snow.obj");
+            poopShape = loadShape("poop.obj");
+            batch3Loaded = true;
+        }
     }
     
     public void scrollerScene()
@@ -2506,7 +2526,7 @@ public class UsingProcessing extends PApplet{
         pushMatrix();
         
         //Begin thought bubbles and heart shape section
-        if( framesIntoScene > 95 && framesIntoScene < 500)
+        if( framesIntoScene > 95 && framesIntoScene <= 250)
         {
             //First bubble
             fill(255);
@@ -2550,13 +2570,24 @@ public class UsingProcessing extends PApplet{
                 //Could turn the lightbulb on, but don't know if it looks any better:
                 //if (framesIntoScene > 25)
                 //    pointLight(255, 255, 255, 500, 450, 300);
-                rotateY(radians(-90+(framesIntoScene-20)*2));
-                rotateX(radians(180+(framesIntoScene-20)/8));
-                scale(16);
+                popMatrix();
+                pushMatrix();
+                //rotateY(radians(90));
+                rotateX(radians(180));
+                translate(815, -400, -350);
+                scale(16 + (framesIntoScene-115)*(framesIntoScene-115)/15);
                 shape(heartShape);
                 popMatrix();
                 pushMatrix();
             }    //heart
+        } else if (framesIntoScene > 250) {
+                pushMatrix();
+                //rotateY(radians(90));
+                rotateX(radians(180));
+                translate(815, -400, -350);
+                scale(16 + (250-115)*(250-115)/15);
+                shape(heartShape);
+                popMatrix();
         }
         
         popMatrix();
@@ -2570,8 +2601,14 @@ public class UsingProcessing extends PApplet{
         //Light is supposed to be mostly from above, with a fair amount of scattered light
         lightFromAbove();
         
+        if (framesIntoScene <= 250) {
+                rotateX(radians(180));
+                translate(815, -400, -350);
+                scale(16 + (250-115)*(250-115)/15);
+                shape(heartShape);
+        }
+
         popMatrix();
-        pushMatrix();
     }
     
     public void babyUnicorn()
@@ -2582,8 +2619,64 @@ public class UsingProcessing extends PApplet{
         //Light is supposed to be mostly from above, with a fair amount of scattered light
         lightFromAbove();
         
+        translate(width / 2, (float)(height*0.5), -50);
+        rotateX(radians(-10));
+        rotateZ(radians(180));
+        scale(32);
+        shape(backgroundSnowWaterShape);
         popMatrix();
         pushMatrix();
+        if (framesIntoScene<= 500)
+        {
+            translate(width / 2 - 26, (float)(height*0.5), +50);
+            rotateX(radians(-10));
+            rotateZ(radians(180));
+        }
+        scale(32);
+        shape(iceShelfShape);
+
+        popMatrix();
+        pushMatrix();
+
+        //Begin Horse
+        translate(width / 2, height / 2 - 200, 200);
+        if(framesIntoScene<=500)
+        {
+            translate(47 + 95*6, 10, 20);
+            rotateY(radians(-290 + 95*2));
+        }
+
+        rotateZ(radians(180));
+        translate(0, 0, 193);
+        scale(48);
+        shape(horseRainbowShape);
+
+        popMatrix();
+        pushMatrix();
+
+        //beginning of Narwhal
+        if(framesIntoScene < 500)  {
+            translate(257, height * 6 / 8 - 50);
+            rotateY(radians(-90));
+            rotateX(radians(180));
+            translate(0, 0, 160);
+            rotateX(radians(-20));
+        }
+
+        scale(64);
+        shape(narwhalRainbowShape);
+
+        popMatrix();
+        pushMatrix();
+
+        //Begin baby Unicorn
+        translate(width/2, height /2 -50 );
+        rotateY(radians(90));
+        rotateX(radians(180));
+        scale(48);
+        shape(babyUnicornShape);
+
+        popMatrix();
     }
     
     public void credits()
@@ -2593,18 +2686,18 @@ public class UsingProcessing extends PApplet{
         
         if(framesIntoScene == 1)
             babyUnicornShape = loadShape("baby_unicorn_final.obj"); //TODO: remove this and load in the proper place
-        
+
         PFont font = createFont("Kingthings_Calligraphica_2.ttf", 52);
         img = loadImage("MonocerosLogoWhite.png");
-        
-        
+
+
         //imageMode(CENTER);
         scale((float)0.5);
         image(img, 0, 0);
-        
+
         popMatrix();
         pushMatrix();
-        
+
         lightFromAbove();
         pointLight(200, 200, 200, width / 2, height / 2, 200);
         pointLight(200, 200, 200, width / 2, height / 4, 200);
@@ -2612,17 +2705,17 @@ public class UsingProcessing extends PApplet{
         translate(0+(framesIntoScene*20), (height*3)/4);
         rotateY(radians(270));
         rotateX(radians(180));
-        
+
         scale(75);
         //shape(coneOnCube);
         shape(babyUnicornShape);
-        
+
         popMatrix();
         pushMatrix();
-        
+
         rainbowRate = 1;
         colorMode(RGB, 400);
-      
+
         if(framesIntoScene>10){
             redTop -= (rainbowRate*7);  //initial 100
             orangeTop -= (rainbowRate*5); //initial 110
@@ -2654,41 +2747,41 @@ public class UsingProcessing extends PApplet{
             fill(127,0,255);
             triangle(0, (height/2)+purpleTop, 0+(framesIntoScene*20)-110, (height/2)+126, 0, (height/2)+purpleBottom);
         }
-        
+
 //        strokeWeight(10);
 //        stroke(155,68,240);
 //        line(0, (height*3)/4, 0+(framesIntoScene*20), (height*3)/4);
 //        textFont(font,64);
-        
+
 //        if (framesIntoScene%50==0){
 //            faderSwitch *= -1;
 //        }
-//        
+//
 //        if (framesIntoScene%100 == 0){
 //            textSwitch++;
 //        }
-//        
+//
 //        textFade = textFade+(3*faderSwitch);
 //        fill(255,255,255,textFade*2);
 //        textAlign(CENTER);
-//        
+//
 //        switch (textSwitch){
-//            case 3: 
+//            case 3:
 //                fill(242,100,252,textFade*2);
 //                if (framesIntoScene>350) {
 //                    fill(242,100,252);
 //                }
 //                textFont(font,108);
 //                text("\"Love Story\"",width/2,(height * 3 /4)+196);
-//            case 2: 
+//            case 2:
 //                fill(255,255,255,textFade*2);
 //                if (framesIntoScene>250) {
 //                    fill(255,255,255);
 //                }
 //                textFont(font,64);
-//                
+//
 //                text("for Evoke 2017",width/2,(height * 3 /4)+96);
-//            case 1: 
+//            case 1:
 //                fill(255,255,255,textFade*2);
 //                if (framesIntoScene>150) {
 //                    fill(255,255,255);
@@ -2702,15 +2795,15 @@ public class UsingProcessing extends PApplet{
 //                }
 //                textFont(font,84);
 //                text("Monoceros presents",width/2,(height * 3 /4)-72);
-            
-            
-            
+
+
+
 //        }
-      
-        
+
+
         //Light is supposed to be mostly from above, with a fair amount of scattered light
         lightFromAbove();
-        
+
         popMatrix();
     }
     
@@ -2775,17 +2868,17 @@ public class UsingProcessing extends PApplet{
             }
         }
     }
-    
+
     public void rainbowStripe(int startX, int startY, int direction, int frameDelay)
     { //-1 makes it come in from the left. 1 from the right Well, theoretically would be, if that's done. So TODO.
         strokeWeight(10);
         stroke(155,68,240);
         //line(0, startY, startX+i, startY);
 
-        
+
     }
 
-    
+
     public void endScene() {
         background(0);
         textSize(200);
