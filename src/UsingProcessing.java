@@ -134,8 +134,8 @@ public class UsingProcessing extends PApplet{
             case "LOADINGSTART":
                 if (framesIntoScene == 1) {
                     //Load picture
-                    img = loadImage("loadingScreenTemp.jpg");
-                    image(img, 0, 0);
+                    img = loadImage("MonocerosLogo.png");
+                    image(img, width*1/4, height*1/4);
                 }
                 if (framesIntoScene == 2) {
                     //Load models
@@ -277,19 +277,19 @@ public class UsingProcessing extends PApplet{
             case "ICESHELFBREAK":
                 iceShelfBreak();
                 if (millis() - startTimer > 8088){
-                    state = "SHADER";
+                    state = "WORRIEDHORSE";
                     resetVars();
                 }
                 break;
             case "WORRIEDHORSE":
-                //worriedHorse();
+                worriedHorse();
                 if (millis() - startTimer > 10088){
-                    state = "SHADER";
+                    state = "NARWHALSAVE";
                     resetVars();
                 }
                 break;
             case "NARWHALSAVE":
-                //narwhalSave();
+                narwhalSave();
                 if (millis() - startTimer > 10088){
                     state = "SHADER";
                     resetVars();
@@ -405,7 +405,7 @@ public class UsingProcessing extends PApplet{
                 resetVars();
                 break;
             case 'h':
-                 if(!batch1Loaded)
+                if(!batch1Loaded)
                     loadBatch1();
                 if(!batch2Loaded)
                     loadBatch2();
@@ -413,6 +413,17 @@ public class UsingProcessing extends PApplet{
                     loadBatch3();
                 state="HORSENARWHALMEETING";
                 player.cue(72720);
+                resetVars();
+                break;
+            case 'i':
+                if(!batch1Loaded)
+                    loadBatch1();
+                if(!batch2Loaded)
+                    loadBatch2();
+                if(!batch3Loaded)
+                    loadBatch3();
+                state="WORRIEDHORSE";
+                player.cue(88080);
                 resetVars();
                 break;
             case 'r':
@@ -2032,8 +2043,10 @@ public class UsingProcessing extends PApplet{
         rotateZ(radians(180));
         if(framesIntoScene<50)
             translate(0, 0, 0);
-        else
+        else if(framesIntoScene < 90 )
             translate(0, 0, framesIntoScene-49);
+        else
+            translate(0, (sin(framesIntoScene) * 5), framesIntoScene-49);
         //horseShape.setFill(color(205,133,63));
         //horseShape.setFill(color(255));
         scale(48);
@@ -2047,14 +2060,210 @@ public class UsingProcessing extends PApplet{
         rotateY(radians(-90));
         rotateX(radians(180));
         //rotateZ(radians(180));
-        if(framesIntoScene < 30)
+        translate(0, 0, 390);
+        //rotateX(radians(-(sin(framesIntoScene))));
+        /*if(framesIntoScene < 30)
             translate(0, framesIntoScene, (framesIntoScene * 5)); //-(sin((framesIntoScene + 90)/5) * 5)
         else if(framesIntoScene >= 30 && framesIntoScene < 60 )
             translate(0, -framesIntoScene+60, framesIntoScene + 120);
         else if(framesIntoScene >= 60)
-            translate(0, translateY, (framesIntoScene) + 150);
+            translate(0, 0, (framesIntoScene) + 150);*/
         
         //narwhalShape.setFill(color(50 + decay, 50, 150));
+        scale(64);
+        shape(narwhalRainbowShape);
+        
+        popMatrix();
+        //pushMatrix();
+    }
+    
+    public void worriedHorse()
+    {
+        background(0);
+        pushMatrix();
+        
+        //Light is supposed to be mostly from above, with a fair amount of scattered light
+        lightFromAbove();
+        
+        translate(width / 2, (float)(height*0.5), -50);
+        //rotateY(radians(90));
+        rotateX(radians(-10));
+        rotateZ(radians(180));
+        scale(32);
+        shape(backgroundSnowWaterShape);
+        popMatrix();
+        pushMatrix();
+        
+        translate(width / 2 - 242 + 49, (float)(height*0.5), +50);
+        rotateX(radians(-10));
+        rotateZ(radians(180));
+        scale(32);
+        shape(iceShelfShape);
+        
+        popMatrix();
+        pushMatrix();
+        
+        //Begin Horse
+        translate(width / 2, height / 2 - 200, 200);
+        if(framesIntoScene<=50)
+        { //Turn clockwise, hopping, moving slightly toward left of screen
+            translate(framesIntoScene, (sin(framesIntoScene) * 10), 0);
+            rotateY(radians(-90 - framesIntoScene));
+        } else if(framesIntoScene<=70)
+        { //Continue clockwise, hopping, now moving toward viewer
+            translate(50, (sin(framesIntoScene) * 10), framesIntoScene-50);
+            rotateY(radians(-90 - framesIntoScene));
+        } else if(framesIntoScene<=90)
+        { //Continuing clockwise, hopping, moving right? Maybe?
+            translate(50-framesIntoScene+70, (sin(framesIntoScene) * 10), 20);
+            rotateY(radians(-90 - framesIntoScene));
+        } else if(framesIntoScene<=130)
+        { //Stopping with butt to camera, hopping left
+            translate(30 -framesIntoScene +90 , (sin(framesIntoScene) * 10), 20);
+            rotateY(radians(-180));
+        } else if(framesIntoScene<=240)
+        { //Still hopping left, now rotating clockwise again
+            translate(-10 -framesIntoScene +130, (sin(framesIntoScene) * 10), 20);
+            rotateY(radians(-180 - framesIntoScene + 130));
+        } else
+        { //Stop hopping, now facing sort of toward camera.
+            translate(-10 -240 +130, 10, 20);
+            rotateY(radians(-180 - 240 + 130));
+        }
+        //rotateX(radians(framesIntoScene));
+        //if(framesIntoScene>=20 && framesIntoScene < 55)
+        //    rotateY(radians(90-framesIntoScene+19));
+        //if(framesIntoScene>= 55)
+        //    rotateY(radians(90-35));
+        rotateZ(radians(180));
+        translate(0, 0, 242-49);
+        //horseShape.setFill(color(205,133,63));
+        //horseShape.setFill(color(255));
+        scale(48);
+        shape(horseRainbowShape);
+        
+        popMatrix();
+        pushMatrix();
+        
+        //beginning of Narwhal
+        translate(0, height * 6 / 8 );
+        rotateY(radians(-90));
+        rotateX(radians(180));
+        //rotateZ(radians(framesIntoScene));
+        if(framesIntoScene < 50)
+        { //Zooming to the right
+            translate(0, 0, (framesIntoScene * 25) + 390); //-(sin((framesIntoScene + 90)/5) * 5)
+            rotateX(radians(-(sin((framesIntoScene + 166)/5) * 5)));
+        }
+        else if(framesIntoScene < 86 )
+        { //turning around
+            translate(0, 0, 50 * 25 + 120 + 390);
+            rotateY(radians((framesIntoScene-50)*5));
+            rotateX(radians(-(sin((framesIntoScene + 166)/5) * 5)));
+        }
+        else if(framesIntoScene <= 150)
+        { //zooming to the left
+            translate(0, 0, -((framesIntoScene-86) * 25) + 50 * 25 + 120 + 390);
+            rotateY(radians(-180));
+            rotateX(radians(-(sin((framesIntoScene + 166)/5) * 5)));
+        }
+        else if(framesIntoScene <= 186)
+        { //turning around
+            translate(0, 0, -((150-86) * 25) + 50 * 25 + 120 + 390);
+            rotateY(radians((framesIntoScene-150)*5-180));
+            rotateX(radians(-(sin((framesIntoScene + 166)/5) * 5)));
+        }
+        else
+        { //wiggling
+            translate(0, 0, -((150-86) * 25) + 50 * 25 + 120 + 390);
+            rotateY(radians((186-150)*5-180));
+            rotateX(radians(-(sin((framesIntoScene + 166)/5) * 5)));
+        }
+        
+        
+        //narwhalShape.setFill(color(50 + decay, 50, 150));
+        scale(64);
+        shape(narwhalRainbowShape);
+        
+        popMatrix();
+        //pushMatrix();
+    }
+    
+    public void narwhalSave()
+    {
+        background(0);
+        pushMatrix();
+        
+        //Light is supposed to be mostly from above, with a fair amount of scattered light
+        lightFromAbove();
+        
+        translate(width / 2, (float)(height*0.5), -50);
+        rotateX(radians(-10));
+        rotateZ(radians(180));
+        scale(32);
+        shape(backgroundSnowWaterShape);
+        popMatrix();
+        pushMatrix();
+        
+        translate(width / 2 - 242 + 49, (float)(height*0.5), +50);
+        rotateX(radians(-10));
+        rotateZ(radians(180));
+        scale(32);
+        shape(iceShelfShape);
+        
+        popMatrix();
+        pushMatrix();
+        
+        //Begin Horse
+        translate(width / 2, height / 2 - 200, 200);
+        if(framesIntoScene<=500)
+        { //Stop hopping, now facing sort of toward camera.
+            translate(-120, 10, 20);
+            rotateY(radians(-290));
+        }
+
+        rotateZ(radians(180));
+        translate(0, 0, 193);
+        scale(48);
+        shape(horseRainbowShape);
+        
+        popMatrix();
+        pushMatrix();
+        
+        //beginning of Narwhal
+        if ( framesIntoScene <= 60)
+        {
+            //First bubble
+            fill(255);
+            ellipse(200, 500, 40, 40); //Draw an ellipse, but change the z dimension?
+            if (framesIntoScene > 5)
+            {}    //Second bubble
+            if (framesIntoScene > 10)
+            {}    //Third bubble
+            if (framesIntoScene > 15)
+            {}    //Fourth (bigger) bubble
+            if (framesIntoScene > 20)
+            {}    //lightbulb
+            popMatrix();
+            pushMatrix();
+            translate(0, height * 6 / 8);
+            rotateY(radians(-90));
+            rotateX(radians(180));
+            translate(0, 0, 160);
+        } else if (framesIntoScene <= 80) {
+            translate(0, height * 6 / 8);
+            rotateY(radians(-90));
+            rotateX(radians(180));
+            translate(0, 0, 160);
+            rotateX(radians(-framesIntoScene+60));
+        } else if (framesIntoScene <= 500) {
+            translate((framesIntoScene-80)*5, height * 6 / 8 - (framesIntoScene-80)*5);
+            rotateY(radians(-90));
+            rotateX(radians(180));
+            translate(0, 0, 160);
+            rotateX(radians(-20));
+        }
+        
         scale(64);
         shape(narwhalRainbowShape);
         
