@@ -73,6 +73,8 @@ public class UsingProcessing extends PApplet{
     PShape icebergShape;
     PShape poopShape;
     PShape treeShape;
+    PShape lightBulbShape;
+    PShape heartShape;
     
     //TODO: Remove all the temporary showing frames-into-scenes text (or other debug text)
     
@@ -290,12 +292,12 @@ public class UsingProcessing extends PApplet{
             case "NARWHALSAVE":
                 narwhalSave();
                 if (millis() - startTimer > 10088){
-                    state = "SHADER";
+                    state = "LOVEINAIR";
                     resetVars();
                 }
                 break;
             case "LOVEINAIR":
-                //loveInAir();
+                loveInAir();
                 if (millis() - startTimer > 10088){
                     state = "SHADER";
                     resetVars();
@@ -436,6 +438,17 @@ public class UsingProcessing extends PApplet{
                 player.cue(98160);
                 resetVars();
                 break;
+            case 'k':
+                if(!batch1Loaded)
+                    loadBatch1();
+                if(!batch2Loaded)
+                    loadBatch2();
+                if(!batch3Loaded)
+                    loadBatch3();
+                state="LOVEINAIR";
+                player.cue(108240);
+                resetVars();
+                break;
             case 'r':
                 if(!batch1Loaded)
                     loadBatch1();
@@ -556,6 +569,8 @@ public class UsingProcessing extends PApplet{
     }
     
     public void loadBatch3() {
+        lightBulbShape = loadShape("lightbulb.obj");
+        heartShape = loadShape("heart.obj");
         babyUnicornShape = loadShape("baby_unicorn_final.obj");
         //backgroundLandSnowShape = loadShape("background_grass_snow.obj");
         poopShape = loadShape("poop.obj");
@@ -2302,8 +2317,11 @@ public class UsingProcessing extends PApplet{
         { //Stop hopping, now facing sort of toward camera.
             translate(-120, 10, 20);
             rotateY(radians(-290));
-        } else {
+        } else if(framesIntoScene<=140) {
             translate(-120 + framesIntoScene - 135, 10, 20);
+            rotateY(radians(-290));
+        } else {
+            translate(-120 + framesIntoScene - 135, 10 + (sin(framesIntoScene) * 10), 20);
             rotateY(radians(-290));
         }
 
@@ -2349,6 +2367,14 @@ public class UsingProcessing extends PApplet{
             if (framesIntoScene > 20){
                 translate(500,450,300);
                 ellipse(0, 0, 150, 150);
+                //TODO: Add some lines to show the light bulb being on.
+                //Could turn the lightbulb on, but don't know if it looks any better:
+                //if (framesIntoScene > 25)
+                //    pointLight(255, 255, 255, 500, 450, 300);
+                rotateY(radians(-90+(framesIntoScene-20)*2));
+                rotateX(radians(180+(framesIntoScene-20)/8));
+                scale(32);
+                shape(lightBulbShape);
                 popMatrix();
                 pushMatrix();
             }    //lightbulb
@@ -2389,6 +2415,134 @@ public class UsingProcessing extends PApplet{
         
         popMatrix();
         //pushMatrix();
+    }
+    
+    public void loveInAir()
+    {
+        background(0);
+        pushMatrix();
+        
+        //Light is supposed to be mostly from above, with a fair amount of scattered light
+        lightFromAbove();
+        
+        translate(width / 2, (float)(height*0.5), -50);
+        rotateX(radians(-10));
+        rotateZ(radians(180));
+        scale(32);
+        shape(backgroundSnowWaterShape);
+        popMatrix();
+        pushMatrix();
+        if (framesIntoScene<= 500)
+        {
+            translate(width / 2 - 26, (float)(height*0.5), +50);
+            rotateX(radians(-10));
+            rotateZ(radians(180));           
+        }
+        scale(32);
+        shape(iceShelfShape);
+        
+        popMatrix();
+        pushMatrix();
+        
+        //Begin Horse
+        translate(width / 2, height / 2 - 200, 200);
+        if(framesIntoScene<=95)
+        { 
+            translate(47 + framesIntoScene*6, 10 + (sin(framesIntoScene) * 10), 20);
+            rotateY(radians(-290 + framesIntoScene * 2));
+        } else
+        {
+            translate(47 + 95*6, 10, 20);
+            rotateY(radians(-290 + 95*2));
+        }
+        
+        rotateZ(radians(180));
+        translate(0, 0, 193);
+        scale(48);
+        shape(horseRainbowShape);
+        
+        popMatrix();
+        pushMatrix();
+        
+        //beginning of Narwhal
+        if(framesIntoScene <= 50 )
+        {
+            translate(482-(framesIntoScene*9)/2, height * 6 / 8 - 175+(framesIntoScene*5)/2); //482-framesIntoScene*9, height * 6 / 8 - 175 + framesIntoScene*5);
+            //translate((framesIntoScene-80)*9, height * 6 / 8 - (framesIntoScene-80)*5);
+            rotateY(radians(-90));
+            rotateX(radians(180));
+            translate(0, 0, 160);
+            rotateX(radians(-20));
+        }
+        else if(framesIntoScene < 500)  {
+            translate(257, height * 6 / 8 - 50);
+            rotateY(radians(-90));
+            rotateX(radians(180));
+            translate(0, 0, 160);
+            rotateX(radians(-20));
+        }
+        
+        scale(64);
+        shape(narwhalRainbowShape);
+        
+        popMatrix();
+        pushMatrix();
+        
+        //Begin thought bubbles and heart shape section
+        if( framesIntoScene > 95 && framesIntoScene < 500)
+        {
+            //First bubble
+            fill(255);
+            stroke(255);
+            if (framesIntoScene > 95 ) {
+                translate(700,560,300); //257, -50
+                ellipse(0, 0, 10, 10);
+                translate(600,-200, 0);
+                ellipse(0, 0, 10, 10);
+                popMatrix();
+                pushMatrix();
+            }
+            if (framesIntoScene > 100){
+                translate(750,525,300);
+                ellipse(0, 0, 20, 20);
+                translate(450,-175, 0);
+                ellipse(0, 0, 20, 20);
+                popMatrix();
+                pushMatrix();
+            }    //Second bubble
+            if (framesIntoScene > 105){
+                translate(690,495,300);
+                ellipse(0, 0, 30, 30);
+                translate(400,-125, 0);
+                ellipse(0, 0, 30, 30);
+                popMatrix();
+                pushMatrix();
+            }    //Third bubble
+            if (framesIntoScene > 110){
+                translate(720,455,300);
+                ellipse(0, 0, 40, 40);
+                translate(200,-75, 0);
+                ellipse(0, 0, 40, 40);
+                popMatrix();
+                pushMatrix();
+            }    //Fourth (bigger) bubble
+            if (framesIntoScene > 115){
+                translate(800,385,300);
+                ellipse(0, 0, 150, 150);
+                //TODO: Add some lines to show the light bulb being on.
+                //Could turn the lightbulb on, but don't know if it looks any better:
+                //if (framesIntoScene > 25)
+                //    pointLight(255, 255, 255, 500, 450, 300);
+                rotateY(radians(-90+(framesIntoScene-20)*2));
+                rotateX(radians(180+(framesIntoScene-20)/8));
+                scale(16);
+                shape(heartShape);
+                popMatrix();
+                pushMatrix();
+            }    //heart
+        }
+        
+        popMatrix();
     }
     
     public void sexyTimes()
