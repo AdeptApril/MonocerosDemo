@@ -336,35 +336,35 @@ public class UsingProcessing extends PApplet{
                 break;
             case "CREDITS1":
                 credits1();
-                if (millis() - startTimer > 13200){
+                if (millis() - startTimer > 13000){
                     state = "CREDITS2";
                     resetVars();
                 }
                 break;
             case "CREDITS2":
                 credits2();
-                if (millis() - startTimer > 13200){
+                if (millis() - startTimer > 3840){
                     state = "CREDITS3";
                     resetVars();
                 }
                 break;
             case "CREDITS3":
                 credits3();
-                if (millis() - startTimer > 13200){
+                if (millis() - startTimer > 3840){
                     state = "CREDITS4";
                     resetVars();
                 }
                 break;
             case "CREDITS4":
                 credits4();
-                if (millis() - startTimer > 13200){
+                if (millis() - startTimer > 3840){
                     state = "CREDITS5";
                     resetVars();
                 }
                 break;
             case "CREDITS5":
                 credits5();
-                if (millis() - startTimer > 13200){
+                if (millis() - startTimer > 3840){
                     state = "END";
                     resetVars();
                 }
@@ -2716,7 +2716,7 @@ public class UsingProcessing extends PApplet{
         if(framesIntoScene == 1)
             babyUnicornShape = loadShape("baby_unicorn_final.obj"); //TODO: remove this and load in the proper place
 
-        PFont font = createFont("Kingthings_Calligraphica_2.ttf", 52);
+        font = createFont("Kingthings_Calligraphica_2.ttf", 52); //TODO: remove and load in a better place
         img = loadImage("MonocerosLogoWhite.png");
 
 
@@ -2825,20 +2825,20 @@ public class UsingProcessing extends PApplet{
         textAlign(CENTER);
         fill(242,100,252);
         textFont(font,250);
-        text("\"Love Story\"",width/2,(height/2)-140);
+        text("Coding",width/2,(height/2)-140);
         
         fill(255,255,255);
         textFont(font,100);
         text("by",width/2,(height/2));
         
         textFont(font,200);
-        text("Monoceros",width/2,(height/2)+220);
+        text("AdeptApril",width/2,(height/2)+220);
         
         textFont(font,100);
-        text("for",width/2,(height/2)+340);
+        text("and",width/2,(height/2)+340);
         
         textFont(font,150);
-        text("Evoke 2017",width/2,(height/2)+510);
+        text("Dusty",width/2,(height/2)+510);
         
         popMatrix();
         pushMatrix();
@@ -2868,20 +2868,14 @@ public class UsingProcessing extends PApplet{
         textAlign(CENTER);
         fill(242,100,252);
         textFont(font,250);
-        text("\"Love Story\"",width/2,(height/2)-140);
+        text("3D Models",width/2,(height/2)-140);
         
         fill(255,255,255);
         textFont(font,100);
         text("by",width/2,(height/2));
         
         textFont(font,200);
-        text("Monoceros",width/2,(height/2)+220);
-        
-        textFont(font,100);
-        text("for",width/2,(height/2)+340);
-        
-        textFont(font,150);
-        text("Evoke 2017",width/2,(height/2)+510);
+        text("Dusty",width/2,(height/2)+220);
         
         popMatrix();
         pushMatrix();
@@ -2911,20 +2905,14 @@ public class UsingProcessing extends PApplet{
         textAlign(CENTER);
         fill(242,100,252);
         textFont(font,250);
-        text("\"Love Story\"",width/2,(height/2)-140);
+        text("Music",width/2,(height/2)-140);
         
         fill(255,255,255);
         textFont(font,100);
         text("by",width/2,(height/2));
         
         textFont(font,200);
-        text("Monoceros",width/2,(height/2)+220);
-        
-        textFont(font,100);
-        text("for",width/2,(height/2)+340);
-        
-        textFont(font,150);
-        text("Evoke 2017",width/2,(height/2)+510);
+        text("AdeptApril",width/2,(height/2)+220);
         
         popMatrix();
         pushMatrix();
@@ -2954,7 +2942,7 @@ public class UsingProcessing extends PApplet{
         textAlign(CENTER);
         fill(242,100,252);
         textFont(font,250);
-        text("\"Love Story\"",width/2,(height/2)-140);
+        text("Monoceros",width/2,(height/2)-140);
         
         fill(255,255,255);
         textFont(font,100);
