@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_monocerosdemo" default="compile.module.monocerosdemo">
+  <dirname property="module.monocerosdemo.basedir" file="${ant.file.module_monocerosdemo}"/>
+  
+  <property name="module.jdk.home.monocerosdemo" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.monocerosdemo" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.monocerosdemo" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.monocerosdemo" value="-encoding UTF-8 -source 8 -target 8 ${compiler.args}"/>
+  
+  <property name="monocerosdemo.output.dir" value="${module.monocerosdemo.basedir}/out/production/MonocerosDemo"/>
+  <property name="monocerosdemo.testoutput.dir" value="${module.monocerosdemo.basedir}/out/test/MonocerosDemo"/>
+  
+  <path id="monocerosdemo.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="monocerosdemo.module.production.classpath">
+    <path refid="${module.jdk.classpath.monocerosdemo}"/>
+    <path refid="library.lib.classpath"/>
+  </path>
+  
+  <path id="monocerosdemo.runtime.production.module.classpath">
+    <pathelement location="${monocerosdemo.output.dir}"/>
+    <path refid="library.lib.classpath"/>
+  </path>
+  
+  <path id="monocerosdemo.module.classpath">
+    <path refid="${module.jdk.classpath.monocerosdemo}"/>
+    <pathelement location="${monocerosdemo.output.dir}"/>
+    <path refid="library.lib.classpath"/>
+  </path>
+  
+  <path id="monocerosdemo.runtime.module.classpath">
+    <pathelement location="${monocerosdemo.testoutput.dir}"/>
+    <pathelement location="${monocerosdemo.output.dir}"/>
+    <path refid="library.lib.classpath"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.monocerosdemo">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.monocerosdemo">
+    <patternset refid="excluded.from.module.monocerosdemo"/>
+  </patternset>
+  
+  <path id="monocerosdemo.module.sourcepath">
+    <dirset dir="${module.monocerosdemo.basedir}">
+      <include name="src"/>
+      <include name="data"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.monocerosdemo" depends="compile.module.monocerosdemo.production,compile.module.monocerosdemo.tests" description="Compile module MonocerosDemo"/>
+  
+  <target name="compile.module.monocerosdemo.production" depends="register.custom.compilers" description="Compile module MonocerosDemo; production classes">
+    <mkdir dir="${monocerosdemo.output.dir}"/>
+    <javac2 destdir="${monocerosdemo.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.monocerosdemo}/javac">
+      <compilerarg line="${compiler.args.monocerosdemo}"/>
+      <bootclasspath refid="monocerosdemo.module.bootclasspath"/>
+      <classpath refid="monocerosdemo.module.production.classpath"/>
+      <src refid="monocerosdemo.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.monocerosdemo"/>
+    </javac2>
+    
+    <copy todir="${monocerosdemo.output.dir}">
+      <fileset dir="${module.monocerosdemo.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+      <fileset dir="${module.monocerosdemo.basedir}/data">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.monocerosdemo.tests" depends="register.custom.compilers,compile.module.monocerosdemo.production" description="compile module MonocerosDemo; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.monocerosdemo" description="cleanup module">
+    <delete dir="${monocerosdemo.output.dir}"/>
+    <delete dir="${monocerosdemo.testoutput.dir}"/>
+  </target>
+</project>

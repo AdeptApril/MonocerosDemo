@@ -6,6 +6,8 @@
 
 import processing.core.*;	
 import ddf.minim.*;
+
+import java.util.ArrayList;
 import java.util.Random;
 
 //TODO: Try/catch around object loading. the program should fail anyway, so it doesn't seem hugely important, but good style and all
@@ -27,7 +29,7 @@ public class UsingProcessing extends PApplet{
     int y = 80;
     int secondLine = 88;
     int thirdLine = 96;
-    String state = "CREDITS5"; //TODO: Change back to LOADINGSTART
+    String state = "LOADINGSTART"; //TODO: Change back to LOADINGSTART
     int textX = 400;
     int textY = 200;
     int tempNum = 0;
@@ -49,6 +51,9 @@ public class UsingProcessing extends PApplet{
     int indigoTop=150;
     int purpleTop=160;
     int purpleBottom=170;
+    boolean goingUp = true;
+    int frames = 0;
+    ArrayList<ObjPosition> unicornPoos = new ArrayList<>();
 
     int horseCount = 1;
     int narwhalCount = 1;
@@ -109,7 +114,7 @@ public class UsingProcessing extends PApplet{
     
     
     public void setup() {
-        
+        dataPath("data");
         frameRate(30);
         //Perhaps camera could be moved around, but this is assuming that the seen scene is screen sized
         camera(width / 2, height / 2, (height/2) / tan((float) (PI*30.0 / 180.0)), width / 2, height / 2, 0, 0, 1, 0);
@@ -2642,6 +2647,7 @@ public class UsingProcessing extends PApplet{
     
     public void babyUnicorn()
     {
+        int timeIntoScene = millis() - startTimer;
         background(0);
         pushMatrix();
         
@@ -2655,12 +2661,9 @@ public class UsingProcessing extends PApplet{
         shape(backgroundSnowWaterShape);
         popMatrix();
         pushMatrix();
-        if (framesIntoScene<= 500)
-        {
-            translate(width / 2 - 26, (float)(height*0.5), +50);
-            rotateX(radians(-10));
-            rotateZ(radians(180));
-        }
+        translate(width / 2 - 26, (float)(height*0.5), +50);
+        rotateX(radians(-10));
+        rotateZ(radians(180));
         scale(32);
         shape(iceShelfShape);
 
@@ -2669,12 +2672,8 @@ public class UsingProcessing extends PApplet{
 
         //Begin Horse
         translate(width / 2, height / 2 - 200, 200);
-        if(framesIntoScene<=500)
-        {
-            translate(47 + 95*6, 10, 20);
-            rotateY(radians(-290 + 95*2));
-        }
-
+        translate(47 + 95*6, 10, 20);
+        rotateY(radians(-290 + 95*2));
         rotateZ(radians(180));
         translate(0, 0, 193);
         scale(48);
@@ -2684,14 +2683,11 @@ public class UsingProcessing extends PApplet{
         pushMatrix();
 
         //beginning of Narwhal
-        if(framesIntoScene < 500)  {
-            translate(257, height * 6 / 8 - 50);
-            rotateY(radians(-90));
-            rotateX(radians(180));
-            translate(0, 0, 160);
-            rotateX(radians(-20));
-        }
-
+        translate(257, height * 6 / 8 - 50);
+        rotateY(radians(-90));
+        rotateX(radians(180));
+        translate(0, 0, 160);
+        rotateX(radians(-20));
         scale(64);
         shape(narwhalRainbowShape);
 
@@ -2699,11 +2695,16 @@ public class UsingProcessing extends PApplet{
         pushMatrix();
 
         //Begin baby Unicorn
-        translate(width/2, height /2 -50 );
-        rotateY(radians(90));
-        rotateX(radians(180));
-        scale(48);
-        shape(babyUnicornShape);
+        if(timeIntoScene < 1680 ) {
+            translate(width / 2, height / 2 - 50);
+            rotateY(radians(90));
+            rotateX(radians(180));
+            scale(48);
+            shape(babyUnicornShape);
+        } else if (goingUp)
+        {
+
+        }
 
         popMatrix();
     }
