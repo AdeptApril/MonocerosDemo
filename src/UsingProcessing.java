@@ -29,7 +29,7 @@ public class UsingProcessing extends PApplet{
     int y = 80;
     int secondLine = 88;
     int thirdLine = 96;
-    String state = "LOADINGSTART"; //TODO: Change back to LOADINGSTART
+    String state = "CREDITS2"; //TODO: Change back to LOADINGSTART
     int textX = 400;
     int textY = 200;
     int tempNum = 0;
@@ -51,9 +51,6 @@ public class UsingProcessing extends PApplet{
     int indigoTop=150;
     int purpleTop=160;
     int purpleBottom=170;
-    boolean goingUp = true;
-    int frames = 0;
-    ArrayList<ObjPosition> unicornPoos = new ArrayList<>();
 
     int horseCount = 1;
     int narwhalCount = 1;
@@ -62,6 +59,14 @@ public class UsingProcessing extends PApplet{
     int tempy = 0;
     int tempz = 0;
     
+    int credit2UniPosX = 1920;
+    int credit2UniPosY = 0;
+    int credit2UniPosZ = 0;
+    int credit2IcePosX = 1920;
+    int credit2IcePosY = 20;
+    int credit2IcePosZ = 0;
+    int credit2Flip = 1;
+
     boolean batch1Loaded = false;
     boolean batch2Loaded = false;
     boolean batch3Loaded = false;
@@ -348,21 +353,21 @@ public class UsingProcessing extends PApplet{
                 break;
             case "CREDITS2":
                 credits2();
-                if (millis() - startTimer > 3840){
-                    state = "CREDITS3";
+                if (millis() - startTimer > 7680){
+                    state = "END"; //TODO: Change to CREDITS3
                     resetVars();
                 }
                 break;
             case "CREDITS3":
                 credits3();
-                if (millis() - startTimer > 3840){
+                if (millis() - startTimer > 7680){
                     state = "CREDITS4";
                     resetVars();
                 }
                 break;
             case "CREDITS4":
                 credits4();
-                if (millis() - startTimer > 3840){
+                if (millis() - startTimer > 7680){
                     state = "CREDITS5";
                     resetVars();
                 }
@@ -2813,6 +2818,8 @@ public class UsingProcessing extends PApplet{
         pushMatrix();
         
         if(framesIntoScene == 1){
+            babyUnicornShape = loadShape("baby_unicorn_final.obj"); //TODO: remove this and load in the proper place
+            icebergShape = loadShape("iceberg.obj");
             img = loadImage("MonocerosLogoWhite.png"); //TODO: remove and load in a better place
             font = createFont("Kingthings_Calligraphica_2.ttf", 52); //TODO: remove and load in a better place
         }
@@ -2843,6 +2850,38 @@ public class UsingProcessing extends PApplet{
         textFont(font,150);
         text("Dusty",width/2,(height/2)+510);
         
+        popMatrix();
+        pushMatrix();
+
+//      Start Positions:
+//      credit2UniPosX = 1920;
+//      credit2UniPosY = 0;
+//      credit2UniPosZ = 0;
+//      credit2IcePosX = 1920;
+//      credit2IcePosY = 20;
+//      credit2IcePosZ = 0;
+        if ((credit2UniPosX<=width/5)&&(credit2Flip>0)){
+            credit2Flip *= -1;
+
+        }
+
+        translate((credit2UniPosX-4)*credit2Flip, (credit2UniPosY-4)*credit2Flip);
+        rotateY(radians(90));
+        rotateX(radians(200));
+
+        scale(60);
+        shape(babyUnicornShape);
+
+        popMatrix();
+        pushMatrix();
+
+        translate((credit2IcePosX-4)*credit2Flip, (credit2IcePosY-4)*credit2Flip);
+        rotateY(radians(90));
+        rotateX(radians(200));
+
+        scale(60);
+        shape(icebergShape);
+
         popMatrix();
         pushMatrix();
 
@@ -2953,21 +2992,23 @@ public class UsingProcessing extends PApplet{
         textAlign(CENTER);
         fill(242,100,252);
         textFont(font,200);
-        text("Monoceros",width/2,(height/2)-400);
+        text("Monoceros",width/2,(height/2)-300);
         
         fill(255,255,255);
         textFont(font,60);
-        text("[muh-nos-er-uh s]",width/2,(height/2)-240);
+        text("[muh-nos-er-uh s]",width/2,(height/2)-190);
         
+        textAlign(LEFT);
         textFont(font,60);
-        text("via Old French from Latin: unicorn, from Greek monokeros",width/2,(height/2)-40);
-        text("with a single horn, from mono- + keras horn",width/2,(height/2)+200);
-        text("a faint constellation on the celestial equator crossed by the Milky Way",width/2,(height/2)+240);
-        text(" and lying close to Orion and Canis Major",width/2,(height/2)+380);
+        text("via Old French from Latin: unicorn, from Greek monokeros",width/6,(height/2)-40);
+        text("with a single horn, from mono- + keras horn",width/6,(height/2)+40);
+        text("a faint constellation on the celestial equator crossed by the Milky Way",width/6,(height/2)+200);
+        text("and lying close to Orion and Canis Major",width/6,(height/2)+280);
         
+        textAlign(CENTER);
         fill(128,250,252);
-        textFont(font,60);
-        text("AdeptApril and Dusty are looking for jobs in Germany! Hire us!",width/2,(height/2)+510);
+        textFont(font,80);
+        text("AdeptApril and Dusty are looking for jobs in Germany! Hire us!",width/2,(height/2)+490);
         
         popMatrix();
         pushMatrix();
