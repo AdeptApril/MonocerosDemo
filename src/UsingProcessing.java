@@ -27,7 +27,7 @@ public class UsingProcessing extends PApplet{
     int y = 80;
     int secondLine = 88;
     int thirdLine = 96;
-    String state = "LOADINGSTART";
+    String state = "CREDITS1"; //TODO: Change back to LOADINGSTART
     int textX = 400;
     int textY = 200;
     int tempNum = 0;
@@ -39,6 +39,7 @@ public class UsingProcessing extends PApplet{
     int textFade = 0;
     int faderSwitch = 1;
     int textSwitch = 0;
+    PFont font;
     int rainbowRate = 0;
     int redTop=100;
     int orangeTop=110;
@@ -329,13 +330,41 @@ public class UsingProcessing extends PApplet{
             case "THEEND":
                 endScene();
                 if (millis() - startTimer > 3840){
-                    state = "CREDITS";
+                    state = "CREDITS1";
                     resetVars();
                 }
                 break;
-            case "CREDITS":
-                credits();
-                if (millis() - startTimer > 19200){
+            case "CREDITS1":
+                credits1();
+                if (millis() - startTimer > 13200){
+                    state = "CREDITS2";
+                    resetVars();
+                }
+                break;
+            case "CREDITS2":
+                credits2();
+                if (millis() - startTimer > 13200){
+                    state = "CREDITS3";
+                    resetVars();
+                }
+                break;
+            case "CREDITS3":
+                credits3();
+                if (millis() - startTimer > 13200){
+                    state = "CREDITS4";
+                    resetVars();
+                }
+                break;
+            case "CREDITS4":
+                credits4();
+                if (millis() - startTimer > 13200){
+                    state = "CREDITS5";
+                    resetVars();
+                }
+                break;
+            case "CREDITS5":
+                credits5();
+                if (millis() - startTimer > 13200){
                     state = "END";
                     resetVars();
                 }
@@ -501,7 +530,7 @@ public class UsingProcessing extends PApplet{
         background(0);
         pushMatrix();
         
-        PFont font = createFont("Kingthings_Calligraphica_2.ttf", 52);
+        font = createFont("Kingthings_Calligraphica_2.ttf", 52);
         img = loadImage("MonocerosLogoWhite.png");
         
         //scale(1/2);
@@ -2679,7 +2708,7 @@ public class UsingProcessing extends PApplet{
         popMatrix();
     }
     
-    public void credits()
+    public void credits1()
     {
         background(0);
         pushMatrix();
@@ -2697,18 +2726,41 @@ public class UsingProcessing extends PApplet{
 
         popMatrix();
         pushMatrix();
+        
+        textAlign(CENTER);
+        fill(242,100,252);
+        textFont(font,250);
+        text("\"Love Story\"",width/2,(height/2)-140);
+        
+        fill(255,255,255);
+        textFont(font,100);
+        text("by",width/2,(height/2));
+        
+        textFont(font,200);
+        text("Monoceros",width/2,(height/2)+220);
+        
+        textFont(font,100);
+        text("for",width/2,(height/2)+340);
+        
+        textFont(font,150);
+        text("Evoke 2017",width/2,(height/2)+510);
+        
+        popMatrix();
+        pushMatrix();
 
         lightFromAbove();
         pointLight(200, 200, 200, width / 2, height / 2, 200);
         pointLight(200, 200, 200, width / 2, height / 4, 200);
 
-        translate(0+(framesIntoScene*20), (height*3)/4);
-        rotateY(radians(270));
-        rotateX(radians(180));
+        if (framesIntoScene>30) {
+            translate(0+((framesIntoScene-35)*20), (height*3)/4);
+            rotateY(radians(270));
+            rotateX(radians(180));
 
-        scale(75);
+            scale(75);
         //shape(coneOnCube);
-        shape(babyUnicornShape);
+            shape(babyUnicornShape);
+        }
 
         popMatrix();
         pushMatrix();
@@ -2716,7 +2768,7 @@ public class UsingProcessing extends PApplet{
         rainbowRate = 1;
         colorMode(RGB, 400);
 
-        if(framesIntoScene>10){
+        if(framesIntoScene>40){
             redTop -= (rainbowRate*7);  //initial 100
             orangeTop -= (rainbowRate*5); //initial 110
             yellowTop -= (rainbowRate*3); //initial 120
@@ -2727,82 +2779,202 @@ public class UsingProcessing extends PApplet{
             purpleBottom += (rainbowRate*7); //initial 170
             //red
             fill(255,0,0);
-            triangle(0, (height/2)+redTop, 0+(framesIntoScene*20)-110, (height/2)+114, 0, (height/2)+orangeTop);
+            triangle(0, (height/2)+redTop, 0+((framesIntoScene-35)*20)-110, (height/2)+114, 0, (height/2)+orangeTop);
             //orange
             fill(255,127,0);
-            triangle(0, (height/2)+orangeTop, 0+(framesIntoScene*20)-110, (height/2)+116, 0, (height/2)+yellowTop);
+            triangle(0, (height/2)+orangeTop, 0+((framesIntoScene-35)*20)-110, (height/2)+116, 0, (height/2)+yellowTop);
             //yellow
             fill(255,255,0);
-            triangle(0, (height/2)+yellowTop, 0+(framesIntoScene*20)-110, (height/2)+118, 0, (height/2)+greenTop);
+            triangle(0, (height/2)+yellowTop, 0+((framesIntoScene-35)*20)-110, (height/2)+118, 0, (height/2)+greenTop);
             //green
             fill(0,255,0);
-            triangle(0, (height/2)+greenTop, 0+(framesIntoScene*20)-110, (height/2)+120, 0, (height/2)+blueTop);
+            triangle(0, (height/2)+greenTop, 0+((framesIntoScene-35)*20)-110, (height/2)+120, 0, (height/2)+blueTop);
             //blue
             fill(0,255,255);
-            triangle(0, (height/2)+blueTop, 0+(framesIntoScene*20)-110, (height/2)+122, 0, (height/2)+indigoTop);
+            triangle(0, (height/2)+blueTop, 0+((framesIntoScene-35)*20)-110, (height/2)+122, 0, (height/2)+indigoTop);
             //indigo
             fill(0,127,255);
-            triangle(0, (height/2)+indigoTop, 0+(framesIntoScene*20)-110, (height/2)+124, 0, (height/2)+purpleTop);
+            triangle(0, (height/2)+indigoTop, 0+((framesIntoScene-35)*20)-110, (height/2)+124, 0, (height/2)+purpleTop);
             //purple
             fill(127,0,255);
-            triangle(0, (height/2)+purpleTop, 0+(framesIntoScene*20)-110, (height/2)+126, 0, (height/2)+purpleBottom);
+            triangle(0, (height/2)+purpleTop, 0+((framesIntoScene-35)*20)-110, (height/2)+126, 0, (height/2)+purpleBottom);
         }
-
-//        strokeWeight(10);
-//        stroke(155,68,240);
-//        line(0, (height*3)/4, 0+(framesIntoScene*20), (height*3)/4);
-//        textFont(font,64);
-
-//        if (framesIntoScene%50==0){
-//            faderSwitch *= -1;
-//        }
-//
-//        if (framesIntoScene%100 == 0){
-//            textSwitch++;
-//        }
-//
-//        textFade = textFade+(3*faderSwitch);
-//        fill(255,255,255,textFade*2);
-//        textAlign(CENTER);
-//
-//        switch (textSwitch){
-//            case 3:
-//                fill(242,100,252,textFade*2);
-//                if (framesIntoScene>350) {
-//                    fill(242,100,252);
-//                }
-//                textFont(font,108);
-//                text("\"Love Story\"",width/2,(height * 3 /4)+196);
-//            case 2:
-//                fill(255,255,255,textFade*2);
-//                if (framesIntoScene>250) {
-//                    fill(255,255,255);
-//                }
-//                textFont(font,64);
-//
-//                text("for Evoke 2017",width/2,(height * 3 /4)+96);
-//            case 1:
-//                fill(255,255,255,textFade*2);
-//                if (framesIntoScene>150) {
-//                    fill(255,255,255);
-//                }
-//                textFont(font,64);
-//                text("its debut production",width/2,(height * 3 /4)+24);
-//            case 0:
-//                fill(255,255,255,textFade*2);
-//                if (framesIntoScene>50) {
-//                    fill(255,255,255);
-//                }
-//                textFont(font,84);
-//                text("Monoceros presents",width/2,(height * 3 /4)-72);
-
-
-
-//        }
 
 
         //Light is supposed to be mostly from above, with a fair amount of scattered light
         lightFromAbove();
+
+        popMatrix();
+    }
+    
+    public void credits2()
+    {
+        background(0);
+        pushMatrix();
+        
+        img = loadImage("MonocerosLogoWhite.png");
+
+
+        //imageMode(CENTER);
+        scale((float)0.5);
+        image(img, 0, 0);
+
+        popMatrix();
+        pushMatrix();
+        
+        textAlign(CENTER);
+        fill(242,100,252);
+        textFont(font,250);
+        text("\"Love Story\"",width/2,(height/2)-140);
+        
+        fill(255,255,255);
+        textFont(font,100);
+        text("by",width/2,(height/2));
+        
+        textFont(font,200);
+        text("Monoceros",width/2,(height/2)+220);
+        
+        textFont(font,100);
+        text("for",width/2,(height/2)+340);
+        
+        textFont(font,150);
+        text("Evoke 2017",width/2,(height/2)+510);
+        
+        popMatrix();
+        pushMatrix();
+
+        lightFromAbove();
+        pointLight(200, 200, 200, width / 2, height / 2, 200);
+        pointLight(200, 200, 200, width / 2, height / 4, 200);
+
+        popMatrix();
+    }
+    
+    public void credits3()
+    {
+        background(0);
+        pushMatrix();
+        
+        img = loadImage("MonocerosLogoWhite.png");
+
+
+        //imageMode(CENTER);
+        scale((float)0.5);
+        image(img, 0, 0);
+
+        popMatrix();
+        pushMatrix();
+        
+        textAlign(CENTER);
+        fill(242,100,252);
+        textFont(font,250);
+        text("\"Love Story\"",width/2,(height/2)-140);
+        
+        fill(255,255,255);
+        textFont(font,100);
+        text("by",width/2,(height/2));
+        
+        textFont(font,200);
+        text("Monoceros",width/2,(height/2)+220);
+        
+        textFont(font,100);
+        text("for",width/2,(height/2)+340);
+        
+        textFont(font,150);
+        text("Evoke 2017",width/2,(height/2)+510);
+        
+        popMatrix();
+        pushMatrix();
+
+        lightFromAbove();
+        pointLight(200, 200, 200, width / 2, height / 2, 200);
+        pointLight(200, 200, 200, width / 2, height / 4, 200);
+
+        popMatrix();
+    }
+    
+    public void credits4()
+    {
+        background(0);
+        pushMatrix();
+        
+        img = loadImage("MonocerosLogoWhite.png");
+
+
+        //imageMode(CENTER);
+        scale((float)0.5);
+        image(img, 0, 0);
+
+        popMatrix();
+        pushMatrix();
+        
+        textAlign(CENTER);
+        fill(242,100,252);
+        textFont(font,250);
+        text("\"Love Story\"",width/2,(height/2)-140);
+        
+        fill(255,255,255);
+        textFont(font,100);
+        text("by",width/2,(height/2));
+        
+        textFont(font,200);
+        text("Monoceros",width/2,(height/2)+220);
+        
+        textFont(font,100);
+        text("for",width/2,(height/2)+340);
+        
+        textFont(font,150);
+        text("Evoke 2017",width/2,(height/2)+510);
+        
+        popMatrix();
+        pushMatrix();
+
+        lightFromAbove();
+        pointLight(200, 200, 200, width / 2, height / 2, 200);
+        pointLight(200, 200, 200, width / 2, height / 4, 200);
+
+        popMatrix();
+    }
+    
+    public void credits5()
+    {
+        background(0);
+        pushMatrix();
+        
+        img = loadImage("MonocerosLogoWhite.png");
+
+
+        //imageMode(CENTER);
+        scale((float)0.5);
+        image(img, 0, 0);
+
+        popMatrix();
+        pushMatrix();
+        
+        textAlign(CENTER);
+        fill(242,100,252);
+        textFont(font,250);
+        text("\"Love Story\"",width/2,(height/2)-140);
+        
+        fill(255,255,255);
+        textFont(font,100);
+        text("by",width/2,(height/2));
+        
+        textFont(font,200);
+        text("Monoceros",width/2,(height/2)+220);
+        
+        textFont(font,100);
+        text("for",width/2,(height/2)+340);
+        
+        textFont(font,150);
+        text("Evoke 2017",width/2,(height/2)+510);
+        
+        popMatrix();
+        pushMatrix();
+
+        lightFromAbove();
+        pointLight(200, 200, 200, width / 2, height / 2, 200);
+        pointLight(200, 200, 200, width / 2, height / 4, 200);
 
         popMatrix();
     }
