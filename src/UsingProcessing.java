@@ -27,7 +27,7 @@ public class UsingProcessing extends PApplet{
     int y = 80;
     int secondLine = 88;
     int thirdLine = 96;
-    String state = "CREDITS1"; //TODO: Change back to LOADINGSTART
+    String state = "CREDITS5"; //TODO: Change back to LOADINGSTART
     int textX = 400;
     int textY = 200;
     int tempNum = 0;
@@ -364,7 +364,7 @@ public class UsingProcessing extends PApplet{
                 break;
             case "CREDITS5":
                 credits5();
-                if (millis() - startTimer > 3840){
+                if (millis() - startTimer > 13000){
                     state = "END";
                     resetVars();
                 }
@@ -2713,12 +2713,11 @@ public class UsingProcessing extends PApplet{
         background(0);
         pushMatrix();
         
-        if(framesIntoScene == 1)
+        if(framesIntoScene == 1){
             babyUnicornShape = loadShape("baby_unicorn_final.obj"); //TODO: remove this and load in the proper place
-
-        font = createFont("Kingthings_Calligraphica_2.ttf", 52); //TODO: remove and load in a better place
-        img = loadImage("MonocerosLogoWhite.png");
-
+            img = loadImage("MonocerosLogoWhite.png"); //TODO: remove and load in a better place
+            font = createFont("Kingthings_Calligraphica_2.ttf", 52); //TODO: remove and load in a better place
+        }
 
         //imageMode(CENTER);
         scale((float)0.5);
@@ -2812,7 +2811,10 @@ public class UsingProcessing extends PApplet{
         background(0);
         pushMatrix();
         
-        img = loadImage("MonocerosLogoWhite.png");
+        if(framesIntoScene == 1){
+            img = loadImage("MonocerosLogoWhite.png"); //TODO: remove and load in a better place
+            font = createFont("Kingthings_Calligraphica_2.ttf", 52); //TODO: remove and load in a better place
+        }
 
 
         //imageMode(CENTER);
@@ -2855,7 +2857,10 @@ public class UsingProcessing extends PApplet{
         background(0);
         pushMatrix();
         
-        img = loadImage("MonocerosLogoWhite.png");
+        if(framesIntoScene == 1){
+            img = loadImage("MonocerosLogoWhite.png"); //TODO: remove and load in a better place
+            font = createFont("Kingthings_Calligraphica_2.ttf", 52); //TODO: remove and load in a better place
+        }
 
 
         //imageMode(CENTER);
@@ -2892,7 +2897,10 @@ public class UsingProcessing extends PApplet{
         background(0);
         pushMatrix();
         
-        img = loadImage("MonocerosLogoWhite.png");
+        if(framesIntoScene == 1){
+            img = loadImage("MonocerosLogoWhite.png"); //TODO: remove and load in a better place
+            font = createFont("Kingthings_Calligraphica_2.ttf", 52); //TODO: remove and load in a better place
+        }
 
 
         //imageMode(CENTER);
@@ -2929,8 +2937,10 @@ public class UsingProcessing extends PApplet{
         background(0);
         pushMatrix();
         
-        img = loadImage("MonocerosLogoWhite.png");
-
+        if(framesIntoScene == 1){
+            img = loadImage("MonocerosLogoWhite.png"); //TODO: remove and load in a better place
+            font = createFont("Kingthings_Calligraphica_2.ttf", 52); //TODO: remove and load in a better place
+        }
 
         //imageMode(CENTER);
         scale((float)0.5);
@@ -2941,21 +2951,22 @@ public class UsingProcessing extends PApplet{
         
         textAlign(CENTER);
         fill(242,100,252);
-        textFont(font,250);
-        text("Monoceros",width/2,(height/2)-140);
+        textFont(font,200);
+        text("Monoceros",width/2,(height/2)-400);
         
         fill(255,255,255);
-        textFont(font,100);
-        text("by",width/2,(height/2));
+        textFont(font,60);
+        text("[muh-nos-er-uh s]",width/2,(height/2)-240);
         
-        textFont(font,200);
-        text("Monoceros",width/2,(height/2)+220);
+        textFont(font,60);
+        text("via Old French from Latin: unicorn, from Greek monokeros",width/2,(height/2)-40);
+        text("with a single horn, from mono- + keras horn",width/2,(height/2)+200);
+        text("a faint constellation on the celestial equator crossed by the Milky Way",width/2,(height/2)+240);
+        text(" and lying close to Orion and Canis Major",width/2,(height/2)+380);
         
-        textFont(font,100);
-        text("for",width/2,(height/2)+340);
-        
-        textFont(font,150);
-        text("Evoke 2017",width/2,(height/2)+510);
+        fill(128,250,252);
+        textFont(font,60);
+        text("AdeptApril and Dusty are looking for jobs in Germany! Hire us!",width/2,(height/2)+510);
         
         popMatrix();
         pushMatrix();
