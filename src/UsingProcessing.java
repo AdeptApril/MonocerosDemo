@@ -23,12 +23,12 @@ public class UsingProcessing extends PApplet{
     
     Random rand = new Random();
 
-    int framesIntoScene = 0;
-    int timeIntoScene = 0; //Time in milliseconds.
-    int startTimer; //startTimer = millis() at the beginning of any scene
-    int y = 80;
-    int secondLine = 88;
-    int thirdLine = 96;
+    private int framesIntoScene = 0;
+    private int timeIntoScene = 0; //Time in milliseconds.
+    private int startTimer; //startTimer = millis() at the beginning of any scene
+    private int y = 80;
+    private int secondLine = 88;
+    private int thirdLine = 96;
     String state = "LOADINGSTART"; //TODO: Change back to LOADINGSTART
     int textX = 400;
     int textY = 200;
@@ -54,6 +54,8 @@ public class UsingProcessing extends PApplet{
 
     int horseCount = 1;
     int narwhalCount = 1;
+    boolean pooSet = false; //This could probably be done with checking to see if the poo is in the array, but a state variable seems fairly good performance-wise
+    ArrayList<ObjPosition> pooArray = new ArrayList<ObjPosition>();
     
     int tempx = 0; //TODO: Delete anything that uses this, then delete this.
     int tempy = 0;
@@ -91,6 +93,7 @@ public class UsingProcessing extends PApplet{
     PShape flowerShape;
     PShape iceShelfShape;
     PShape icebergShape;
+    PShape[] poopShapes;
     PShape poopShape;
     PShape treeShape;
     PShape lightBulbShape;
@@ -2663,7 +2666,6 @@ public class UsingProcessing extends PApplet{
     
     public void babyUnicorn()
     {
-        int timeIntoScene = millis() - startTimer;
         background(0);
         pushMatrix();
         
@@ -2711,17 +2713,162 @@ public class UsingProcessing extends PApplet{
         pushMatrix();
 
         //Begin baby Unicorn
-        if(timeIntoScene < 1680 ) {
+        int timeIntoScene = millis() - startTimer;
+        int randX = width/2;
+        int randY = height/2;
+        int randZ = 500;
+        if(!pooSet){
+            randX = (int)(noise(framesIntoScene) * width);
+            randY = (int)(noise(framesIntoScene) * height);
+            randZ = (int)(noise(framesIntoScene) * 500) + 100;
+        }
+        if(timeIntoScene < 125760-124080 ) {
             translate(width / 2, height / 2 - 50);
+            if(!pooSet) {
+                pooArray.add(new ObjPosition(width / 2, height / 2 - 50, 100));
+                pooSet = true;
+            }
             rotateY(radians(90));
             rotateX(radians(180));
             scale(48);
             shape(babyUnicornShape);
-        } else //if (goingUp)
+        } else if(timeIntoScene < 126000-124080)
         {
-
+            pooSet = false;
+        } else if(timeIntoScene < 126720-124080)
+        { //TODO: Make unicorn appear in places other than along a line from upper left to lower right
+            if(!pooSet) {
+                pooArray.add(new ObjPosition(randX, randY, randZ));
+                pooSet = true;
+            }
+            ObjPosition temp = pooArray.get(pooArray.size()-1);
+            translate(temp.getX(), temp.getY(), temp.getZ());
+            rotateY(radians(90));
+            rotateX(radians(180));
+            scale(48);
+            shape(babyUnicornShape);
+        } else if(timeIntoScene < 126960-124080)
+        {
+            pooSet = false;
+        } else if(timeIntoScene < 127680-124080)
+        {
+            if(!pooSet) {
+                pooArray.add(new ObjPosition(randX, randY, randZ));
+                pooSet = true;
+            }
+            ObjPosition temp = pooArray.get(pooArray.size()-1);
+            translate(temp.getX(), temp.getY(), temp.getZ());
+            rotateY(radians(90));
+            rotateX(radians(180));
+            scale(48);
+            shape(babyUnicornShape);
+        } else if(timeIntoScene < 127920-124080)
+        {
+            pooSet = false;
+        } else if(timeIntoScene < 128640-124080)
+        {
+            if(!pooSet) {
+                pooArray.add(new ObjPosition(randX, randY, randZ));
+                pooSet = true;
+            }
+            ObjPosition temp = pooArray.get(pooArray.size()-1);
+            translate(temp.getX(), temp.getY(), temp.getZ());
+            rotateY(radians(90));
+            rotateX(radians(180));
+            scale(48);
+            shape(babyUnicornShape);
+        } else if(timeIntoScene < 128880-124080)
+        {
+            pooSet = false;
+        } else if(timeIntoScene < 129600-124080)
+        {
+            if(!pooSet) {
+                pooArray.add(new ObjPosition(randX, randY, randZ));
+                pooSet = true;
+            }
+            ObjPosition temp = pooArray.get(pooArray.size()-1);
+            translate(temp.getX(), temp.getY(), temp.getZ());
+            rotateY(radians(90));
+            rotateX(radians(180));
+            scale(48);
+            shape(babyUnicornShape);
+        } else if(timeIntoScene < 129840-124080)
+        {
+            pooSet = false;
+        } else if(timeIntoScene < 130560-124080)
+        {
+            if(!pooSet) {
+                pooArray.add(new ObjPosition(randX, randY, randZ));
+                pooSet = true;
+            }
+            ObjPosition temp = pooArray.get(pooArray.size()-1);
+            translate(temp.getX(), temp.getY(), temp.getZ());
+            rotateY(radians(90));
+            rotateX(radians(180));
+            scale(48);
+            shape(babyUnicornShape);
+        } else if(timeIntoScene < 130800-124080)
+        {
+            pooSet = false;
+        } else if(timeIntoScene < 131520-124080)
+        {
+            if(!pooSet) {
+                pooArray.add(new ObjPosition(randX, randY, randZ));
+                pooSet = true;
+            }
+            ObjPosition temp = pooArray.get(pooArray.size()-1);
+            translate(temp.getX(), temp.getY(), temp.getZ());
+            rotateY(radians(90));
+            rotateX(radians(180));
+            scale(48);
+            shape(babyUnicornShape);
+        } else if(timeIntoScene < 131760-124080)
+        {
+            pooSet = false;
+        } else if(timeIntoScene < 132480-124080)
+        {
+            if(!pooSet) {
+                pooArray.add(new ObjPosition(randX, randY, randZ));
+                pooSet = true;
+            }
+            ObjPosition temp = pooArray.get(pooArray.size()-1);
+            translate(temp.getX(), temp.getY(), temp.getZ());
+            rotateY(radians(90));
+            rotateX(radians(180));
+            scale(48);
+            shape(babyUnicornShape);
+        } else if(timeIntoScene < 132720-124080)
+        {
+            pooSet = false;
+        } else
+        {
+            if(!pooSet) {
+                pooArray.add(new ObjPosition(randX, randY, randZ));
+                pooSet = true;
+            }
+            ObjPosition temp = pooArray.get(pooArray.size()-1);
+            translate(temp.getX(), temp.getY(), temp.getZ());
+            rotateY(radians(90));
+            rotateX(radians(180));
+            scale(48);
+            shape(babyUnicornShape);
         }
 
+        popMatrix();
+        pushMatrix();
+        for(int i = 0; i < pooArray.size() - 1; i++)
+        { //TODO: Make poo move/rotate. Same with unicorn
+            popMatrix();
+            pushMatrix();
+            ObjPosition temp = pooArray.get(i);
+            translate(temp.getX(), temp.getY(), temp.getZ());
+            rotateY(radians(90));
+            rotateX(radians(180));
+            scale(24);
+            shape(poopShape);
+            popMatrix();
+            pushMatrix();
+        }
         popMatrix();
     }
     
@@ -3157,5 +3304,5 @@ public class UsingProcessing extends PApplet{
         //lightFalloff(1, 0, 0);
         lightSpecular(0, 0, 0);
     }
-    
+
 }
