@@ -162,11 +162,11 @@ public class UsingProcessing extends PApplet{
                 exit();
                 break;
             case "LOADINGSTART":
-                if (framesIntoScene < 351) {
+                if (framesIntoScene < 211) {
                     //Load models
                     intro();
                 }
-                if (framesIntoScene == 351) {
+                if (framesIntoScene == 211) {
                     state = "NARWHAL";
                     resetVars();
                 }
@@ -552,11 +552,11 @@ public class UsingProcessing extends PApplet{
         image(img, width/2, height/3);
         textFont(font,64);
         
-        if (framesIntoScene%50==0){
+        if (framesIntoScene%30==0){
             faderSwitch *= -1;
         }
         
-        if (framesIntoScene%100 == 0){
+        if (framesIntoScene%60 == 0){
             textSwitch++;
         }
         
@@ -567,14 +567,14 @@ public class UsingProcessing extends PApplet{
         switch (textSwitch){
             case 3: 
                 fill(242,100,252,textFade*2);
-                if (framesIntoScene>350) {
+                if (framesIntoScene>210) {
                     fill(242,100,252);
                 }
                 textFont(font,108);
                 text("\"Love Story\"",width/2,(height * 3 /4)+196);
             case 2: 
                 fill(255,255,255,textFade*2);
-                if (framesIntoScene>250) {
+                if (framesIntoScene>150) {
                     fill(255,255,255);
                 }
                 textFont(font,64);
@@ -582,14 +582,14 @@ public class UsingProcessing extends PApplet{
                 text("for Evoke 2017",width/2,(height * 3 /4)+96);
             case 1: 
                 fill(255,255,255,textFade*2);
-                if (framesIntoScene>150) {
+                if (framesIntoScene>90) {
                     fill(255,255,255);
                 }
                 textFont(font,64);
                 text("its debut production",width/2,(height * 3 /4)+24);
             case 0:
                 fill(255,255,255,textFade*2);
-                if (framesIntoScene>50) {
+                if (framesIntoScene>30) {
                     fill(255,255,255);
                 }
                 textFont(font,84);
@@ -598,7 +598,7 @@ public class UsingProcessing extends PApplet{
             
             
         }
-        if (framesIntoScene == 350){
+        if (framesIntoScene == 210){
             loadBatch1();
             loadBatch2();
             loadBatch3();
@@ -2030,7 +2030,7 @@ public class UsingProcessing extends PApplet{
         rotateZ(radians(180));
         scale(50);
         
-        shape(flowerShape);
+        shape(treeShape);
         
         popMatrix();
         pushMatrix();
