@@ -29,7 +29,7 @@ public class UsingProcessing extends PApplet{
     int y = 80;
     int secondLine = 88;
     int thirdLine = 96;
-    String state = "CREDITS1"; //TODO: Change back to LOADINGSTART
+    String state = "LOADINGSTART"; //TODO: Change back to LOADINGSTART
     int textX = 400;
     int textY = 200;
     int tempNum = 0;
@@ -110,6 +110,9 @@ public class UsingProcessing extends PApplet{
         translateZ = 0;
         tempNum = 0;
         startTimer = millis();
+        textFade = 0;
+        faderSwitch = 1;
+        textSwitch = 0;
         //y = 80;
         //secondLine = 88;
         //thirdLine = 96;
@@ -2733,7 +2736,7 @@ public class UsingProcessing extends PApplet{
             font = createFont("Kingthings_Calligraphica_2.ttf", 52); //TODO: remove and load in a better place
         }
 
-        //imageMode(CENTER);
+        imageMode(CORNER);
         scale((float)0.5);
         image(img, 0, 0);
 
