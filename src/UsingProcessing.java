@@ -29,7 +29,7 @@ public class UsingProcessing extends PApplet{
     int y = 80;
     int secondLine = 88;
     int thirdLine = 96;
-    String state = "CREDITS2"; //TODO: Change back to LOADINGSTART
+    String state = "CREDITS1"; //TODO: Change back to LOADINGSTART
     int textX = 400;
     int textY = 200;
     int tempNum = 0;
@@ -59,7 +59,7 @@ public class UsingProcessing extends PApplet{
     int tempy = 0;
     int tempz = 0;
     
-    int credit2UniPosX = 1920;
+    int credit2UniPosX = 1890;
     int credit2UniPosY = 0;
     int credit2UniPosZ = 0;
     int credit2IcePosX = 1920;
@@ -346,7 +346,7 @@ public class UsingProcessing extends PApplet{
                 break;
             case "CREDITS1":
                 credits1();
-                if (millis() - startTimer > 13000){
+                if (millis() - startTimer > 10000){
                     state = "CREDITS2";
                     resetVars();
                 }
@@ -1480,10 +1480,10 @@ public class UsingProcessing extends PApplet{
 
         //Light is supposed to be mostly from above, with a fair amount of scattered light
         lightFromAbove();
-        
+
         popMatrix();
         pushMatrix();
-        
+
         translate(width / 2, (float)(height*0.5), -50);
         //rotateY(radians(90));
         rotateZ(radians(180));
@@ -1503,98 +1503,98 @@ public class UsingProcessing extends PApplet{
             translate(0, -framesIntoScene+60, framesIntoScene * 10);
         else if(framesIntoScene >= 60)
             translate(0, translateY, framesIntoScene * 10);
-        
+
         //narwhalShape.setFill(color(50 + decay, 50, 150));
         scale(64);
         shape(narwhalRainbowShape);
         popMatrix();
 
         translateZ += 5;
-        
+
         pushMatrix();
-        
+
         translate(width / 4, height / 2);
         //rotateY(radians(90));
         rotateZ(radians(180));
         scale(96);
-        
+
         shape(cloudShape);
-        
+
         popMatrix();
         pushMatrix();
-        
+
         translate(width * 3 / 5, height / 3);
         rotateY(radians(180));
         rotateZ(radians(180));
         scale(86);
-        
+
         shape(cloudShape);
-        
+
         popMatrix();
         pushMatrix();
-        
-        translate((width * 1 / 5)-framesIntoScene, height/2 -(sin((framesIntoScene + 90)/5) * 5));
+
+       /* translate((width * 1 / 5)-framesIntoScene, height/2 -(sin((framesIntoScene + 90)/5) * 5));
         rotateY(radians(160));
         rotateZ(radians(180));
         rotateX(radians(-20));
         scale(86);
-        
+
         shape(icebergShape);
-        
+
         popMatrix();
         pushMatrix();
-        
+
         translate((width * 3 / 5)+framesIntoScene, height/2 -(cos((framesIntoScene + 90)/5) * 5));
         rotateY(radians(160));
         rotateZ(radians(180));
         rotateX(radians(-20));
         scale(60);
-        
+
         shape(icebergShape);
-        
+
         popMatrix();
-        pushMatrix();
-        
+        pushMatrix();*/
+
         translate(translateZ*2+25, height -(sin((framesIntoScene + 90)/5) * 5)-50);
         rotateY(radians(270 + cos(framesIntoScene) * 5));
         rotateZ(radians(180));
         fishShape.setFill(color(72,119,160));
         scale(96);
-        
+
         shape(fishShape);
-        
+
         scale(16);
-        
+
         popMatrix();
-        
+
         pushMatrix();
-        
+
         translate(translateZ*2-25, height -(sin(framesIntoScene/5) * 5)+50);
         rotateY(radians(270 + sin(framesIntoScene) * 5));
         rotateZ(radians(180));
         fishShape.setFill(color(26,73,114));
         scale(96);
-        
+
         shape(fishShape);
-        
+
         scale(16);
-        
+
         popMatrix();
         pushMatrix();
-        
+
         translate(translateZ*2-50, height -(cos((framesIntoScene)/5) * 10));
         rotateY(radians(270 + cos(framesIntoScene) * 7));
         rotateZ(radians(180));
         fishShape.setFill(color(178,87,145));
         scale(96);
-        
+
         shape(fishShape);
-        
+
         scale(16);
-        
+
         popMatrix();
     }
-    
+
     public void horseSearch()
     {
         //background(0x87, 0xce, 0xff); //sky blue
@@ -1610,7 +1610,7 @@ public class UsingProcessing extends PApplet{
         //rotateY(radians(90));
         rotateZ(radians(180));
         scale(128);
-        shape(backgroundLandSnowShape);
+        shape(backgroundLandShape);
         popMatrix();
         pushMatrix();
         
@@ -1914,6 +1914,7 @@ public class UsingProcessing extends PApplet{
         
    public void horseSearch2()
     {
+        //TODO: Add pine tree(s)
         //background(0x87, 0xce, 0xff); //sky blue
         background(0);
         text(framesIntoScene, width/2, height/2); // show value of variable, if wanted
@@ -2706,7 +2707,7 @@ public class UsingProcessing extends PApplet{
             rotateX(radians(180));
             scale(48);
             shape(babyUnicornShape);
-        } else if (goingUp)
+        } else //if (goingUp)
         {
 
         }
@@ -2854,20 +2855,38 @@ public class UsingProcessing extends PApplet{
         pushMatrix();
 
 //      Start Positions:
-//      credit2UniPosX = 1920;
+//      credit2UniPosX = 1890;
 //      credit2UniPosY = 0;
 //      credit2UniPosZ = 0;
 //      credit2IcePosX = 1920;
 //      credit2IcePosY = 20;
 //      credit2IcePosZ = 0;
-        if ((credit2UniPosX<=width/5)&&(credit2Flip>0)){
+        if ((credit2UniPosX<=width/3)&&(credit2Flip>0)){
             credit2Flip *= -1;
-
         }
 
-        translate((credit2UniPosX-4)*credit2Flip, (credit2UniPosY-4)*credit2Flip);
-        rotateY(radians(90));
+        if (credit2Flip>0){
+            credit2UniPosX-=8;
+            credit2IcePosX-=8;
+            credit2IcePosZ+=4;
+            if (credit2UniPosX<=width/2) {
+                credit2UniPosZ += 4;
+
+            }
+        }else{
+            credit2UniPosX+=8;
+            credit2IcePosX+=8;
+            credit2UniPosZ-=1;
+            credit2IcePosZ+=4;
+        }
+
+        credit2UniPosY+=4;
+        credit2IcePosY+=4;
+
+        translate(credit2UniPosX, credit2UniPosY,credit2IcePosZ);
+        rotateY(radians(90+credit2UniPosZ));
         rotateX(radians(200));
+        rotateZ(radians(credit2UniPosZ/3));
 
         scale(60);
         shape(babyUnicornShape);
@@ -2875,9 +2894,10 @@ public class UsingProcessing extends PApplet{
         popMatrix();
         pushMatrix();
 
-        translate((credit2IcePosX-4)*credit2Flip, (credit2IcePosY-4)*credit2Flip);
-        rotateY(radians(90));
+        translate(credit2IcePosX, credit2IcePosY,credit2IcePosZ);
+        rotateY(radians(90+credit2UniPosZ));
         rotateX(radians(200));
+        rotateZ(radians(credit2UniPosZ/3));
 
         scale(60);
         shape(icebergShape);
