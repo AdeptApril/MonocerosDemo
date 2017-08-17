@@ -104,6 +104,7 @@ public class UsingProcessing extends PApplet{
     
     public void resetVars() {
         framesIntoScene = 0;
+        timeIntoScene = 0;
         translateX = 0;
         translateY = 0;
         translateZ = 0;
@@ -594,14 +595,12 @@ public class UsingProcessing extends PApplet{
             
             
         }
-        popMatrix();
-        
         if (framesIntoScene == 350){
             loadBatch1();
             loadBatch2();
             loadBatch3();
         }
-        
+        popMatrix();
     }
 
     public void loadBatch1() {
@@ -655,11 +654,14 @@ public class UsingProcessing extends PApplet{
     
     public void scrollerScene()
     {
+        pushMatrix();
         drawLines();
         drawText("Turns out that it's not particularly hard to scroll using Processing.", 400, 200);
+        popMatrix();
     }
     
     public void drawLines() {
+        pushMatrix();
         int yChange = 2;
         int secondChange = 4;
         int thirdChange = 8;
@@ -682,9 +684,11 @@ public class UsingProcessing extends PApplet{
         int randLine =  (int)(Math.random() * (height + 1));
         stroke(0, 255, 255, 200);
         line(0, randLine, width, randLine);
+        popMatrix();
     }
     
     public void drawText(String inText, int inTextX, int inTextY) {
+        pushMatrix();
         text(framesIntoScene, 60, 60); // show value of variable, if wanted
         if(framesIntoScene < 2)
             textX = inTextX;
@@ -714,9 +718,11 @@ public class UsingProcessing extends PApplet{
         }
 
         decay = (int) (decay / 2);
+        popMatrix();
     }
     
     public void shaderScene() {
+        pushMatrix();
         int lowVolume = (int) (abs(player.left.get(0)) * 100);
         if (lowVolume > 10 && decay < 100) //lowVolume only used once, so could just lookup here.
         {
@@ -742,6 +748,7 @@ public class UsingProcessing extends PApplet{
         shape(babyUnicornShape);
 
         angle += 0.01 + decay *0.001 ;
+        popMatrix();
     }
     
     public void narwhalScene() {
@@ -866,9 +873,8 @@ public class UsingProcessing extends PApplet{
     public void horseScene() {
         //background(0x87, 0xce, 0xff); //sky blue
         background(0);
-        text(framesIntoScene, width/2, height/2); // show value of variable, if wanted
-        
         pushMatrix();
+        text(framesIntoScene, width/2, height/2); // show value of variable, if wanted
         
         //Light is supposed to be mostly from above, with a fair amount of scattered light
         lightFromAbove();
@@ -1075,6 +1081,7 @@ public class UsingProcessing extends PApplet{
         fill(255);
         text(framesIntoScene, width/2, height/2); // show value of variable, if wanted
         popMatrix();
+        pushMatrix();
         scale(2);
 
         //Display the rainbow, slowly scrolling it onto the screen (and then stopping)
@@ -1082,6 +1089,7 @@ public class UsingProcessing extends PApplet{
         rainbow(-(int)(width*0.9)+translateX*5,height/2);
         if(translateX < height/2 )
             translateX += 1;
+        popMatrix();
     }
     
     public void horseRainbowApproach()
@@ -1192,6 +1200,7 @@ public class UsingProcessing extends PApplet{
         text(framesIntoScene, 0, 275); // show value of variable, if wanted
 
         popMatrix();
+        pushMatrix();
         //Display the rainbow. This should be the stopping point for the rainbow in the narwhal scene
         scale(2);
         if(framesIntoScene < 100)
@@ -1201,9 +1210,11 @@ public class UsingProcessing extends PApplet{
         /*rainbow(-(int)(width*0.9)+translateX*5,height/2);
         if(translateX < height/2 )
             translateX += 1;*/
+        popMatrix();
     }   
 
     public void rainbow(int centerX, int centerY) {
+        pushMatrix();
         //TODO: Make rainbow thicker, with speed multiplier working better, and center not being black.
         int speedMultiplier = 18; //how quickly to go through the rainbow
         int ellipseSizeMultiplier = 16; //I think this, combined with i < height/x, 
@@ -1257,13 +1268,13 @@ public class UsingProcessing extends PApplet{
         //fill(0x87, 0xce, 0xff); //Sky blue center
         fill(0x33, 0xce, 0xee); //Sky blue center
         ellipse(centerX, centerY, height/2, height/2);
+        popMatrix();
     }
 
     public void narwhalSuck()
     {
         background(0);
         pushMatrix();
-        
         //Light is supposed to be mostly from above, with a fair amount of scattered light
         lightFromAbove();
         
@@ -1357,7 +1368,9 @@ public class UsingProcessing extends PApplet{
             shape(narwhalRainbowShape);
         
         popMatrix();
+        pushMatrix();
         rainbowTriangle(width/2, height/2+210, -1, 60);
+        popMatrix();
     }
     
     public void horseSuck()
@@ -1465,7 +1478,9 @@ public class UsingProcessing extends PApplet{
         text(framesIntoScene, 0, 275); // show value of variable, if wanted
 
         popMatrix();
+        pushMatrix();
         rainbowTriangle(width/2, height/2, 1, 50);
+        popMatrix();
     }
     
     public void narwhalSearch()
@@ -1599,10 +1614,9 @@ public class UsingProcessing extends PApplet{
     {
         //background(0x87, 0xce, 0xff); //sky blue
         background(0);
-        text(framesIntoScene, width/2, height/2); // show value of variable, if wanted
-        
         pushMatrix();
-        
+        //text(framesIntoScene, width/2, height/2); // show value of variable, if wanted
+
         //Light is supposed to be mostly from above, with a fair amount of scattered light
         lightFromAbove();
         
@@ -1917,9 +1931,8 @@ public class UsingProcessing extends PApplet{
         //TODO: Add pine tree(s)
         //background(0x87, 0xce, 0xff); //sky blue
         background(0);
-        text(framesIntoScene, width/2, height/2); // show value of variable, if wanted
-        
         pushMatrix();
+        //text(framesIntoScene, width/2, height/2); // show value of variable, if wanted
         
         //Light is supposed to be mostly from above, with a fair amount of scattered light
         lightFromAbove();
@@ -2169,7 +2182,6 @@ public class UsingProcessing extends PApplet{
         shape(narwhalRainbowShape);
         
         popMatrix();
-        //pushMatrix();
     }
     
     public void iceShelfBreak()
@@ -2242,7 +2254,6 @@ public class UsingProcessing extends PApplet{
         shape(narwhalRainbowShape);
         
         popMatrix();
-        //pushMatrix();
     }
     
     public void worriedHorse()
@@ -2354,7 +2365,6 @@ public class UsingProcessing extends PApplet{
         shape(narwhalRainbowShape);
         
         popMatrix();
-        //pushMatrix();
     }
     
     public void narwhalSave()
@@ -2491,7 +2501,6 @@ public class UsingProcessing extends PApplet{
         shape(narwhalRainbowShape);
         
         popMatrix();
-        //pushMatrix();
     }
     
     public void loveInAir()
@@ -2640,13 +2649,11 @@ public class UsingProcessing extends PApplet{
         
         //Light is supposed to be mostly from above, with a fair amount of scattered light
         lightFromAbove();
-        
-        if (framesIntoScene <= 250) {
-                rotateX(radians(180));
-                translate(815, -400, -350);
-                scale(16 + (250-115)*(250-115)/15);
-                shape(heartShape);
-        }
+
+        rotateX(radians(180));
+        translate(815, -400, -350);
+        scale(16 + (250 - 115) * (250 - 115) / 15);
+        shape(heartShape);
 
         popMatrix();
     }
@@ -3107,13 +3114,12 @@ public class UsingProcessing extends PApplet{
         strokeWeight(10);
         stroke(155,68,240);
         //line(0, startY, startX+i, startY);
-
-
     }
 
 
     public void endScene() {
         background(0);
+        pushMatrix();
         textSize(200);
         fill(255);
         text("The End", 500, 500);
@@ -3122,6 +3128,7 @@ public class UsingProcessing extends PApplet{
             state = "END";
             framesIntoScene = 0;
         }
+        popMatrix();
     }
     
     public void lightFromAbove() {
@@ -3145,7 +3152,7 @@ public class UsingProcessing extends PApplet{
         //ambientLight(128, 128, 128);
         directionalLight(200, 200, 200, 0, 0, -1); 
         //lightFalloff(1, 0, 0);
-        lightSpecular(0, 0, 0);        
+        lightSpecular(0, 0, 0);
     }
     
 }
