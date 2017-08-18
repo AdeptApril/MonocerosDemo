@@ -120,6 +120,8 @@ public class UsingProcessing extends PApplet{
         textFade = 0;
         faderSwitch = 1;
         textSwitch = 0;
+        shapeMode(CORNER);
+        imageMode(CORNER);
         //y = 80;
         //secondLine = 88;
         //thirdLine = 96;
@@ -519,6 +521,9 @@ public class UsingProcessing extends PApplet{
                 resetVars();
                 break;
             case 'n':
+                loadBatch1();
+                loadBatch2();
+                loadBatch3();
                 state = "THEEND";
                 player.cue(137280);
                 resetVars();
