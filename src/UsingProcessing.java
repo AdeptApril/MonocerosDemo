@@ -9,6 +9,7 @@ import ddf.minim.*;
 
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 //TODO: Try/catch around object loading. the program should fail anyway, so it doesn't seem hugely important, but good style and all
 
@@ -37,6 +38,9 @@ public class UsingProcessing extends PApplet{
     private int translateX = 0;
     private int translateY = 0;
     private int translateZ = 0;
+    int randRotateX = 0;
+    int randRotateY = 0;
+    int randRotateZ = 0;
 
     private int textFade = 0;
     private int faderSwitch = 1;
@@ -2721,9 +2725,12 @@ public class UsingProcessing extends PApplet{
         int randY = height/2;
         int randZ = 500;
         if(!pooSet){
-            randX = (int)(noise(framesIntoScene) * width);
-            randY = (int)(noise(framesIntoScene) * height);
+            randX = ThreadLocalRandom.current().nextInt(500, width-500);//(int)(noise(framesIntoScene) * (width-100) + 100);
+            randY = ThreadLocalRandom.current().nextInt(300, height-300);//(int)(noise(framesIntoScene) * (height-100) + 100);
             randZ = (int)(noise(framesIntoScene) * 500) + 100;
+            randRotateX = ThreadLocalRandom.current().nextInt(0, 360);;
+            randRotateY = ThreadLocalRandom.current().nextInt(0, 360);;
+            randRotateZ = ThreadLocalRandom.current().nextInt(0, 360);;
         }
         if(timeIntoScene < 125760-124080 ) {
             translate(width / 2, height / 2 - 50);
@@ -2738,46 +2745,49 @@ public class UsingProcessing extends PApplet{
         } else if(timeIntoScene < 126000-124080)
         {
             pooSet = false;
-        } else if(timeIntoScene < 126720-124080)
-        { //TODO: Make unicorn appear in places other than along a line from upper left to lower right
+        } else if(timeIntoScene < 126720-124080) //Start 50 frames in
+        { //TODO: Extract these random unicorns into a method
             if(!pooSet) {
-                pooArray.add(new ObjPosition(randX, randY, randZ));
+                pooArray.add(new ObjPosition(randX, randY, randZ,randRotateX, randRotateY, randRotateZ));
                 pooSet = true;
             }
             ObjPosition temp = pooArray.get(pooArray.size()-1);
-            translate(temp.getX(), temp.getY(), temp.getZ());
-            rotateY(radians(90));
-            rotateX(radians(180));
+            translate(temp.getX() - (framesIntoScene - 50)*10, temp.getY() + (sin(framesIntoScene) * 10), temp.getZ());
+            rotateX(radians(temp.getRotX()));
+            rotateY(radians(temp.getRotY()));
+            rotateZ(radians(temp.getRotZ()));
             scale(48);
             shape(babyUnicornShape);
         } else if(timeIntoScene < 126960-124080)
         {
             pooSet = false;
-        } else if(timeIntoScene < 127680-124080)
+        } else if(timeIntoScene < 127680-124080)//Start 80 frames in
         {
             if(!pooSet) {
-                pooArray.add(new ObjPosition(randX, randY, randZ));
+                pooArray.add(new ObjPosition(randX, randY, randZ,randRotateX, randRotateY, randRotateZ));
                 pooSet = true;
             }
             ObjPosition temp = pooArray.get(pooArray.size()-1);
-            translate(temp.getX(), temp.getY(), temp.getZ());
-            rotateY(radians(90));
-            rotateX(radians(180));
+            translate(temp.getX()+ (framesIntoScene - 80)*10, temp.getY() + (sin(framesIntoScene) * 10), temp.getZ());
+            rotateX(radians(temp.getRotX()));
+            rotateY(radians(temp.getRotY()));
+            rotateZ(radians(temp.getRotZ()));
             scale(48);
             shape(babyUnicornShape);
         } else if(timeIntoScene < 127920-124080)
         {
             pooSet = false;
-        } else if(timeIntoScene < 128640-124080)
+        } else if(timeIntoScene < 128640-124080)//Start 108 frames in
         {
             if(!pooSet) {
-                pooArray.add(new ObjPosition(randX, randY, randZ));
+                pooArray.add(new ObjPosition(randX, randY, randZ,randRotateX, randRotateY, randRotateZ));
                 pooSet = true;
             }
             ObjPosition temp = pooArray.get(pooArray.size()-1);
-            translate(temp.getX(), temp.getY(), temp.getZ());
-            rotateY(radians(90));
-            rotateX(radians(180));
+            translate(temp.getX()- (framesIntoScene - 108)*10, temp.getY() + (sin(framesIntoScene) * 10), temp.getZ());
+            rotateX(radians(temp.getRotX()));
+            rotateY(radians(temp.getRotY()));
+            rotateZ(radians(temp.getRotZ()));
             scale(48);
             shape(babyUnicornShape);
         } else if(timeIntoScene < 128880-124080)
@@ -2786,13 +2796,14 @@ public class UsingProcessing extends PApplet{
         } else if(timeIntoScene < 129600-124080)
         {
             if(!pooSet) {
-                pooArray.add(new ObjPosition(randX, randY, randZ));
+                pooArray.add(new ObjPosition(randX, randY, randZ,randRotateX, randRotateY, randRotateZ));
                 pooSet = true;
             }
             ObjPosition temp = pooArray.get(pooArray.size()-1);
-            translate(temp.getX(), temp.getY(), temp.getZ());
-            rotateY(radians(90));
-            rotateX(radians(180));
+            translate(temp.getX()+(framesIntoScene - 136)*10, temp.getY() + (sin(framesIntoScene) * 10), temp.getZ());
+            rotateX(radians(temp.getRotX()));
+            rotateY(radians(temp.getRotY()));
+            rotateZ(radians(temp.getRotZ()));
             scale(48);
             shape(babyUnicornShape);
         } else if(timeIntoScene < 129840-124080)
@@ -2801,43 +2812,46 @@ public class UsingProcessing extends PApplet{
         } else if(timeIntoScene < 130560-124080)
         {
             if(!pooSet) {
-                pooArray.add(new ObjPosition(randX, randY, randZ));
+                pooArray.add(new ObjPosition(randX, randY, randZ,randRotateX, randRotateY, randRotateZ));
                 pooSet = true;
             }
             ObjPosition temp = pooArray.get(pooArray.size()-1);
-            translate(temp.getX(), temp.getY(), temp.getZ());
-            rotateY(radians(90));
-            rotateX(radians(180));
+            translate(temp.getX()-(framesIntoScene - 164)*10, temp.getY() + (sin(framesIntoScene) * 10), temp.getZ());
+            rotateX(radians(temp.getRotX()));
+            rotateY(radians(temp.getRotY()));
+            rotateZ(radians(temp.getRotZ()));
             scale(48);
             shape(babyUnicornShape);
         } else if(timeIntoScene < 130800-124080)
         {
             pooSet = false;
-        } else if(timeIntoScene < 131520-124080)
+        } else if(timeIntoScene < 131520-124080) //7440, 223
         {
             if(!pooSet) {
-                pooArray.add(new ObjPosition(randX, randY, randZ));
+                pooArray.add(new ObjPosition(randX, randY, randZ,randRotateX, randRotateY, randRotateZ));
                 pooSet = true;
             }
             ObjPosition temp = pooArray.get(pooArray.size()-1);
-            translate(temp.getX(), temp.getY(), temp.getZ());
-            rotateY(radians(90));
-            rotateX(radians(180));
+            translate(temp.getX()+(framesIntoScene - 192)*10, temp.getY() + (sin(framesIntoScene) * 10), temp.getZ());
+            rotateX(radians(temp.getRotX()));
+            rotateY(radians(temp.getRotY()));
+            rotateZ(radians(temp.getRotZ()));
             scale(48);
             shape(babyUnicornShape);
         } else if(timeIntoScene < 131760-124080)
         {
             pooSet = false;
-        } else if(timeIntoScene < 132480-124080)
+        } else if(timeIntoScene < 132480-124080) //8400, 252
         {
             if(!pooSet) {
-                pooArray.add(new ObjPosition(randX, randY, randZ));
+                pooArray.add(new ObjPosition(randX, randY, randZ,randRotateX, randRotateY, randRotateZ));
                 pooSet = true;
             }
             ObjPosition temp = pooArray.get(pooArray.size()-1);
-            translate(temp.getX(), temp.getY(), temp.getZ());
-            rotateY(radians(90));
-            rotateX(radians(180));
+            translate(temp.getX()-(framesIntoScene - 223)*10, temp.getY() + (sin(framesIntoScene) * 10), temp.getZ());
+            rotateX(radians(temp.getRotX()));
+            rotateY(radians(temp.getRotY()));
+            rotateZ(radians(temp.getRotZ()));
             scale(48);
             shape(babyUnicornShape);
         } else if(timeIntoScene < 132720-124080)
@@ -2860,19 +2874,20 @@ public class UsingProcessing extends PApplet{
 
         popMatrix();
         pushMatrix();
-        for(int i = 0; i < pooArray.size() - 1; i++)
-        { //TODO: Make poo move/rotate. Same with unicorn
-            popMatrix();
-            pushMatrix();
-            ObjPosition temp = pooArray.get(i);
-            translate(temp.getX(), temp.getY(), temp.getZ());
-            rotateY(radians(90));
-            rotateX(radians(180));
-            rotateZ(radians(sin(framesIntoScene) * (i+1) * 2 + i ));
-            scale(24);
-            shape(poopShape);
-            popMatrix();
-            pushMatrix();
+        if(timeIntoScene > 125760-124080) {
+            for (int i = 0; i < pooArray.size(); i++) {
+                popMatrix();
+                pushMatrix();
+                ObjPosition temp = pooArray.get(i);
+                translate(temp.getX(), temp.getY(), temp.getZ());
+                rotateY(radians(90));
+                rotateX(radians(180));
+                rotateZ(radians(5 + sin(framesIntoScene) * (i + 1) * 2 + i));
+                scale(24);
+                shape(poopShape);
+                popMatrix();
+                pushMatrix();
+            }
         }
         popMatrix();
     }
