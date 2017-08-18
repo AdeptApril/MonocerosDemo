@@ -55,7 +55,7 @@ public class UsingProcessing extends PApplet{
     private int horseCount = 1;
     private int narwhalCount = 1;
     private boolean pooSet = false; //This could probably be done with checking to see if the poo is in the array, but a state variable seems fairly good performance-wise
-    private ArrayList<ObjPosition> pooArray = new ArrayList<ObjPosition>();
+    private ArrayList<ObjPosition> pooArray;// = new ArrayList<ObjPosition>();
 
     private int tempx = 0; //TODO: Delete anything that uses this, then delete this.
     private int tempy = 0;
@@ -2668,6 +2668,9 @@ public class UsingProcessing extends PApplet{
     {
         background(0);
         pushMatrix();
+
+        if(framesIntoScene == 1)
+            pooArray = new ArrayList<ObjPosition>();
         
         //Light is supposed to be mostly from above, with a fair amount of scattered light
         lightFromAbove();
@@ -2842,16 +2845,17 @@ public class UsingProcessing extends PApplet{
             pooSet = false;
         } else
         {
+            translate(width / 2, height / 2, 500);
             if(!pooSet) {
-                pooArray.add(new ObjPosition(randX, randY, randZ));
+                pooArray.add(new ObjPosition(width / 2, height / 2 - 50, 100));
                 pooSet = true;
             }
-            ObjPosition temp = pooArray.get(pooArray.size()-1);
-            translate(temp.getX(), temp.getY(), temp.getZ());
             rotateY(radians(90));
             rotateX(radians(180));
-            scale(48);
+            scale(32+framesIntoScene-260);
+            shapeMode(CENTER);
             shape(babyUnicornShape);
+            shapeMode(CORNER);
         }
 
         popMatrix();
@@ -2864,6 +2868,7 @@ public class UsingProcessing extends PApplet{
             translate(temp.getX(), temp.getY(), temp.getZ());
             rotateY(radians(90));
             rotateX(radians(180));
+            rotateZ(radians(sin(framesIntoScene) * (i+1) * 2 + i ));
             scale(24);
             shape(poopShape);
             popMatrix();
