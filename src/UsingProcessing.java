@@ -357,7 +357,7 @@ public class UsingProcessing extends PApplet{
                 break;
             case "CREDITS1":
                 credits1();
-                if (millis() - startTimer > 10000){
+                if (millis() - startTimer > 7680){
                     state = "CREDITS2";
                     resetVars();
                 }
@@ -365,7 +365,7 @@ public class UsingProcessing extends PApplet{
             case "CREDITS2":
                 credits2();
                 if (millis() - startTimer > 7680){
-                    state = "END"; //TODO: Change to CREDITS3
+                    state = "CREDITS3";
                     resetVars();
                 }
                 break;
@@ -529,6 +529,14 @@ public class UsingProcessing extends PApplet{
                 loadBatch3();
                 state="CREDITS";
                 player.cue(125760);
+                resetVars();
+                break;
+            case 'p':
+                loadBatch1();
+                loadBatch2();
+                loadBatch3();
+                state="CREDITS3";
+                player.cue(156480);
                 resetVars();
                 break;
 //            case 'r':
@@ -3079,6 +3087,16 @@ public class UsingProcessing extends PApplet{
         background(0);
         pushMatrix();
         
+        credits3text();
+
+        lightFromAbove();
+        pointLight(200, 200, 200, width / 2, height / 2, 200);
+        pointLight(200, 200, 200, width / 2, height / 4, 200);
+
+        popMatrix();
+    }
+    public void credits3text()
+    {
         if(framesIntoScene == 1){
             img = loadImage("MonocerosLogoWhite.png"); //TODO: remove and load in a better place
             font = createFont("Kingthings_Calligraphica_2.ttf", 52); //TODO: remove and load in a better place
@@ -3091,27 +3109,21 @@ public class UsingProcessing extends PApplet{
 
         popMatrix();
         pushMatrix();
-        
+
         textAlign(CENTER);
         fill(242,100,252);
         textFont(font,250);
         text("3D Models",width/2,(height/2)-140);
-        
+
         fill(255,255,255);
         textFont(font,100);
         text("by",width/2,(height/2));
-        
+
         textFont(font,200);
         text("Dusty",width/2,(height/2)+220);
-        
+
         popMatrix();
         pushMatrix();
-
-        lightFromAbove();
-        pointLight(200, 200, 200, width / 2, height / 2, 200);
-        pointLight(200, 200, 200, width / 2, height / 4, 200);
-
-        popMatrix();
     }
     
     public void credits4()
