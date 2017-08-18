@@ -17,11 +17,11 @@ import java.util.Random;
  * @author Computer
  */
 public class UsingProcessing extends PApplet{
-    
-    Minim minim;
-    AudioPlayer player;
-    
-    Random rand = new Random();
+
+    private Minim minim;
+    private AudioPlayer player;
+
+    private Random rand = new Random();
 
     private int framesIntoScene = 0;
     private int timeIntoScene = 0; //Time in milliseconds.
@@ -29,75 +29,75 @@ public class UsingProcessing extends PApplet{
     private int y = 80;
     private int secondLine = 88;
     private int thirdLine = 96;
-    String state = "LOADINGSTART"; //TODO: Change back to LOADINGSTART
-    int textX = 400;
-    int textY = 200;
-    int tempNum = 0;
-    int decay = 0;
-    int translateX = 0;
-    int translateY = 0;
-    int translateZ = 0;
-    
-    int textFade = 0;
-    int faderSwitch = 1;
-    int textSwitch = 0;
-    PFont font;
-    int rainbowRate = 0;
-    int redTop=100;
-    int orangeTop=110;
-    int yellowTop=120;
-    int greenTop=130;
-    int blueTop=140;
-    int indigoTop=150;
-    int purpleTop=160;
-    int purpleBottom=170;
+    private String state = "LOADINGSTART"; //TODO: Change back to LOADINGSTART
+    private int textX = 400;
+    private int textY = 200;
+    private int tempNum = 0;
+    private int decay = 0;
+    private int translateX = 0;
+    private int translateY = 0;
+    private int translateZ = 0;
 
-    int horseCount = 1;
-    int narwhalCount = 1;
-    boolean pooSet = false; //This could probably be done with checking to see if the poo is in the array, but a state variable seems fairly good performance-wise
-    ArrayList<ObjPosition> pooArray = new ArrayList<ObjPosition>();
-    
-    int tempx = 0; //TODO: Delete anything that uses this, then delete this.
-    int tempy = 0;
-    int tempz = 0;
-    
-    int credit2UniPosX = 1890;
-    int credit2UniPosY = 0;
-    int credit2UniPosZ = 0;
-    int credit2IcePosX = 1920;
-    int credit2IcePosY = 20;
-    int credit2IcePosZ = 0;
-    int credit2Flip = 1;
+    private int textFade = 0;
+    private int faderSwitch = 1;
+    private int textSwitch = 0;
+    private PFont font;
+    private int rainbowRate = 0;
+    private int redTop=100;
+    private int orangeTop=110;
+    private int yellowTop=120;
+    private int greenTop=130;
+    private int blueTop=140;
+    private int indigoTop=150;
+    private int purpleTop=160;
+    private int purpleBottom=170;
 
-    boolean batch1Loaded = false;
-    boolean batch2Loaded = false;
-    boolean batch3Loaded = false;
-    
-    float angle;
-    
-    PImage img;
-    PShape cup;
-    PShape horseShape;
-    PShape horseRainbowShape;
-    PShape narwhalShape;
-    PShape narwhalRainbowShape;
-    PShape backgroundLandShape;
-    PShape backgroundWaterShape;
-    PShape babyUnicornShape;
-    PShape backgroundLandSnowShape;
-    PShape backgroundSnowShape;
-    PShape backgroundSnowWaterShape;
-    PShape birdShape;
-    PShape cloudShape;
-    PShape fishShape;
-    PShape flowerShape;
-    PShape iceShelfShape;
-    PShape icebergShape;
-    PShape[] poopShapes;
-    PShape poopShape;
-    PShape treeShape;
-    PShape lightBulbShape;
-    PShape heartShape;
+    private int horseCount = 1;
+    private int narwhalCount = 1;
+    private boolean pooSet = false; //This could probably be done with checking to see if the poo is in the array, but a state variable seems fairly good performance-wise
+    private ArrayList<ObjPosition> pooArray = new ArrayList<ObjPosition>();
+
+    private int tempx = 0; //TODO: Delete anything that uses this, then delete this.
+    private int tempy = 0;
+    private int tempz = 0;
+
+    private int credit2UniPosX = 1890;
+    private int credit2UniPosY = 0;
+    private int credit2UniPosZ = 0;
+    private int credit2IcePosX = 1920;
+    private int credit2IcePosY = 20;
+    private int credit2IcePosZ = 0;
+    private int credit2Flip = 1;
+
+    private boolean batch1Loaded = false;
+    private boolean batch2Loaded = false;
+    private boolean batch3Loaded = false;
+
+    private float angle;
+
+    private PImage img;
+    private PShape cup;
+    private PShape horseShape;
+    private PShape horseRainbowShape;
+    private PShape narwhalShape;
+    private PShape narwhalRainbowShape;
+    private PShape backgroundLandShape;
+    private PShape backgroundWaterShape;
+    private PShape babyUnicornShape;
+    private PShape backgroundLandSnowShape;
+    private PShape backgroundSnowShape;
+    private PShape backgroundSnowWaterShape;
+    private PShape birdShape;
+    private PShape cloudShape;
+    private PShape fishShape;
+    private PShape flowerShape;
+    private PShape iceShelfShape;
+    private PShape icebergShape;
+    private PShape[] poopShapes;
+    private PShape poopShape;
+    private PShape treeShape;
+    private PShape lightBulbShape;
+    private PShape heartShape;
     
     //TODO: Remove all the temporary showing frames-into-scenes text (or other debug text)
     
