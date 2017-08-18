@@ -65,13 +65,13 @@ public class UsingProcessing extends PApplet{
     private int tempy = 0;
     private int tempz = 0;
 
-    private int credit2UniPosX = 1890;
-    private int credit2UniPosY = 0;
-    private int credit2UniPosZ = 0;
-    private int credit2IcePosX = 1920;
-    private int credit2IcePosY = 20;
-    private int credit2IcePosZ = 0;
-    private int credit2Flip = 1;
+    private float credit2UniPosX = 1890;
+    private float credit2UniPosY = 0;
+    private float credit2UniPosZ = 0;
+    private float credit2IcePosX = 1920;
+    private float credit2IcePosY = 20;
+    private float credit2IcePosZ = -30;
+    private int credit2Flip = -1;
 
     private boolean batch1Loaded = false;
     private boolean batch2Loaded = false;
@@ -3038,32 +3038,38 @@ public class UsingProcessing extends PApplet{
 //      credit2IcePosX = 1920;
 //      credit2IcePosY = 20;
 //      credit2IcePosZ = 0;
-        if ((credit2UniPosX<=width/3)&&(credit2Flip>0)){
-            credit2Flip *= -1;
+        if ((credit2UniPosX<=width/3)&&(credit2Flip<0)){
+            credit2Flip =1;
         }
 
-        if (credit2Flip>0){
-            credit2UniPosX-=8;
-            credit2IcePosX-=8;
-            credit2IcePosZ+=4;
-            if (credit2UniPosX<=width/2) {
+        if (credit2Flip<0){
+            if (credit2UniPosX<=width*.75) {
+                //credit2UniPosX-=((1-((width/3)/credit2UniPosX))*12)/abs(credit2Flip);
+                //credit2Flip--;
+                //credit2IcePosX-=(1-((width/3)/credit2IcePosX))*12;
+                credit2UniPosX-=10;
+                credit2IcePosX-=10;
                 credit2UniPosZ += 4;
-
+                credit2IcePosZ+=4;
+            }else {
+                credit2UniPosX-=8;
+                credit2IcePosX-=8;
+                credit2IcePosZ+=4;
             }
         }else{
             credit2UniPosX+=8;
             credit2IcePosX+=8;
             credit2UniPosZ-=1;
-            credit2IcePosZ+=4;
+            credit2IcePosZ+=8;
         }
 
         credit2UniPosY+=4;
         credit2IcePosY+=4;
 
         translate(credit2UniPosX, credit2UniPosY,credit2IcePosZ);
-        rotateY(radians(90+credit2UniPosZ));
+        rotateY(radians(90+credit2UniPosZ/2));
         rotateX(radians(200));
-        rotateZ(radians(credit2UniPosZ/3));
+        rotateZ(radians(credit2UniPosZ/6));
 
         scale(60);
         shape(babyUnicornShape);
@@ -3072,9 +3078,9 @@ public class UsingProcessing extends PApplet{
         pushMatrix();
 
         translate(credit2IcePosX, credit2IcePosY,credit2IcePosZ);
-        rotateY(radians(90+credit2UniPosZ));
+        rotateY(radians(90+credit2UniPosZ/2));
         rotateX(radians(200));
-        rotateZ(radians(credit2UniPosZ/3));
+        rotateZ(radians(credit2UniPosZ/6));
 
         scale(60);
         shape(icebergShape);
