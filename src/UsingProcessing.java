@@ -15,7 +15,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 /**
  *
- * @author Computer
+ * @author Monoceros: AdeptApril and Dusty
  */
 public class UsingProcessing extends PApplet{
 
@@ -30,7 +30,7 @@ public class UsingProcessing extends PApplet{
     private int y = 80;
     private int secondLine = 88;
     private int thirdLine = 96;
-    private String state = "CREDITS4"; //TODO: Change back to LOADINGSTART
+    private String state = "LOADINGSTART";
     private int textX = 400;
     private int textY = 200;
     private int tempNum = 0;
@@ -38,9 +38,9 @@ public class UsingProcessing extends PApplet{
     private int translateX = 0;
     private int translateY = 0;
     private int translateZ = 0;
-    int randRotateX = 0;
-    int randRotateY = 0;
-    int randRotateZ = 0;
+    private int randRotateX = 0;
+    private int randRotateY = 0;
+    private int randRotateZ = 0;
 
     private int textFade = 0;
     private int faderSwitch = 1;
@@ -61,7 +61,7 @@ public class UsingProcessing extends PApplet{
     private boolean pooSet = false; //This could probably be done with checking to see if the poo is in the array, but a state variable seems fairly good performance-wise
     private ArrayList<ObjPosition> pooArray;// = new ArrayList<ObjPosition>();
 
-    private int tempx = 0; //TODO: Delete anything that uses this, then delete this.
+    private int tempx = 0;
     private int tempy = 0;
     private int tempz = 0;
 
@@ -2888,12 +2888,7 @@ public class UsingProcessing extends PApplet{
         pushMatrix();
         stroke(0);
         noStroke();
-        
-        if(framesIntoScene == 1){
-            babyUnicornShape = loadShape("baby_unicorn_final.obj"); //TODO: remove this and load in the proper place
-            img = loadImage("MonocerosLogoWhite.png"); //TODO: remove and load in a better place
-            font = createFont("Kingthings_Calligraphica_2.ttf", 52); //TODO: remove and load in a better place
-        }
+
 
         imageMode(CORNER);
         scale((float)0.5);
@@ -2987,14 +2982,6 @@ public class UsingProcessing extends PApplet{
         background(0);
         pushMatrix();
         
-        if(framesIntoScene == 1){
-            babyUnicornShape = loadShape("baby_unicorn_final.obj"); //TODO: remove this and load in the proper place
-            icebergShape = loadShape("iceberg.obj");
-            img = loadImage("MonocerosLogoWhite.png"); //TODO: remove and load in a better place
-            font = createFont("Kingthings_Calligraphica_2.ttf", 52); //TODO: remove and load in a better place
-        }
-
-
         //imageMode(CENTER);
         scale((float)0.5);
         image(img, 0, 0);
@@ -3274,12 +3261,6 @@ public class UsingProcessing extends PApplet{
     }
     public void credits3text()
     {
-        if(framesIntoScene == 1){
-            img = loadImage("MonocerosLogoWhite.png"); //TODO: remove and load in a better place
-            font = createFont("Kingthings_Calligraphica_2.ttf", 52); //TODO: remove and load in a better place
-        }
-
-
         imageMode(CORNER);
         scale((float)0.5);
         image(img, 0, 0);
@@ -3309,22 +3290,6 @@ public class UsingProcessing extends PApplet{
         background(0);
         pushMatrix();
         
-        if(framesIntoScene == 1){
-            babyUnicornShape = loadShape("baby_unicorn_final.obj"); //TODO: remove this and load in the proper place
-            icebergShape = loadShape("iceberg.obj");
-            flowerShape = loadShape("flower.obj");
-            cloudShape = loadShape("cloud.obj");
-            treeShape = loadShape("tree.obj");
-            birdShape = loadShape("bird.obj");
-            fishShape = loadShape("fish.obj");
-            heartShape = loadShape("heart.obj");
-            lightBulbShape = loadShape("lightbulb.obj");
-            poopShape = loadShape("poop.obj");
-            img = loadImage("MonocerosLogoWhite.png"); //TODO: remove and load in a better place
-            font = createFont("Kingthings_Calligraphica_2.ttf", 52); //TODO: remove and load in a better place
-        }
-
-
         //imageMode(CENTER);
         scale((float)0.5);
         image(img, 0, 0);
@@ -3372,7 +3337,7 @@ public class UsingProcessing extends PApplet{
                 translate(width - (framesIntoScene - i) * 15, 350, -100);
                 rotateZ(radians(180));
 
-                fishShape.setFill(color(55,55,55));
+                fishShape.setFill(color(RGB,200,50,200));
                 scale(50);
                 shape(fishShape);
             }
@@ -3391,14 +3356,14 @@ public class UsingProcessing extends PApplet{
                 rotateZ(radians(90));
                 rotateY(radians(90));
 
-                birdShape.setFill(color(155,155,155));
+                birdShape.setFill(color(RGB,0,255,155));
                 scale(50);
                 shape(birdShape);
             }
             if (i % (interval*2) == 0) { //flower
                 popMatrix();
                 pushMatrix();
-                translate(width - (framesIntoScene - i) * 5, 850, -100);
+                translate((framesIntoScene - i) * 5, 850, -100);
                 rotateZ(radians(180));
 
                 scale(50);
@@ -3416,7 +3381,7 @@ public class UsingProcessing extends PApplet{
             if (i % interval == 0) { //iceberg
                 popMatrix();
                 pushMatrix();
-                translate(width - (framesIntoScene - i) * 15, 1050, -100);
+                translate((framesIntoScene - i) * 15, 1050, -100);
                 rotateZ(radians(180));
 
                 scale(25);
@@ -3439,11 +3404,6 @@ public class UsingProcessing extends PApplet{
         background(0);
         pushMatrix();
         
-        if(framesIntoScene == 1){
-            img = loadImage("MonocerosLogoWhite.png"); //TODO: remove and load in a better place
-            font = createFont("Kingthings_Calligraphica_2.ttf", 52); //TODO: remove and load in a better place
-        }
-
         //imageMode(CENTER);
         scale((float)0.5);
         image(img, 0, 0);
@@ -3556,8 +3516,8 @@ public class UsingProcessing extends PApplet{
         background(0);
         pushMatrix();
         textSize(200);
-        fill(255);
-        text("The End", 500, 500);
+        fill(255,0,100);
+        text("Fin", 500, 500);
         if(framesIntoScene > 180 )
         {
             state = "END";
