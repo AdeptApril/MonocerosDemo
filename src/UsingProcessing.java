@@ -25,16 +25,16 @@ public class UsingProcessing extends PApplet{
     private Random rand = new Random();
 
     private int framesIntoScene = 0;
-    private int timeIntoScene = 0; //Time in milliseconds.
+    //private int timeIntoScene = 0; //Time in milliseconds.
     private int startTimer; //startTimer = millis() at the beginning of any scene
-    private int y = 80;
-    private int secondLine = 88;
-    private int thirdLine = 96;
+//    private int y = 80;
+//    private int secondLine = 88;
+//    private int thirdLine = 96;
     private String state = "LOADINGSTART";
-    private int textX = 400;
-    private int textY = 200;
-    private int tempNum = 0;
-    private int decay = 0;
+//    private int textX = 400;
+//    private int textY = 200;
+//    private int tempNum = 0;
+//    private int decay = 0;
     private int translateX = 0;
     private int translateY = 0;
     private int translateZ = 0;
@@ -61,9 +61,9 @@ public class UsingProcessing extends PApplet{
     private boolean pooSet = false; //This could probably be done with checking to see if the poo is in the array, but a state variable seems fairly good performance-wise
     private ArrayList<ObjPosition> pooArray;// = new ArrayList<ObjPosition>();
 
-    private int tempx = 0;
-    private int tempy = 0;
-    private int tempz = 0;
+//    private int tempx = 0;
+//    private int tempy = 0;
+//    private int tempz = 0;
 
     private float credit2UniPosX = 1890;
     private float credit2UniPosY = 0;
@@ -77,7 +77,7 @@ public class UsingProcessing extends PApplet{
     private boolean batch2Loaded = false;
     private boolean batch3Loaded = false;
 
-    private float angle;
+    //private float angle;
 
     private PImage img;
     //private PShape cup;
@@ -106,13 +106,13 @@ public class UsingProcessing extends PApplet{
         PApplet.main(new String[]{UsingProcessing.class.getName()}); 
     }
     
-    public void resetVars() {
+    private void resetVars() {
         framesIntoScene = 0;
-        timeIntoScene = 0;
+        //timeIntoScene = 0;
         translateX = 0;
         translateY = 0;
         translateZ = 0;
-        tempNum = 0;
+        //tempNum = 0;
         startTimer = millis();
         textFade = 0;
         faderSwitch = 1;
@@ -160,7 +160,7 @@ public class UsingProcessing extends PApplet{
      * Gets hit each time through, and goes to a different place depending on
      * how the "state" variable is currently set.
      */
-    public void stateMachine() {
+    private void stateMachine() {
         switch (state) {
             case "END":
                 player.close();
@@ -188,7 +188,6 @@ public class UsingProcessing extends PApplet{
                 narwhalScene();
                 if (millis() - startTimer > 7680){//framesIntoScene > 228) {
                     narwhalCount++;
-                    //TODO: Make this have the correct progression of scenes
                     if (narwhalCount <= 2) {
                         state = "HORSE";
                     }
@@ -413,7 +412,7 @@ public class UsingProcessing extends PApplet{
      * If a key is hit, it changes the state. Well, as long as it's in the list.
      * @param key - which key was hit
      */
-    public void stateSwitch(char key) {
+    private void stateSwitch(char key) {
         switch (key) {
             case ESC:
             case 'q':
@@ -558,7 +557,7 @@ public class UsingProcessing extends PApplet{
         }
     }
 
-    public void intro(){
+    private void intro(){
         background(0);
         pushMatrix();
         
@@ -772,7 +771,7 @@ public class UsingProcessing extends PApplet{
 //        popMatrix();
 //    }
     
-    public void narwhalScene() {
+    private void narwhalScene() {
         //background(0x54, 0xff, 0x9f); // sea green
         background(0);
         pushMatrix();
@@ -869,7 +868,7 @@ public class UsingProcessing extends PApplet{
         popMatrix(); // end background objects
     }    
     
-    public void horseScene() {
+    private void horseScene() {
         camera(width / 2 -85 + framesIntoScene/3, height / 2 - 50 + framesIntoScene, (height/2) / tan((float) (PI*30.0 / 180.0)), width / 2, height / 2, 0, 0, 1, 0);
         //background(0x87, 0xce, 0xff); //sky blue
         background(0);
@@ -971,7 +970,7 @@ public class UsingProcessing extends PApplet{
         popMatrix();
     }
     
-    public void narwhalRainbowApproach()
+    private void narwhalRainbowApproach()
     {
         background(0x54, 0xff, 0x9f); // sea green
         pushMatrix();
@@ -1085,7 +1084,7 @@ public class UsingProcessing extends PApplet{
         popMatrix();
     }
     
-    public void horseRainbowApproach()
+    private void horseRainbowApproach()
     {
         background(0x87, 0xce, 0xff); //sky blue
         pushMatrix();
@@ -1206,7 +1205,7 @@ public class UsingProcessing extends PApplet{
         popMatrix();
     }   
 
-    public void rainbow(int centerX, int centerY) {
+    private void rainbow(int centerX, int centerY) {
         //TODO: Make rainbow thicker, with speed multiplier working better, and center not being black.
         int speedMultiplier = 18; //how quickly to go through the rainbow
         int ellipseSizeMultiplier = 16; //I think this, combined with i < height/x, 
@@ -1262,7 +1261,7 @@ public class UsingProcessing extends PApplet{
         ellipse(centerX, centerY, height/2, height/2);
     }
 
-    public void narwhalSuck()
+    private void narwhalSuck()
     {
         background(0);
         pushMatrix();
@@ -1364,7 +1363,7 @@ public class UsingProcessing extends PApplet{
         popMatrix();
     }
     
-    public void horseSuck()
+    private void horseSuck()
     {
         background(0);
         pushMatrix();
@@ -1474,7 +1473,7 @@ public class UsingProcessing extends PApplet{
         popMatrix();
     }
     
-    public void narwhalSearch()
+    private void narwhalSearch()
     {
         background(0);
         pushMatrix();
@@ -1505,9 +1504,9 @@ public class UsingProcessing extends PApplet{
         //rotateZ(radians(180));
         if(framesIntoScene < 30)
             translate(0, framesIntoScene, framesIntoScene * 10); //-(sin((framesIntoScene + 90)/5) * 5)
-        else if(framesIntoScene >= 30 && framesIntoScene < 60 )
+        else if(framesIntoScene < 60 )
             translate(0, -framesIntoScene+60, framesIntoScene * 10);
-        else if(framesIntoScene >= 60)
+        else
             translate(0, translateY, framesIntoScene * 10);
 
         //narwhalShape.setFill(color(50 + decay, 50, 150));
@@ -1601,7 +1600,7 @@ public class UsingProcessing extends PApplet{
         popMatrix();
     }
 
-    public void horseSearch()
+    private void horseSearch()
     {
         //background(0x87, 0xce, 0xff); //sky blue
         background(0);
@@ -1790,7 +1789,7 @@ public class UsingProcessing extends PApplet{
         popMatrix();
     }
     
-    public void narwhalSearch2()
+    private void narwhalSearch2()
     {
         background(0);
         pushMatrix();
@@ -1821,9 +1820,9 @@ public class UsingProcessing extends PApplet{
         //rotateZ(radians(180));
         if(framesIntoScene < 30)
             translate(0, framesIntoScene, framesIntoScene * 10); //-(sin((framesIntoScene + 90)/5) * 5)
-        else if(framesIntoScene >= 30 && framesIntoScene < 60 )
+        else if(framesIntoScene < 60 )
             translate(0, -framesIntoScene+60, framesIntoScene * 10);
-        else if(framesIntoScene >= 60)
+        else
             translate(0, translateY, framesIntoScene * 10);
         
         //narwhalShape.setFill(color(50 + decay, 50, 150));
@@ -1855,7 +1854,7 @@ public class UsingProcessing extends PApplet{
         popMatrix();
         pushMatrix();
         
-        translate((width * 1 / 5)-framesIntoScene, height/2 -(sin((framesIntoScene + 90)/5) * 5));
+        translate((width / 5)-framesIntoScene, height/2 -(sin((framesIntoScene + 90)/5) * 5));
         rotateY(radians(160));
         rotateZ(radians(180));
         rotateX(radians(-20));
@@ -1917,7 +1916,7 @@ public class UsingProcessing extends PApplet{
         popMatrix();
     }
         
-   public void horseSearch2()
+   private void horseSearch2()
     {
         //TODO: Add pine tree(s)
         //background(0x87, 0xce, 0xff); //sky blue
@@ -2102,7 +2101,7 @@ public class UsingProcessing extends PApplet{
         popMatrix();
     }
     
-    public void horseNarwhalMeeting()
+    private void horseNarwhalMeeting()
     {
         background(0);
         pushMatrix();
@@ -2163,9 +2162,9 @@ public class UsingProcessing extends PApplet{
         //rotateZ(radians(180));
         if(framesIntoScene < 30)
             translate(0, framesIntoScene, (framesIntoScene * 5)); //-(sin((framesIntoScene + 90)/5) * 5)
-        else if(framesIntoScene >= 30 && framesIntoScene < 60 )
+        else if(framesIntoScene < 60 )
             translate(0, -framesIntoScene+60, framesIntoScene + 120);
-        else if(framesIntoScene >= 60)
+        else
             translate(0, translateY, (framesIntoScene) + 150);
         
         //narwhalShape.setFill(color(50 + decay, 50, 150));
@@ -2199,7 +2198,7 @@ public class UsingProcessing extends PApplet{
         popMatrix();
     }
     
-    public void iceShelfBreak()
+    private void iceShelfBreak()
     {
         background(0);
         pushMatrix();
@@ -2291,7 +2290,7 @@ public class UsingProcessing extends PApplet{
         popMatrix();
     }
     
-    public void worriedHorse()
+    private void worriedHorse()
     {
         background(0);
         pushMatrix();
@@ -2422,7 +2421,7 @@ public class UsingProcessing extends PApplet{
         popMatrix();
     }
     
-    public void narwhalSave()
+    private void narwhalSave()
     {
         background(0);
         pushMatrix();
@@ -2578,7 +2577,7 @@ public class UsingProcessing extends PApplet{
         popMatrix();
     }
     
-    public void loveInAir()
+    private void loveInAir()
     {
         background(0);
         pushMatrix();
@@ -2737,7 +2736,7 @@ public class UsingProcessing extends PApplet{
         popMatrix();
     }
     
-    public void sexyTimes()
+    private void sexyTimes()
     {
         background(0);
         pushMatrix();
@@ -2753,13 +2752,13 @@ public class UsingProcessing extends PApplet{
         popMatrix();
     }
     
-    public void babyUnicorn()
+    private void babyUnicorn()
     {
         background(0);
         pushMatrix();
 
         if(framesIntoScene == 1)
-            pooArray = new ArrayList<ObjPosition>();
+            pooArray = new ArrayList<>();
         
         //Light is supposed to be mostly from above, with a fair amount of scattered light
         lightFromAbove();
@@ -2813,9 +2812,9 @@ public class UsingProcessing extends PApplet{
             randX = ThreadLocalRandom.current().nextInt(500, width-500);//(int)(noise(framesIntoScene) * (width-100) + 100);
             randY = ThreadLocalRandom.current().nextInt(300, height-300);//(int)(noise(framesIntoScene) * (height-100) + 100);
             randZ = (int)(noise(framesIntoScene) * 500) + 100;
-            randRotateX = ThreadLocalRandom.current().nextInt(0, 360);;
-            randRotateY = ThreadLocalRandom.current().nextInt(0, 360);;
-            randRotateZ = ThreadLocalRandom.current().nextInt(0, 360);;
+            randRotateX = ThreadLocalRandom.current().nextInt(0, 360);
+            randRotateY = ThreadLocalRandom.current().nextInt(0, 360);
+            randRotateZ = ThreadLocalRandom.current().nextInt(0, 360);
         }
         if(timeIntoScene < 125760-124080 ) {
             translate(width / 2, height / 2 - 50);
@@ -2997,7 +2996,7 @@ public class UsingProcessing extends PApplet{
         popMatrix();
     }
     
-    public void credits1()
+    private void credits1()
     {
         background(0);
         pushMatrix();
@@ -3038,7 +3037,7 @@ public class UsingProcessing extends PApplet{
         pointLight(200, 200, 200, width / 2, height / 4, 200);
 
         if (framesIntoScene>30) {
-            translate(0+((framesIntoScene-35)*20), (height*3)/4);
+            translate(((framesIntoScene-35)*20), (height*3)/4);
             rotateY(radians(270));
             rotateX(radians(180));
 
@@ -3064,25 +3063,25 @@ public class UsingProcessing extends PApplet{
             purpleBottom += (rainbowRate*7); //initial 170
             //red
             fill(255,0,0);
-            triangle(0, (height/2)+redTop, 0+((framesIntoScene-35)*20)-110, (height/2)+114, 0, (height/2)+orangeTop);
+            triangle(0, (height/2)+redTop, ((framesIntoScene-35)*20)-110, (height/2)+114, 0, (height/2)+orangeTop);
             //orange
             fill(255,127,0);
-            triangle(0, (height/2)+orangeTop, 0+((framesIntoScene-35)*20)-110, (height/2)+116, 0, (height/2)+yellowTop);
+            triangle(0, (height/2)+orangeTop, ((framesIntoScene-35)*20)-110, (height/2)+116, 0, (height/2)+yellowTop);
             //yellow
             fill(255,255,0);
-            triangle(0, (height/2)+yellowTop, 0+((framesIntoScene-35)*20)-110, (height/2)+118, 0, (height/2)+greenTop);
+            triangle(0, (height/2)+yellowTop, ((framesIntoScene-35)*20)-110, (height/2)+118, 0, (height/2)+greenTop);
             //green
             fill(0,255,0);
-            triangle(0, (height/2)+greenTop, 0+((framesIntoScene-35)*20)-110, (height/2)+120, 0, (height/2)+blueTop);
+            triangle(0, (height/2)+greenTop, ((framesIntoScene-35)*20)-110, (height/2)+120, 0, (height/2)+blueTop);
             //blue
             fill(0,255,255);
-            triangle(0, (height/2)+blueTop, 0+((framesIntoScene-35)*20)-110, (height/2)+122, 0, (height/2)+indigoTop);
+            triangle(0, (height/2)+blueTop, ((framesIntoScene-35)*20)-110, (height/2)+122, 0, (height/2)+indigoTop);
             //indigo
             fill(0,127,255);
-            triangle(0, (height/2)+indigoTop, 0+((framesIntoScene-35)*20)-110, (height/2)+124, 0, (height/2)+purpleTop);
+            triangle(0, (height/2)+indigoTop, ((framesIntoScene-35)*20)-110, (height/2)+124, 0, (height/2)+purpleTop);
             //purple
             fill(127,0,255);
-            triangle(0, (height/2)+purpleTop, 0+((framesIntoScene-35)*20)-110, (height/2)+126, 0, (height/2)+purpleBottom);
+            triangle(0, (height/2)+purpleTop, ((framesIntoScene-35)*20)-110, (height/2)+126, 0, (height/2)+purpleBottom);
         }
 
 
@@ -3092,7 +3091,7 @@ public class UsingProcessing extends PApplet{
         popMatrix();
     }
     
-    public void credits2()
+    private void credits2()
     {
         background(0);
         pushMatrix();
@@ -3189,7 +3188,7 @@ public class UsingProcessing extends PApplet{
         popMatrix();
     }
     
-    public void credits3()
+    private void credits3()
     {//Roughly 230 frames in the scene
         //TODO: Perhaps have a unicorn come through the center
         //TODO: Add the 22.5 degree things (beyond the first two)
@@ -3374,7 +3373,7 @@ public class UsingProcessing extends PApplet{
 
         popMatrix();
     }
-    public void credits3text()
+    private void credits3text()
     {
         imageMode(CORNER);
         scale((float)0.5);
@@ -3399,7 +3398,7 @@ public class UsingProcessing extends PApplet{
         pushMatrix();
     }
     
-    public void credits4()
+    private void credits4()
     {
         int interval = 20;
         background(0);
@@ -3514,7 +3513,7 @@ public class UsingProcessing extends PApplet{
         }
 
     
-    public void credits5()
+    private void credits5()
     {
         background(0);
         pushMatrix();
@@ -3559,10 +3558,10 @@ public class UsingProcessing extends PApplet{
     
     /**
      * Creates a rainbow triangle that fades in, going to the passed start point.
-     * @param startX
-     * @param startY 
+     * @param startX - Point triangle goes to
+     * @param startY - Point triangle goes to
      */
-    public void rainbowTriangle(int startX, int startY, int direction, int frameDelay)
+    private void rainbowTriangle(int startX, int startY, int direction, int frameDelay)
     { //-1 makes it come in from the left. 1 from the right Well, theoretically would be, if that's done. So TODO.
         if(framesIntoScene < frameDelay)
             return;
@@ -3619,15 +3618,15 @@ public class UsingProcessing extends PApplet{
         }
     }
 
-    public void rainbowStripe(int startX, int startY, int direction, int frameDelay)
-    { //-1 makes it come in from the left. 1 from the right Well, theoretically would be, if that's done. So TODO.
-        strokeWeight(10);
-        stroke(155,68,240);
-        //line(0, startY, startX+i, startY);
-    }
+//    public void rainbowStripe(int startX, int startY, int direction, int frameDelay)
+//    { //-1 makes it come in from the left. 1 from the right Well, theoretically would be, if that's done. So TODO.
+//        strokeWeight(10);
+//        stroke(155,68,240);
+//        //line(0, startY, startX+i, startY);
+//    }
 
 
-    public void endScene() {
+    private void endScene() {
         background(0);
         pushMatrix();
         textSize(200);
@@ -3641,7 +3640,7 @@ public class UsingProcessing extends PApplet{
         popMatrix();
     }
     
-    public void lightFromAbove() {
+    private void lightFromAbove() {
         //directionalLight(v1, v2, v3, nx, ny, nz)
         //Light is supposed to be mostly from above, with a fair amount of scattered light
         //pointLight(255, 255, 255, 0, -height, -200);
@@ -3651,13 +3650,14 @@ public class UsingProcessing extends PApplet{
         lightFalloff((float)0.5, 0, 0);
         ambientLight(64, 64, 64);
         //pointLight(255, 255, 255, 0 + tempx, -1000 + tempy, 1000 + tempz);
-        tempx += 0;
-        tempy += 0;
-        tempz += 0;
+//        tempx += 0;
+//        tempy += 0;
+//        tempz += 0;
         
         //The following, with a tempz -= 5; leads to a solid sunset (well, dusk, anyway; no sun) effect
         //pointLight(255, 255, 255, 0 + tempx, -1000 + tempy, 1000 + tempz);
-        pointLight(255, 255, 255, 0 + tempx, -1000 + tempy, 1000 + tempz);
+        //pointLight(255, 255, 255, tempx, -1000 + tempy, 1000 + tempz);
+        pointLight(255, 255, 255, 0,-1000, 1000);
         //default light values
         //ambientLight(128, 128, 128);
         directionalLight(200, 200, 200, 0, 0, -1); 
