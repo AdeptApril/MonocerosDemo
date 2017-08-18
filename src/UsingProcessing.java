@@ -527,8 +527,8 @@ public class UsingProcessing extends PApplet{
                 loadBatch1();
                 loadBatch2();
                 loadBatch3();
-                state="CREDITS";
-                player.cue(125760);
+                state="CREDITS1";
+                player.cue(141120);
                 resetVars();
                 break;
             case 'p':
@@ -3083,15 +3083,175 @@ public class UsingProcessing extends PApplet{
     }
     
     public void credits3()
-    {
+    {//Roughly 230 frames in the scene
+        //TODO: Perhaps have a unicorn come through the center
+        //TODO: Add the 22.5 degree things (beyond the first two)
         background(0);
         pushMatrix();
         
         credits3text();
 
         lightFromAbove();
-        pointLight(200, 200, 200, width / 2, height / 2, 200);
-        pointLight(200, 200, 200, width / 2, height / 4, 200);
+        //pointLight(200, 200, 200, width / 2, height / 2, 200);
+        //pointLight(200, 200, 200, width / 2, height / 4, 200);
+
+        popMatrix();
+        pushMatrix();
+
+        int objectTiming1 = 10;
+        //beginning of Narwhal
+        for(int i = 0; i < framesIntoScene; i++) {
+            if(i % objectTiming1 == 0) { //narwhalRainbowShape
+                popMatrix();
+                pushMatrix();
+                translate(width / 2 -150 - (framesIntoScene - i) * 15, height / 2, -3000 + (framesIntoScene-i) * 75);
+                rotateY(radians(-90));
+                rotateX(radians(180));
+                scale(64);
+                shape(narwhalRainbowShape);
+            }
+            if(i % objectTiming1 == 0) { //horseRainbowShape
+                popMatrix();
+                pushMatrix();
+                translate(width / 2 +250 + (framesIntoScene - i) * 15, height / 2-250, -3000 + (framesIntoScene-i) * 75);
+                rotateY(radians(-90));
+                rotateX(radians(180));
+                scale(64);
+                shape(horseRainbowShape);
+            }
+            if(i % objectTiming1 == 0) {
+                popMatrix();
+                pushMatrix();
+                translate(width / 2, height / 2+ (framesIntoScene - i) * 15, -3000 + (framesIntoScene-i) * 75);
+                rotateY(radians(-90));
+                rotateX(radians(180));
+                scale(64);
+                shape(icebergShape);
+            }
+            if(i % objectTiming1 == 0) {
+                popMatrix();
+                pushMatrix();
+                translate(width / 2, height / 2 - (framesIntoScene - i) * 15, -3000 + (framesIntoScene-i) * 75);
+                rotateY(radians(-90));
+                rotateX(radians(180));
+                scale(64);
+                shape(cloudShape);
+            }
+            if(i % objectTiming1 == 0) {
+                popMatrix();
+                pushMatrix();
+                translate(width / 2+ (framesIntoScene - i) * 15, height / 2 - (framesIntoScene - i) * 15, -3000 + (framesIntoScene-i) * 75);
+                rotateY(radians(-90));
+                rotateX(radians(180));
+                scale(64);
+                shape(flowerShape);
+            }
+            if(i % objectTiming1 == 0) {
+                popMatrix();
+                pushMatrix();
+                translate(width / 2 - (framesIntoScene - i) * 15, height / 2 - (framesIntoScene - i) * 15, -3000 + (framesIntoScene-i) * 75);
+                rotateY(radians(-90));
+                rotateX(radians(180));
+                scale(64);
+                shape(birdShape);
+            }
+            if(i % objectTiming1 == 0) {
+                popMatrix();
+                pushMatrix();
+                translate(width / 2- (framesIntoScene - i) * 15, height / 2 + (framesIntoScene - i) * 15, -3000 + (framesIntoScene-i) * 75);
+                rotateY(radians(-90));
+                rotateX(radians(180));
+                scale(64);
+                shape(fishShape);
+            }
+            if(i % objectTiming1 == 0) {
+                popMatrix();
+                pushMatrix();
+                translate(width / 2+ (framesIntoScene - i) * 15, height / 2 + (framesIntoScene - i) * 15, -3000 + (framesIntoScene-i) * 75);
+                rotateY(radians(-90));
+                rotateX(radians(180));
+                scale(64);
+                shape(poopShape);
+            }
+            //*******************END OF N, S, E, W, NW, NE, SW, SE
+            //*******************
+            //*******************
+
+            if(i % objectTiming1 == 0) {
+                popMatrix();
+                pushMatrix();
+                translate(width / 2 - (framesIntoScene - i)/2 * 15, height / 2+ (framesIntoScene - i)/2 * 15, -3000 + (framesIntoScene-i) * 75);
+                rotateY(radians(-90));
+                rotateX(radians(180));
+                scale(64);
+                shape(treeShape);
+            }
+            if(i % objectTiming1 == 0) { //horseRainbowShape
+                popMatrix();
+                pushMatrix();
+                translate(width / 2 + (framesIntoScene - i)/2 * 15, height / 2+ (framesIntoScene - i)/2 * 15, -3000 + (framesIntoScene-i) * 75);
+                rotateY(radians(-90));
+                rotateX(radians(180));
+                scale(64);
+                shape(lightBulbShape);
+            }
+//            if(i % objectTiming1 == 0) {
+//                popMatrix();
+//                pushMatrix();
+//                translate(width / 2, height / 2+ (framesIntoScene - i) * 15, -3000 + (framesIntoScene-i) * 75);
+//                rotateY(radians(-90));
+//                rotateX(radians(180));
+//                scale(64);
+//                shape(icebergShape);
+//            }
+//            if(i % objectTiming1 == 0) {
+//                popMatrix();
+//                pushMatrix();
+//                translate(width / 2, height / 2 - (framesIntoScene - i) * 15, -3000 + (framesIntoScene-i) * 75);
+//                rotateY(radians(-90));
+//                rotateX(radians(180));
+//                scale(64);
+//                shape(cloudShape);
+//            }
+//            if(i % objectTiming1 == 0) {
+//                popMatrix();
+//                pushMatrix();
+//                translate(width / 2+ (framesIntoScene - i) * 15, height / 2 - (framesIntoScene - i) * 15, -3000 + (framesIntoScene-i) * 75);
+//                rotateY(radians(-90));
+//                rotateX(radians(180));
+//                scale(64);
+//                shape(flowerShape);
+//            }
+//            if(i % objectTiming1 == 0) {
+//                popMatrix();
+//                pushMatrix();
+//                translate(width / 2 - (framesIntoScene - i) * 15, height / 2 - (framesIntoScene - i) * 15, -3000 + (framesIntoScene-i) * 75);
+//                rotateY(radians(-90));
+//                rotateX(radians(180));
+//                scale(64);
+//                shape(birdShape);
+//            }
+//            if(i % objectTiming1 == 0) {
+//                popMatrix();
+//                pushMatrix();
+//                translate(width / 2- (framesIntoScene - i) * 15, height / 2 + (framesIntoScene - i) * 15, -3000 + (framesIntoScene-i) * 75);
+//                rotateY(radians(-90));
+//                rotateX(radians(180));
+//                scale(64);
+//                shape(fishShape);
+//            }
+//            if(i % objectTiming1 == 0) {
+//                popMatrix();
+//                pushMatrix();
+//                translate(width / 2+ (framesIntoScene - i) * 15, height / 2 + (framesIntoScene - i) * 15, -3000 + (framesIntoScene-i) * 75);
+//                rotateY(radians(-90));
+//                rotateX(radians(180));
+//                scale(64);
+//                shape(poopShape);
+//            }
+
+
+        }
 
         popMatrix();
     }
@@ -3103,7 +3263,7 @@ public class UsingProcessing extends PApplet{
         }
 
 
-        //imageMode(CENTER);
+        imageMode(CORNER);
         scale((float)0.5);
         image(img, 0, 0);
 
