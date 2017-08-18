@@ -2173,6 +2173,26 @@ public class UsingProcessing extends PApplet{
         shape(narwhalRainbowShape);
         
         popMatrix();
+        pushMatrix();
+
+        translate(width / 4, height / 2);
+        //rotateY(radians(90));
+        rotateZ(radians(180));
+        scale(96);
+
+        shape(cloudShape);
+
+        popMatrix();
+        pushMatrix();
+
+        translate(width * 3 / 5, height / 3);
+        rotateY(radians(180));
+        rotateZ(radians(180));
+        scale(86);
+
+        shape(cloudShape);
+
+        popMatrix();
     }
     
     public void iceShelfBreak()
@@ -2243,7 +2263,27 @@ public class UsingProcessing extends PApplet{
         //narwhalShape.setFill(color(50 + decay, 50, 150));
         scale(64);
         shape(narwhalRainbowShape);
-        
+
+        popMatrix();
+        pushMatrix();
+
+        translate(width / 4, height / 2);
+        //rotateY(radians(90));
+        rotateZ(radians(180));
+        scale(96);
+
+        shape(cloudShape);
+
+        popMatrix();
+        pushMatrix();
+
+        translate(width * 3 / 5, height / 3);
+        rotateY(radians(180));
+        rotateZ(radians(180));
+        scale(86);
+
+        shape(cloudShape);
+
         popMatrix();
     }
     
@@ -2355,6 +2395,26 @@ public class UsingProcessing extends PApplet{
         scale(64);
         shape(narwhalRainbowShape);
         
+        popMatrix();
+        pushMatrix();
+
+        translate(width / 4, height / 2);
+        //rotateY(radians(90));
+        rotateZ(radians(180));
+        scale(96);
+
+        shape(cloudShape);
+
+        popMatrix();
+        pushMatrix();
+
+        translate(width * 3 / 5, height / 3);
+        rotateY(radians(180));
+        rotateZ(radians(180));
+        scale(86);
+
+        shape(cloudShape);
+
         popMatrix();
     }
     
@@ -2491,6 +2551,26 @@ public class UsingProcessing extends PApplet{
         scale(64);
         shape(narwhalRainbowShape);
         
+        popMatrix();
+        pushMatrix();
+
+        translate(width / 4, height / 2);
+        //rotateY(radians(90));
+        rotateZ(radians(180));
+        scale(96);
+
+        shape(cloudShape);
+
+        popMatrix();
+        pushMatrix();
+
+        translate(width * 3 / 5, height / 3);
+        rotateY(radians(180));
+        rotateZ(radians(180));
+        scale(86);
+
+        shape(cloudShape);
+
         popMatrix();
     }
     
@@ -2630,6 +2710,26 @@ public class UsingProcessing extends PApplet{
                 popMatrix();
         }
         
+        popMatrix();
+        pushMatrix();
+
+        translate(width / 4, height / 2);
+        //rotateY(radians(90));
+        rotateZ(radians(180));
+        scale(96);
+
+        shape(cloudShape);
+
+        popMatrix();
+        pushMatrix();
+
+        translate(width * 3 / 5, height / 3);
+        rotateY(radians(180));
+        rotateZ(radians(180));
+        scale(86);
+
+        shape(cloudShape);
+
         popMatrix();
     }
     
@@ -2870,6 +2970,26 @@ public class UsingProcessing extends PApplet{
                 pushMatrix();
             }
         }
+        popMatrix();
+        pushMatrix();
+
+        translate(width / 4, height / 2);
+        //rotateY(radians(90));
+        rotateZ(radians(180));
+        scale(96);
+
+        shape(cloudShape);
+
+        popMatrix();
+        pushMatrix();
+
+        translate(width * 3 / 5, height / 3);
+        rotateY(radians(180));
+        rotateZ(radians(180));
+        scale(86);
+
+        shape(cloudShape);
+
         popMatrix();
     }
     
