@@ -3162,6 +3162,7 @@ public class UsingProcessing extends PApplet{
                 rotateY(radians(-90));
                 rotateX(radians(180));
                 scale(64);
+                fishShape.setFill(color(255,0,0));
                 shape(fishShape);
             }
             if(i % objectTiming1 == 0) {
@@ -3249,9 +3250,20 @@ public class UsingProcessing extends PApplet{
 //                scale(64);
 //                shape(poopShape);
 //            }
+        } //end of object for loop
 
-
-        }
+        popMatrix();
+        pushMatrix();
+        shapeMode(CENTER);
+        if(framesIntoScene < 210)
+            translate(width / 2, height / 2, -3000 + framesIntoScene * (float)18);
+        else
+            translate(width / 2, height / 2, -3000 + 210 * (float)18);
+        rotateY(radians(-90));
+        rotateX(radians(180));
+        scale(64);
+        shape(babyUnicornShape);
+        shapeMode(CORNER);
 
         popMatrix();
     }
