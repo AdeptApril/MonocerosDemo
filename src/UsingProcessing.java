@@ -708,40 +708,40 @@ public class UsingProcessing extends PApplet{
 //        popMatrix();
 //    }
     
-    public void drawText(String inText, int inTextX, int inTextY) {
-        pushMatrix();
-        text(framesIntoScene, 60, 60); // show value of variable, if wanted
-        if(framesIntoScene < 2)
-            textX = inTextX;
-        String text = inText;
-        PFont mono;
-        mono = createFont("Monospaced", 32);
-        textFont(mono);
-        textSize(32); // Set text size to 32
-        fill(255);
-        for (int i=0; i<text.length(); i++) {
-            char c = text.charAt(i);
-            text(c, textX + i * 15 , inTextY + (int)((Math.sin(textX + i * 15))*(10+decay)) + decay );
-        }
-        //text("Turns out that it's not particularly hard to scroll using Processing.", textX, textY);
-        //The following bit is meant to make the letters seem more like they're walking,
-        //but it doesn't seem to do a whole lot; it might be fine to just subtract 5 each time
-        if(framesIntoScene % 2 == 1)
-            textX = textX - 9;
-        else
-            textX = textX - 1;
-
-        //Make the text bounce when the beat is loud
-        int lowVolume = (int) (abs(player.left.get(0)) * 100);
-        if (lowVolume > 15 && decay < 100) //lowVolume only used once, so could just lookup here.
-        {
-            decay += 100;
-        }
-
-        decay = (int) (decay / 2);
-        popMatrix();
-    }
-    
+//    public void drawText(String inText, int inTextX, int inTextY) {
+//        pushMatrix();
+//        text(framesIntoScene, 60, 60); // show value of variable, if wanted
+//        if(framesIntoScene < 2)
+//            textX = inTextX;
+//        String text = inText;
+//        PFont mono;
+//        mono = createFont("Monospaced", 32);
+//        textFont(mono);
+//        textSize(32); // Set text size to 32
+//        fill(255);
+//        for (int i=0; i<text.length(); i++) {
+//            char c = text.charAt(i);
+//            text(c, textX + i * 15 , inTextY + (int)((Math.sin(textX + i * 15))*(10+decay)) + decay );
+//        }
+//        //text("Turns out that it's not particularly hard to scroll using Processing.", textX, textY);
+//        //The following bit is meant to make the letters seem more like they're walking,
+//        //but it doesn't seem to do a whole lot; it might be fine to just subtract 5 each time
+//        if(framesIntoScene % 2 == 1)
+//            textX = textX - 9;
+//        else
+//            textX = textX - 1;
+//
+//        //Make the text bounce when the beat is loud
+//        int lowVolume = (int) (abs(player.left.get(0)) * 100);
+//        if (lowVolume > 15 && decay < 100) //lowVolume only used once, so could just lookup here.
+//        {
+//            decay += 100;
+//        }
+//
+//        decay = (int) (decay / 2);
+//        popMatrix();
+//    }
+//
 //    public void shaderScene() {
 //        pushMatrix();
 //        int lowVolume = (int) (abs(player.left.get(0)) * 100);
@@ -870,7 +870,7 @@ public class UsingProcessing extends PApplet{
     }    
     
     public void horseScene() {
-        camera(width / 2 -90 + framesIntoScene/2, height / 2 - 50 + framesIntoScene, (height/2) / tan((float) (PI*30.0 / 180.0)), width / 2, height / 2, 0, 0, 1, 0);
+        camera(width / 2 -85 + framesIntoScene/3, height / 2 - 50 + framesIntoScene, (height/2) / tan((float) (PI*30.0 / 180.0)), width / 2, height / 2, 0, 0, 1, 0);
         //background(0x87, 0xce, 0xff); //sky blue
         background(0);
         pushMatrix();
@@ -988,7 +988,7 @@ public class UsingProcessing extends PApplet{
         popMatrix(); //end of background water
         pushMatrix();
         
-        translate(width / 4, height / 2);
+        translate(width / 4 + framesIntoScene, height / 2);
         //rotateY(radians(90));
         rotateZ(radians(180));
         scale(96);
@@ -998,7 +998,7 @@ public class UsingProcessing extends PApplet{
         popMatrix();
         pushMatrix();
         
-        translate(width * 3 / 5, height / 3);
+        translate(width * 3 / 5 + framesIntoScene *3 /2, height / 3);
         rotateY(radians(180));
         rotateZ(radians(180));
         scale(86);
@@ -1159,7 +1159,7 @@ public class UsingProcessing extends PApplet{
         popMatrix();
         pushMatrix();
         
-        translate(width / 3, height / 2);
+        translate(width / 3 - framesIntoScene, height / 2);
         rotateY(radians(90));
         rotateZ(radians(180));
         scale(96);
@@ -1169,7 +1169,7 @@ public class UsingProcessing extends PApplet{
         popMatrix();
         pushMatrix();
         
-        translate(width * 3 / 4, height / 3);
+        translate(width * 3 / 4 - framesIntoScene*3/2, height / 3);
         //rotateY(radians(90));
         rotateZ(radians(180));
         scale(86);
@@ -1281,7 +1281,7 @@ public class UsingProcessing extends PApplet{
         popMatrix(); //end of background water
         pushMatrix();
         
-        translate(width / 4, height / 2);
+        translate(width / 4 + framesIntoScene * 3/2, height / 2);
         //rotateY(radians(90));
         rotateZ(radians(180));
         scale(96);
@@ -1291,7 +1291,7 @@ public class UsingProcessing extends PApplet{
         popMatrix();
         pushMatrix();
         
-        translate(width * 3 / 5, height / 3);
+        translate(width * 3 / 5 + framesIntoScene, height / 3);
         rotateY(radians(180));
         rotateZ(radians(180));
         scale(86);
@@ -1435,7 +1435,7 @@ public class UsingProcessing extends PApplet{
         popMatrix();
         pushMatrix();
         
-        translate(width / 3, height / 2);
+        translate(width / 3 - framesIntoScene * 3/2, height / 2);
         rotateY(radians(90));
         rotateZ(radians(180));
         scale(96);
@@ -1445,7 +1445,7 @@ public class UsingProcessing extends PApplet{
         popMatrix();
         pushMatrix();
         
-        translate(width * 3 / 4, height / 3);
+        translate(width * 3 / 4 - framesIntoScene, height / 3);
         //rotateY(radians(90));
         rotateZ(radians(180));
         scale(86);
@@ -1470,7 +1470,7 @@ public class UsingProcessing extends PApplet{
 
         popMatrix();
         pushMatrix();
-        rainbowTriangle(width/2, height/2, 1, 50);
+        rainbowTriangle(width/2, height/2, 1, 0);
         popMatrix();
     }
     
@@ -1519,7 +1519,7 @@ public class UsingProcessing extends PApplet{
 
         pushMatrix();
 
-        translate(width / 4, height / 2);
+        translate(width / 4 + framesIntoScene, height / 2);
         //rotateY(radians(90));
         rotateZ(radians(180));
         scale(96);
@@ -1529,7 +1529,7 @@ public class UsingProcessing extends PApplet{
         popMatrix();
         pushMatrix();
 
-        translate(width * 3 / 5, height / 3);
+        translate(width * 3 / 5 + framesIntoScene * 3 /2, height / 3);
         rotateY(radians(180));
         rotateZ(radians(180));
         scale(86);
@@ -1681,7 +1681,7 @@ public class UsingProcessing extends PApplet{
         popMatrix();
         pushMatrix();
         
-        translate(width / 3, height / 2);
+        translate(width / 3 - framesIntoScene, height / 2);
         rotateY(radians(90));
         rotateZ(radians(180));
         scale(96);
@@ -1691,7 +1691,7 @@ public class UsingProcessing extends PApplet{
         popMatrix();
         pushMatrix();
         
-        translate(width * 3 / 4, height / 3);
+        translate(width * 3 / 4 - framesIntoScene *3/2, height / 3);
         //rotateY(radians(90));
         rotateZ(radians(180));
         scale(86);
@@ -1757,25 +1757,25 @@ public class UsingProcessing extends PApplet{
         
         scale(16);
         
-        popMatrix();
-        pushMatrix();
+//        popMatrix();
+//        pushMatrix();
+//
+//        translate(width / 3 + framesIntoScene, height / 2);
+//        rotateY(radians(90));
+//        rotateZ(radians(180));
+//        scale(96);
+//
+//        shape(cloudShape);
         
-        translate(width / 3, height / 2);
-        rotateY(radians(90));
-        rotateZ(radians(180));
-        scale(96);
-        
-        shape(cloudShape);
-        
-        popMatrix();
-        pushMatrix();
-        
-        translate(width * 3 / 4, height / 3);
-        //rotateY(radians(90));
-        rotateZ(radians(180));
-        scale(86);
-        
-        shape(cloudShape);
+//        popMatrix();
+//        pushMatrix();
+//
+//        translate(width * 3 / 4 + framesIntoScene *3/2, height / 3);
+//        //rotateY(radians(90));
+//        rotateZ(radians(180));
+//        scale(86);
+//
+//        shape(cloudShape);
         
         popMatrix();
         pushMatrix();
@@ -1835,7 +1835,7 @@ public class UsingProcessing extends PApplet{
         
         pushMatrix();
         
-        translate(width / 4, height / 2);
+        translate(width / 4 + framesIntoScene*3/2, height / 2);
         //rotateY(radians(90));
         rotateZ(radians(180));
         scale(96);
@@ -1845,7 +1845,7 @@ public class UsingProcessing extends PApplet{
         popMatrix();
         pushMatrix();
         
-        translate(width * 3 / 5, height / 3);
+        translate(width * 3 / 5 + framesIntoScene, height / 3);
         rotateY(radians(180));
         rotateZ(radians(180));
         scale(86);
@@ -1993,7 +1993,7 @@ public class UsingProcessing extends PApplet{
         popMatrix();
         pushMatrix();
         
-        translate(width / 3, height / 2);
+        translate(width / 3 - framesIntoScene*3/2, height / 2);
         rotateY(radians(90));
         rotateZ(radians(180));
         scale(96);
@@ -2003,7 +2003,7 @@ public class UsingProcessing extends PApplet{
         popMatrix();
         pushMatrix();
         
-        translate(width * 3 / 4, height / 3);
+        translate(width * 3 / 4 - framesIntoScene, height / 3);
         //rotateY(radians(90));
         rotateZ(radians(180));
         scale(86);
@@ -2069,25 +2069,25 @@ public class UsingProcessing extends PApplet{
         
         scale(16);
         
-        popMatrix();
-        pushMatrix();
+//        popMatrix();
+//        pushMatrix();
+//
+//        translate(width / 3, height / 2);
+//        rotateY(radians(90));
+//        rotateZ(radians(180));
+//        scale(96);
+//
+//        shape(cloudShape);
         
-        translate(width / 3, height / 2);
-        rotateY(radians(90));
-        rotateZ(radians(180));
-        scale(96);
-        
-        shape(cloudShape);
-        
-        popMatrix();
-        pushMatrix();
-        
-        translate(width * 3 / 4, height / 3);
-        //rotateY(radians(90));
-        rotateZ(radians(180));
-        scale(86);
-        
-        shape(cloudShape);
+//        popMatrix();
+//        pushMatrix();
+//
+//        translate(width * 3 / 4, height / 3);
+//        //rotateY(radians(90));
+//        rotateZ(radians(180));
+//        scale(86);
+//
+//        shape(cloudShape);
         
         popMatrix();
         pushMatrix();
@@ -2175,6 +2175,8 @@ public class UsingProcessing extends PApplet{
         popMatrix();
         pushMatrix();
 
+        //TODO: Make the clouds move, but deal with it being multiple scenes
+        //translate(width / 4 +framesIntoScene *3/2, height / 2);
         translate(width / 4, height / 2);
         //rotateY(radians(90));
         rotateZ(radians(180));
@@ -2185,6 +2187,8 @@ public class UsingProcessing extends PApplet{
         popMatrix();
         pushMatrix();
 
+        //TODO: More clouds
+        //translate(width * 3 / 5 + framesIntoScene, height / 3);
         translate(width * 3 / 5, height / 3);
         rotateY(radians(180));
         rotateZ(radians(180));
