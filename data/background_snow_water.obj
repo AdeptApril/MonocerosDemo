@@ -1,6 +1,6 @@
-# Blender v2.78 (sub 0) OBJ File: 'backgroud_snow_water.blend'
+# Blender v2.78 (sub 0) OBJ File: 'background_snow_water.blend'
 # www.blender.org
-mtllib backgroud_snow_water.mtl
+mtllib background_snow_water.mtl
 o Underwater_Plane.008
 v -95.685410 -40.668171 -11.445317
 v 95.831207 -40.668171 -11.445317

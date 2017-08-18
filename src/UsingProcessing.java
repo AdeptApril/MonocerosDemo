@@ -80,7 +80,7 @@ public class UsingProcessing extends PApplet{
     private float angle;
 
     private PImage img;
-    private PShape cup;
+    //private PShape cup;
     private PShape horseShape;
     private PShape horseRainbowShape;
     private PShape narwhalShape;
@@ -89,7 +89,7 @@ public class UsingProcessing extends PApplet{
     private PShape backgroundWaterShape;
     private PShape babyUnicornShape;
     private PShape backgroundLandSnowShape;
-    private PShape backgroundSnowShape;
+    //private PShape backgroundSnowShape;
     private PShape backgroundSnowWaterShape;
     private PShape birdShape;
     private PShape cloudShape;
@@ -97,13 +97,10 @@ public class UsingProcessing extends PApplet{
     private PShape flowerShape;
     private PShape iceShelfShape;
     private PShape icebergShape;
-    private PShape[] poopShapes;
     private PShape poopShape;
     private PShape treeShape;
     private PShape lightBulbShape;
     private PShape heartShape;
-    
-    //TODO: Remove all the temporary showing frames-into-scenes text (or other debug text)
     
     public static void main(String[] args) {
         PApplet.main(new String[]{UsingProcessing.class.getName()}); 
@@ -122,6 +119,7 @@ public class UsingProcessing extends PApplet{
         textSwitch = 0;
         shapeMode(CORNER);
         imageMode(CORNER);
+        camera(width / 2, height / 2, (height/2) / tan((float) (PI*30.0 / 180.0)), width / 2, height / 2, 0, 0, 1, 0);
         //y = 80;
         //secondLine = 88;
         //thirdLine = 96;
@@ -626,7 +624,7 @@ public class UsingProcessing extends PApplet{
         popMatrix();
     }
 
-    public void loadBatch1() {
+    private void loadBatch1() {
         if (!batch1Loaded) {
             horseShape = loadShape("horse_no_hair_w_color_2.obj");
             narwhalShape = loadShape("narwhal.obj");
@@ -653,10 +651,10 @@ public class UsingProcessing extends PApplet{
 //        batch3Loaded = true;
     }
     
-    public void loadBatch2() {
+    private void loadBatch2() {
         if (!batch2Loaded) {
             horseRainbowShape = loadShape("horse_rainbow.obj");
-            backgroundSnowShape = loadShape("background_snow.obj");
+            //backgroundSnowShape = loadShape("background_snow.obj");
             backgroundSnowWaterShape = loadShape("background_snow_water.obj");
             iceShelfShape = loadShape("ice_shelf.obj");
             icebergShape = loadShape("iceberg.obj");
@@ -664,7 +662,7 @@ public class UsingProcessing extends PApplet{
         }
     }
     
-    public void loadBatch3() {
+    private void loadBatch3() {
         if (!batch3Loaded) {
             lightBulbShape = loadShape("lightbulb.obj");
             heartShape = loadShape("heart.obj");
@@ -675,40 +673,40 @@ public class UsingProcessing extends PApplet{
         }
     }
     
-    public void scrollerScene()
-    {
-        pushMatrix();
-        drawLines();
-        drawText("Turns out that it's not particularly hard to scroll using Processing.", 400, 200);
-        popMatrix();
-    }
+//    public void scrollerScene()
+//    {
+//        pushMatrix();
+//        drawLines();
+//        drawText("Turns out that it's not particularly hard to scroll using Processing.", 400, 200);
+//        popMatrix();
+//    }
     
-    public void drawLines() {
-        pushMatrix();
-        int yChange = 2;
-        int secondChange = 4;
-        int thirdChange = 8;
-        stroke(255);
-        background(0);   // Clear the screen with a black background
-        y = y - yChange;
-        if (y < 0) { y = height; }
-        line(0, y, width, y);        
-        
-        stroke(125);
-        secondLine = secondLine - secondChange;
-        if (secondLine < 0) { secondLine = height; }
-        line(0, secondLine, width, secondLine);        
-        
-        stroke(35);
-        thirdLine = thirdLine - thirdChange;
-        if (thirdLine < 0) { thirdLine = height; }
-        line(0, thirdLine, width, thirdLine);        
-        
-        int randLine =  (int)(Math.random() * (height + 1));
-        stroke(0, 255, 255, 200);
-        line(0, randLine, width, randLine);
-        popMatrix();
-    }
+//    public void drawLines() {
+//        pushMatrix();
+//        int yChange = 2;
+//        int secondChange = 4;
+//        int thirdChange = 8;
+//        stroke(255);
+//        background(0);   // Clear the screen with a black background
+//        y = y - yChange;
+//        if (y < 0) { y = height; }
+//        line(0, y, width, y);
+//
+//        stroke(125);
+//        secondLine = secondLine - secondChange;
+//        if (secondLine < 0) { secondLine = height; }
+//        line(0, secondLine, width, secondLine);
+//
+//        stroke(35);
+//        thirdLine = thirdLine - thirdChange;
+//        if (thirdLine < 0) { thirdLine = height; }
+//        line(0, thirdLine, width, thirdLine);
+//
+//        int randLine =  (int)(Math.random() * (height + 1));
+//        stroke(0, 255, 255, 200);
+//        line(0, randLine, width, randLine);
+//        popMatrix();
+//    }
     
     public void drawText(String inText, int inTextX, int inTextY) {
         pushMatrix();
@@ -744,35 +742,35 @@ public class UsingProcessing extends PApplet{
         popMatrix();
     }
     
-    public void shaderScene() {
-        pushMatrix();
-        int lowVolume = (int) (abs(player.left.get(0)) * 100);
-        if (lowVolume > 10 && decay < 100) //lowVolume only used once, so could just lookup here.
-        {
-            decay += 150;
-        }
-
-        decay = (int) (decay / 1.5);
-        
-        background(0);
-        drawText("Now a shader!", 400, 100);
-
-        pointLight(200, 200, 200, width / 2, height / 2, 200);
-
-        translate(width / 2, height / 2);
-        rotateY(angle);
-        //rotateX(angle);
-        rotateZ(angle);
-
-        //coneOnCube.setFill(color(50 + decay, 50, 150));
-        babyUnicornShape.setFill(color(50 + decay, 50, 150));
-        scale(15);
-        //shape(coneOnCube);
-        shape(babyUnicornShape);
-
-        angle += 0.01 + decay *0.001 ;
-        popMatrix();
-    }
+//    public void shaderScene() {
+//        pushMatrix();
+//        int lowVolume = (int) (abs(player.left.get(0)) * 100);
+//        if (lowVolume > 10 && decay < 100) //lowVolume only used once, so could just lookup here.
+//        {
+//            decay += 150;
+//        }
+//
+//        decay = (int) (decay / 1.5);
+//
+//        background(0);
+//        drawText("Now a shader!", 400, 100);
+//
+//        pointLight(200, 200, 200, width / 2, height / 2, 200);
+//
+//        translate(width / 2, height / 2);
+//        rotateY(angle);
+//        //rotateX(angle);
+//        rotateZ(angle);
+//
+//        //coneOnCube.setFill(color(50 + decay, 50, 150));
+//        babyUnicornShape.setFill(color(50 + decay, 50, 150));
+//        scale(15);
+//        //shape(coneOnCube);
+//        shape(babyUnicornShape);
+//
+//        angle += 0.01 + decay *0.001 ;
+//        popMatrix();
+//    }
     
     public void narwhalScene() {
         //background(0x54, 0xff, 0x9f); // sea green
@@ -812,8 +810,7 @@ public class UsingProcessing extends PApplet{
         
         pushMatrix(); // Begin background shapes 2 clouds, 3 fish
         
-        translate(width / 4, height / 2);
-        //rotateY(radians(90));
+        translate(width / 4 + framesIntoScene*3/2, height / 2);
         rotateZ(radians(180));
         scale(96);
         
@@ -822,7 +819,7 @@ public class UsingProcessing extends PApplet{
         popMatrix();
         pushMatrix();
         
-        translate(width * 3 / 5, height / 3);
+        translate(width * 3 / 5 + framesIntoScene, height / 3);
         rotateY(radians(180));
         rotateZ(radians(180));
         scale(86);
@@ -873,6 +870,7 @@ public class UsingProcessing extends PApplet{
     }    
     
     public void horseScene() {
+        camera(width / 2 -90 + framesIntoScene/2, height / 2 - 50 + framesIntoScene, (height/2) / tan((float) (PI*30.0 / 180.0)), width / 2, height / 2, 0, 0, 1, 0);
         //background(0x87, 0xce, 0xff); //sky blue
         background(0);
         pushMatrix();
@@ -893,17 +891,12 @@ public class UsingProcessing extends PApplet{
         rotateY(radians(90));
         rotateZ(radians(180));
         translate(translateX, translateY, translateZ);
-        //horseShape.setFill(color(205,133,63));
-        //horseShape.setFill(color(255));
         scale(96);
         shape(horseShape);
         
         popMatrix();
         pushMatrix();
         scale(16);
-        //fill(255);
-        //scale((float)1/16);
-        //angle += 0.01;
         translateZ += 5;
         translateY += sin(framesIntoScene) * 25;
         
@@ -950,7 +943,7 @@ public class UsingProcessing extends PApplet{
         popMatrix();
         pushMatrix();
         
-        translate(width / 3, height / 2);
+        translate(width / 3 - framesIntoScene*3/2, height / 2);
         rotateY(radians(90));
         rotateZ(radians(180));
         scale(96);
@@ -960,7 +953,7 @@ public class UsingProcessing extends PApplet{
         popMatrix();
         pushMatrix();
         
-        translate(width * 3 / 4, height / 3);
+        translate(width * 3 / 4 - framesIntoScene, height / 3);
         //rotateY(radians(90));
         rotateZ(radians(180));
         scale(86);
@@ -971,10 +964,8 @@ public class UsingProcessing extends PApplet{
         pushMatrix();
         
         translate(width / 3, height * 3 / 4);
-        //rotateY(radians(90));
         rotateZ(radians(180));
         scale(50);
-        
         shape(flowerShape);
         
         popMatrix();
