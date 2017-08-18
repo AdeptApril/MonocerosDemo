@@ -45,6 +45,7 @@ old/
 .idea/**/workspace.xml
 .idea/**/tasks.xml
 .idea/dictionaries
+MonocerosDemo.iml
 
 # Sensitive or high-churn files:
 .idea/**/dataSources/

@@ -267,11 +267,11 @@ public class UsingProcessing extends PApplet{
                 }
                 break;
             case "NARWHALSEARCH":
-                if (framesIntoScene == 1) {
-                    //resyncing the demo, since there's a pause in the music.
-                    player.cue(57360);
-                    player.play();
-                }
+//                if (framesIntoScene == 1) {
+//                    //resyncing the demo, since there's a pause in the music.
+//                    player.cue(57360);
+//                    player.play();
+//                }
                 narwhalSearch();
                 if (millis() - startTimer > 4800){
                     state = "HORSESEARCH";
@@ -762,33 +762,12 @@ public class UsingProcessing extends PApplet{
     }
     
     public void narwhalScene() {
-//        int lowVolume = (int) (abs(player.left.get(0)) * 100);
-//        if (lowVolume > 10 && decay < 100) //lowVolume only used once, so could just lookup here.
-//        {
-//            decay += 150;
-//        }
-//
-//        decay = (int) (decay / 1.5);
-        
         //background(0x54, 0xff, 0x9f); // sea green
         background(0);
         pushMatrix();
         scale(2);
-        text(framesIntoScene, width/4, height/2); // show value of variable, if wanted
-        //TODO: Remove all this displaying text stuff.
-//        text("Number of vertices: " + narwhalShape.getVertexCount(), width/2, height/2); // How many vertices
-//        text("Number of children: " + narwhalShape.getChildCount(), width/2, height/2+100);
-//        int childVertixCount = 0;
-//        for(int i =0; i < narwhalShape.getChildCount(); i++ )
-//        {
-//            if(narwhalShape.getChild(i).getVertexCount() > 1)
-//                childVertixCount++;
-//            if(narwhalShape.getChild(i).getName() != null && narwhalShape.getChild(i).getName().toLowerCase().contains("tail") )
-//               text("Found it!", width/2, height/2+150); 
-//        }
-//        text("Number of children with 2 or more vertices: " + childVertixCount, width/2, height/2+200);
-        //text(player.length(), width/2, height/2); //Show total length of song in ms. Last check was over 65k
-        //text(width, width/2, height/2); //Show width
+        //text(framesIntoScene, width/4, height/2); // show value of variable, if wanted
+
 
         //Light is supposed to be mostly from above, with a fair amount of scattered light
         lightFromAbove();
@@ -884,7 +863,7 @@ public class UsingProcessing extends PApplet{
         //background(0x87, 0xce, 0xff); //sky blue
         background(0);
         pushMatrix();
-        text(framesIntoScene, width/2, height/2); // show value of variable, if wanted
+        //text(framesIntoScene, width/2, height/2); // show value of variable, if wanted
         
         //Light is supposed to be mostly from above, with a fair amount of scattered light
         lightFromAbove();
@@ -1089,7 +1068,7 @@ public class UsingProcessing extends PApplet{
         pushMatrix();
         scale(2);
         fill(255);
-        text(framesIntoScene, width/2, height/2); // show value of variable, if wanted
+        //text(framesIntoScene, width/2, height/2); // show value of variable, if wanted
         popMatrix();
         pushMatrix();
         scale(2);
@@ -1207,7 +1186,7 @@ public class UsingProcessing extends PApplet{
         pushMatrix();
         scale(2);
         fill(255);
-        text(framesIntoScene, 0, 275); // show value of variable, if wanted
+        //text(framesIntoScene, 0, 275); // show value of variable, if wanted
 
         popMatrix();
         pushMatrix();
@@ -1224,7 +1203,6 @@ public class UsingProcessing extends PApplet{
     }   
 
     public void rainbow(int centerX, int centerY) {
-        pushMatrix();
         //TODO: Make rainbow thicker, with speed multiplier working better, and center not being black.
         int speedMultiplier = 18; //how quickly to go through the rainbow
         int ellipseSizeMultiplier = 16; //I think this, combined with i < height/x, 
@@ -1278,7 +1256,6 @@ public class UsingProcessing extends PApplet{
         //fill(0x87, 0xce, 0xff); //Sky blue center
         fill(0x33, 0xce, 0xee); //Sky blue center
         ellipse(centerX, centerY, height/2, height/2);
-        popMatrix();
     }
 
     public void narwhalSuck()
@@ -1485,7 +1462,7 @@ public class UsingProcessing extends PApplet{
         pushMatrix();
         scale(2);
         fill(255);
-        text(framesIntoScene, 0, 275); // show value of variable, if wanted
+        //text(framesIntoScene, 0, 275); // show value of variable, if wanted
 
         popMatrix();
         pushMatrix();
@@ -1498,7 +1475,7 @@ public class UsingProcessing extends PApplet{
         background(0);
         pushMatrix();
         scale(2);
-        text(framesIntoScene, width/4, height/2); // show value of variable, if wanted
+        //text(framesIntoScene, width/4, height/2); // show value of variable, if wanted
         //TODO: Remove all this displaying text stuff.
         //text(player.length(), width/2, height/2); //Show total length of song in ms. Last check was over 65k
         //text(width, width/2, height/2); //Show width
@@ -1814,7 +1791,7 @@ public class UsingProcessing extends PApplet{
         background(0);
         pushMatrix();
         scale(2);
-        text(framesIntoScene, width/4, height/2); // show value of variable, if wanted
+        //text(framesIntoScene, width/4, height/2); // show value of variable, if wanted
         //TODO: Remove all this displaying text stuff.
         //text(player.length(), width/2, height/2); //Show total length of song in ms. Last check was over 65k
         //text(width, width/2, height/2); //Show width
@@ -2896,6 +2873,8 @@ public class UsingProcessing extends PApplet{
     {
         background(0);
         pushMatrix();
+        stroke(0);
+        noStroke();
         
         if(framesIntoScene == 1){
             babyUnicornShape = loadShape("baby_unicorn_final.obj"); //TODO: remove this and load in the proper place
