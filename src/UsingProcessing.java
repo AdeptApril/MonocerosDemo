@@ -30,7 +30,7 @@ public class UsingProcessing extends PApplet{
     private int y = 80;
     private int secondLine = 88;
     private int thirdLine = 96;
-    private String state = "LOADINGSTART"; //TODO: Change back to LOADINGSTART
+    private String state = "CREDITS4"; //TODO: Change back to LOADINGSTART
     private int textX = 400;
     private int textY = 200;
     private int tempNum = 0;
@@ -3288,10 +3288,21 @@ public class UsingProcessing extends PApplet{
     
     public void credits4()
     {
+        int interval = 20;
         background(0);
         pushMatrix();
         
         if(framesIntoScene == 1){
+            babyUnicornShape = loadShape("baby_unicorn_final.obj"); //TODO: remove this and load in the proper place
+            icebergShape = loadShape("iceberg.obj");
+            flowerShape = loadShape("flower.obj");
+            cloudShape = loadShape("cloud.obj");
+            treeShape = loadShape("tree.obj");
+            birdShape = loadShape("bird.obj");
+            fishShape = loadShape("fish.obj");
+            heartShape = loadShape("heart.obj");
+            lightBulbShape = loadShape("lightbulb.obj");
+            poopShape = loadShape("poop.obj");
             img = loadImage("MonocerosLogoWhite.png"); //TODO: remove and load in a better place
             font = createFont("Kingthings_Calligraphica_2.ttf", 52); //TODO: remove and load in a better place
         }
@@ -3319,12 +3330,63 @@ public class UsingProcessing extends PApplet{
         popMatrix();
         pushMatrix();
 
-        lightFromAbove();
-        pointLight(200, 200, 200, width / 2, height / 2, 200);
-        pointLight(200, 200, 200, width / 2, height / 4, 200);
+        for(int i = 0; i < framesIntoScene; i++) {
+            if (i % interval == 0) { //poop
+                popMatrix();
+                pushMatrix();
+                translate(width - (framesIntoScene - i) * 15, 50, -100);
+                rotateZ(radians(180));
 
-        popMatrix();
-    }
+                scale(25);
+                shape(poopShape);
+            }
+            if (i % interval == 0) { //light
+                popMatrix();
+                pushMatrix();
+                translate((framesIntoScene - i) * 15, 150, -100);
+                rotateZ(radians(180));
+
+                scale(25);
+                shape(lightBulbShape);
+            }
+            if (i % interval == 0) { //fish
+                popMatrix();
+                pushMatrix();
+                translate(width - (framesIntoScene - i) * 15, 250, -100);
+                rotateZ(radians(180));
+
+                scale(50);
+                shape(fishShape);
+            }
+            if (i % interval == 0) { //heart
+                popMatrix();
+                pushMatrix();
+                translate((framesIntoScene - i) * 15, 350, -100);
+                rotateZ(radians(180));
+
+                scale(25);
+                shape(heartShape);
+            }if (i % interval == 0) { //bird
+                popMatrix();
+                pushMatrix();
+                translate(width - (framesIntoScene - i) * 15, 450, -100);
+                rotateZ(radians(180));
+
+                scale(50);
+                shape(birdShape);
+            }
+        }
+
+            popMatrix();
+            pushMatrix();
+
+            lightFromAbove();
+            pointLight(200, 200, 200, width / 2, height / 2, 200);
+            pointLight(200, 200, 200, width / 2, height / 4, 200);
+
+            popMatrix();
+        }
+
     
     public void credits5()
     {
