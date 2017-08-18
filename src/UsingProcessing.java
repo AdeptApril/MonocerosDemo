@@ -3343,7 +3343,7 @@ public class UsingProcessing extends PApplet{
             if (i % interval == 0) { //light
                 popMatrix();
                 pushMatrix();
-                translate((framesIntoScene - i) * 15, 150, -100);
+                translate((framesIntoScene - i) * 10, 150, -100);
                 rotateZ(radians(180));
 
                 scale(25);
@@ -3352,16 +3352,17 @@ public class UsingProcessing extends PApplet{
             if (i % interval == 0) { //fish
                 popMatrix();
                 pushMatrix();
-                translate(width - (framesIntoScene - i) * 15, 250, -100);
+                translate(width - (framesIntoScene - i) * 15, 350, -100);
                 rotateZ(radians(180));
 
+                fishShape.setFill(color(55,55,55));
                 scale(50);
                 shape(fishShape);
             }
-            if (i % interval == 0) { //heart
+            if (i % (interval*2) == 0) { //heart
                 popMatrix();
                 pushMatrix();
-                translate((framesIntoScene - i) * 15, 350, -100);
+                translate((framesIntoScene - i) * 5, 450, -100);
                 rotateZ(radians(180));
 
                 scale(25);
@@ -3369,11 +3370,40 @@ public class UsingProcessing extends PApplet{
             }if (i % interval == 0) { //bird
                 popMatrix();
                 pushMatrix();
-                translate(width - (framesIntoScene - i) * 15, 450, -100);
+                translate(width - (framesIntoScene - i) * 15, 650, -100);
+                rotateZ(radians(90));
+                rotateY(radians(90));
+
+                birdShape.setFill(color(155,155,155));
+                scale(50);
+                shape(birdShape);
+            }
+            if (i % (interval*2) == 0) { //flower
+                popMatrix();
+                pushMatrix();
+                translate(width - (framesIntoScene - i) * 5, 850, -100);
                 rotateZ(radians(180));
 
                 scale(50);
-                shape(birdShape);
+                shape(flowerShape);
+            }
+            if (i % interval == 0) { //tree
+                popMatrix();
+                pushMatrix();
+                translate(width - (framesIntoScene - i) * 10, 950, -100);
+                rotateZ(radians(180));
+
+                scale(15);
+                shape(treeShape);
+            }
+            if (i % interval == 0) { //iceberg
+                popMatrix();
+                pushMatrix();
+                translate(width - (framesIntoScene - i) * 15, 1050, -100);
+                rotateZ(radians(180));
+
+                scale(25);
+                shape(icebergShape);
             }
         }
 
@@ -3381,8 +3411,7 @@ public class UsingProcessing extends PApplet{
             pushMatrix();
 
             lightFromAbove();
-            pointLight(200, 200, 200, width / 2, height / 2, 200);
-            pointLight(200, 200, 200, width / 2, height / 4, 200);
+            pointLight(200, 200, 200, width / 2, height, 200);
 
             popMatrix();
         }
