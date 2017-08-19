@@ -42,6 +42,8 @@ public class UsingProcessing extends PApplet{
     private int randRotateY = 0;
     private int randRotateZ = 0;
 
+    private int rainbowStartColor = 0;
+
     private int textFade = 0;
     private int faderSwitch = 1;
     private int textSwitch = 0;
@@ -59,7 +61,7 @@ public class UsingProcessing extends PApplet{
     private int horseCount = 1;
     private int narwhalCount = 1;
     private boolean pooSet = false; //This could probably be done with checking to see if the poo is in the array, but a state variable seems fairly good performance-wise
-    private boolean flowersPlaced = false;
+    //private boolean flowersPlaced = false;
     private ArrayList<ObjPosition> pooArray;// = new ArrayList<ObjPosition>();
 
 //    private int tempx = 0;
@@ -118,6 +120,7 @@ public class UsingProcessing extends PApplet{
         textFade = 0;
         faderSwitch = 1;
         textSwitch = 0;
+        rainbowStartColor = 0;
         shapeMode(CORNER);
         imageMode(CORNER);
         //camera(width / 2, height / 2, (height/2) / tan((float) (PI*30.0 / 180.0)), width / 2, height / 2, 0, 0, 1, 0);
@@ -421,7 +424,7 @@ public class UsingProcessing extends PApplet{
                 resetVars();
                 break;
             case 'a':
-                    //TODO: Possibly replace all these if statements
+                    //TODO: Possibly replace all the loadBatch() methods
                     //With a, "loadNeededFiles(char case)", passing along
                     // the curret point in the demo.
                 loadBatch1();
@@ -617,9 +620,31 @@ public class UsingProcessing extends PApplet{
             
         }
         if (framesIntoScene == 210){
-            loadBatch1();
-            loadBatch2();
-            loadBatch3();
+            horseShape = loadShape("horse_no_hair_w_color_2.obj");
+            narwhalShape = loadShape("narwhal.obj");
+            narwhalRainbowShape = loadShape("narwhal_rainbow.obj");
+            backgroundLandShape = loadShape("background_grass_sky.obj");
+            backgroundWaterShape = loadShape("background_water_sky.obj");
+            birdShape = loadShape("bird.obj");
+            cloudShape = loadShape("cloud.obj");
+            fishShape = loadShape("fish.obj");
+            flowerShape = loadShape("flower.obj");
+            treeShape = loadShape("tree.obj");
+            horseRainbowShape = loadShape("horse_rainbow.obj");
+            backgroundSnowWaterShape = loadShape("background_snow_water.obj");
+            iceShelfShape = loadShape("ice_shelf.obj");
+            icebergShape = loadShape("iceberg.obj");
+            lightBulbShape = loadShape("lightbulb.obj");
+            heartShape = loadShape("heart.obj");
+            babyUnicornShape = loadShape("baby_unicorn_final.obj");
+            backgroundLandSnowShape = loadShape("background_grass_snow.obj");
+            poopShape = loadShape("poop.obj");
+            batch1Loaded=true;
+            batch2Loaded=true;
+            batch3Loaded=true;
+            //loadBatch1();
+            //loadBatch2();
+            //loadBatch3();
         }
         popMatrix();
     }
@@ -654,21 +679,21 @@ public class UsingProcessing extends PApplet{
     private void loadBatch2() {
         if (!batch2Loaded) {
             horseRainbowShape = loadShape("horse_rainbow.obj");
-            //backgroundSnowShape = loadShape("background_snow.obj");
             backgroundSnowWaterShape = loadShape("background_snow_water.obj");
             iceShelfShape = loadShape("ice_shelf.obj");
             icebergShape = loadShape("iceberg.obj");
+            lightBulbShape = loadShape("lightbulb.obj");
+            heartShape = loadShape("heart.obj");
+            babyUnicornShape = loadShape("baby_unicorn_final.obj");
+            backgroundLandSnowShape = loadShape("background_grass_snow.obj");
+            poopShape = loadShape("poop.obj");
             batch2Loaded = true;
         }
     }
     
     private void loadBatch3() {
         if (!batch3Loaded) {
-            lightBulbShape = loadShape("lightbulb.obj");
-            heartShape = loadShape("heart.obj");
-            babyUnicornShape = loadShape("baby_unicorn_final.obj");
-            backgroundLandSnowShape = loadShape("background_grass_snow.obj");
-            poopShape = loadShape("poop.obj");
+
             batch3Loaded = true;
         }
     }
@@ -870,6 +895,8 @@ public class UsingProcessing extends PApplet{
     }    
     
     private void horseScene() {
+        loadBatch2();
+        loadBatch3();
         //If putting the camera movement back in, be sure to reset the variable
         //camera(width / 2 -85 + framesIntoScene/3, height / 2 - 50 + framesIntoScene, (height/2) / tan((float) (PI*30.0 / 180.0)), width / 2, height / 2, 0, 0, 1, 0);
         //background(0x87, 0xce, 0xff); //sky blue
@@ -1054,7 +1081,7 @@ public class UsingProcessing extends PApplet{
         //Brighten the rainbow a bit
         //spotLight(v1, v2, v3, x, y, z, nx, ny, nz, angle, concentration)
         //So it's fairly far out to get a wider spotlight
-        //TODO: Does this actually help anything? Perhaps delete.
+        //Does this actually help anything? Perhaps delete.
         spotLight(51, 102, 126, 50, 50, 5000, 0, 0, -1, PI/16, 600); 
         translate((float)(width-translateX*3), (float)(height * 6 / 8));
         
@@ -1261,6 +1288,37 @@ public class UsingProcessing extends PApplet{
         //fill(0x87, 0xce, 0xff); //Sky blue center
         fill(0x33, 0xce, 0xee); //Sky blue center
         ellipse(centerX, centerY, height/2, height/2);
+    }
+
+
+    private void rainbowPop(int centerX, int centerY, int size, int startingColor) {
+        int speedMultiplier = 10; //how quickly to go through the rainbow
+        int ellipseSizeMultiplier = size/7; //I think this, combined with i < height/x,
+        //have to come out to height/2 (or whatever the size of the inner ellipse is. multiplier 8, height/16 works for height/2
+        //And the bigger the multiplier, the faster the loading, but the less smooth the rainbow transition
+        for(int i= 0; i< 7; i++) {
+            int j = (startingColor + i) % 7;
+            if(j == 0) //red
+                fill(255, 0, 0);
+            if(j == 1) //orange
+                fill(255, 127, 0);
+            if(j == 2) //yellow
+                fill(255, 255, 0);
+            if(j == 3) //green
+                fill(0, 255, 0);
+            if(j == 4) //blue
+                fill(0, 255, 255);
+            if(j == 5) //indigo
+                fill(0, 127, 255);
+            if(j == 6) //purple
+                fill(127, 0, 255);
+            //stroke(r, rainbowG, b, 5); //Stroke should follow the rainbow. Opacity number is a guess. Will likely change if lighting changes.
+            noStroke();
+            ellipse(centerX, centerY, size - i *ellipseSizeMultiplier, size - i*ellipseSizeMultiplier);
+        }
+        //fill(0x87, 0xce, 0xff); //Sky blue center
+//        fill(0x33, 0xce, 0xee); //Sky blue center
+//        ellipse(centerX, centerY, height/2, height/2);
     }
 
     private void narwhalSuck()
@@ -1481,12 +1539,20 @@ public class UsingProcessing extends PApplet{
         pushMatrix();
         scale(2);
         //text(framesIntoScene, width/4, height/2); // show value of variable, if wanted
-        //TODO: Remove all this displaying text stuff.
         //text(player.length(), width/2, height/2); //Show total length of song in ms. Last check was over 65k
         //text(width, width/2, height/2); //Show width
 
         //Light is supposed to be mostly from above, with a fair amount of scattered light
         lightFromAbove();
+
+        popMatrix();
+        pushMatrix();
+
+        //if(framesIntoScene % 5 == 0)
+        rainbowStartColor = framesIntoScene/5;
+        translate( width/3-framesIntoScene*5 , height/3- framesIntoScene*3, 500 - framesIntoScene*5);
+        rainbowPop(0, 0, 100, rainbowStartColor);
+        //rainbowTriangleBeam(width/2, height/2, rainbowStartColor, 50);
 
         popMatrix();
         pushMatrix();
@@ -1617,6 +1683,13 @@ public class UsingProcessing extends PApplet{
         rotateZ(radians(180));
         scale(128);
         shape(backgroundLandShape);
+        popMatrix();
+        pushMatrix();
+
+        rainbowStartColor = framesIntoScene/5;
+        translate( width*2/3+framesIntoScene*5 , height/3- framesIntoScene*3, 500 - framesIntoScene*5);
+        rainbowPop(0, 0, 100, rainbowStartColor);
+
         popMatrix();
         pushMatrix();
         
@@ -1818,13 +1891,19 @@ public class UsingProcessing extends PApplet{
         pushMatrix();
         scale(2);
         //text(framesIntoScene, width/4, height/2); // show value of variable, if wanted
-        //TODO: Remove all this displaying text stuff.
         //text(player.length(), width/2, height/2); //Show total length of song in ms. Last check was over 65k
         //text(width, width/2, height/2); //Show width
 
         //Light is supposed to be mostly from above, with a fair amount of scattered light
         lightFromAbove();
         
+        popMatrix();
+        pushMatrix();
+
+        rainbowStartColor = framesIntoScene/5;
+        translate( width/3-framesIntoScene/5 , height/3- framesIntoScene/3, 500 + framesIntoScene*5);
+        rainbowPop(0, 0, 100, rainbowStartColor);
+
         popMatrix();
         pushMatrix();
         
@@ -1941,7 +2020,6 @@ public class UsingProcessing extends PApplet{
         
    private void horseSearch2()
     {
-        //TODO: Add pine tree(s)
         //background(0x87, 0xce, 0xff); //sky blue
         background(0);
         pushMatrix();
@@ -1955,6 +2033,12 @@ public class UsingProcessing extends PApplet{
         rotateZ(radians(180));
         scale(128);
         shape(backgroundLandSnowShape);
+        popMatrix();
+        pushMatrix();
+
+        rainbowStartColor = framesIntoScene/5;
+        translate( width*2/3+framesIntoScene/5 , height/3- framesIntoScene/3, 500 + framesIntoScene*5);
+        rainbowPop(0, 0, 100, rainbowStartColor);
         popMatrix();
         pushMatrix();
         
@@ -2141,6 +2225,14 @@ public class UsingProcessing extends PApplet{
         shape(backgroundSnowWaterShape);
         popMatrix();
         pushMatrix();
+
+        //Meeting rainbow that they've been chasing ############################
+        if(framesIntoScene * 5 < width/2) {
+            rainbowStartColor = framesIntoScene / 5;
+            rainbowPop(width * 2 / 5, height / 3, 100, rainbowStartColor);
+            popMatrix();
+            pushMatrix();
+        }
         
         //Ice shelf#############################################################
         translate(width / 2, (float)(height*0.5), +50);
@@ -2151,7 +2243,8 @@ public class UsingProcessing extends PApplet{
         
         popMatrix();
         pushMatrix();
-        
+
+        //Horse#################################################################
         //Horse#################################################################
         //sin(framesIntoScene) * 25 is the hopping
         if(framesIntoScene * 5 < width/2)
@@ -2250,6 +2343,13 @@ public class UsingProcessing extends PApplet{
         shape(backgroundSnowWaterShape);
         popMatrix();
         pushMatrix();
+
+//        if(framesIntoScene < 50 ) {
+//            rainbowStartColor = framesIntoScene / 5;
+//            rainbowPop(width * 2 / 5, height / 3, 100, rainbowStartColor);
+//        }
+//        popMatrix();
+//        pushMatrix();
         
         if(framesIntoScene<50)
             translate(width / 2, (float)(height*0.5), +50);
@@ -3361,7 +3461,6 @@ public class UsingProcessing extends PApplet{
     
     private void credits3()
     {//Roughly 230 frames in the scene
-        //TODO: Perhaps have a unicorn come through the center
         //TODO: Add the 22.5 degree things (beyond the first two)
         background(0);
         pushMatrix();
@@ -3786,6 +3885,61 @@ public class UsingProcessing extends PApplet{
                 line(startX+i*direction, startY-(i/4), startX+i*direction, startY-i);
                 //line(startX+i, startY-(i/4), startX+i, startY-i);
             }
+        }
+    }
+
+    private void rainbowTriangleBeam(int startX, int startY, int direction, int length)
+    { //-1 makes it come in from the left. 1 from the right Well, theoretically would be, if that's done. So TODO.
+        int speedMultiplier = 100;//millis() % 8 + 8;//16; //how quickly to go through the rainbow
+        int rainbowState = 0;
+        int r = 255;
+        int rainbowG = 0;
+        int b = 0;
+        for (int i = length; i >= 0 ; i--) { //Not sure if height/16 makes any sense at all for an end
+            if (rainbowState == 0) {
+                rainbowG += speedMultiplier;
+                if (rainbowG >= 255) {
+                    rainbowState = 1;
+                }
+            }
+            if (rainbowState == 1) {
+                r -= speedMultiplier;
+                if (r <= 0) {
+                    rainbowState = 2;
+                }
+            }
+            if (rainbowState == 2) {
+                b += speedMultiplier;
+                if (b >= 255) {
+                    rainbowState = 3;
+                }
+            }
+            if (rainbowState == 3) {
+                rainbowG -= speedMultiplier;
+                if (rainbowG == 0) {
+                    rainbowState = 4;
+                }
+            }
+            if (rainbowState == 4) {
+                r += speedMultiplier;
+                if (r >= 255) {
+                    rainbowState = 5;
+                }
+            }
+            if (rainbowState == 5) {
+                b -= speedMultiplier;
+                if (b <= 0) {
+                    rainbowState = 0;
+                }
+            }
+            stroke(r, rainbowG, b);
+//            if(100 - framesIntoScene < i/30)
+//            {
+                //line(x1, y1, x2, y2)
+                //line(startX, startY, startX+((sin(direction))*50+i), startY-(cos(direction)*50)-i);
+                line(startX+i, startY-i, startX+((sin(direction))*50+i), startY-((cos(direction))*50)-i);
+                //line(startX+i*direction, startY-(i/4), startX+i*direction, startY-i);
+//            }
         }
     }
 
