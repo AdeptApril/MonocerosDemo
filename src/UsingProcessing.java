@@ -46,7 +46,7 @@ public class UsingProcessing extends PApplet{
     private int faderSwitch = 1;
     private int textSwitch = 0;
     private PFont font;
-    private int rainbowRate = 0;
+    //private int rainbowRate = 0;
     private int redTop=100;
     private int orangeTop=110;
     private int yellowTop=120;
@@ -59,6 +59,7 @@ public class UsingProcessing extends PApplet{
     private int horseCount = 1;
     private int narwhalCount = 1;
     private boolean pooSet = false; //This could probably be done with checking to see if the poo is in the array, but a state variable seems fairly good performance-wise
+    private boolean flowersPlaced = false;
     private ArrayList<ObjPosition> pooArray;// = new ArrayList<ObjPosition>();
 
 //    private int tempx = 0;
@@ -119,7 +120,7 @@ public class UsingProcessing extends PApplet{
         textSwitch = 0;
         shapeMode(CORNER);
         imageMode(CORNER);
-        camera(width / 2, height / 2, (height/2) / tan((float) (PI*30.0 / 180.0)), width / 2, height / 2, 0, 0, 1, 0);
+        //camera(width / 2, height / 2, (height/2) / tan((float) (PI*30.0 / 180.0)), width / 2, height / 2, 0, 0, 1, 0);
         //y = 80;
         //secondLine = 88;
         //thirdLine = 96;
@@ -869,7 +870,8 @@ public class UsingProcessing extends PApplet{
     }    
     
     private void horseScene() {
-        camera(width / 2 -85 + framesIntoScene/3, height / 2 - 50 + framesIntoScene, (height/2) / tan((float) (PI*30.0 / 180.0)), width / 2, height / 2, 0, 0, 1, 0);
+        //If putting the camera movement back in, be sure to reset the variable
+        //camera(width / 2 -85 + framesIntoScene/3, height / 2 - 50 + framesIntoScene, (height/2) / tan((float) (PI*30.0 / 180.0)), width / 2, height / 2, 0, 0, 1, 0);
         //background(0x87, 0xce, 0xff); //sky blue
         background(0);
         pushMatrix();
@@ -1709,7 +1711,28 @@ public class UsingProcessing extends PApplet{
         
         popMatrix();
         pushMatrix();
-        scale(16);
+
+        //Possible idea for random additional flowers, but leaving it out.
+//        if(!flowersPlaced) {
+//            pooArray = new ArrayList<>();
+//            for (int i = 0; i < 30; i++) {
+//                pooArray.add(new ObjPosition(ThreadLocalRandom.current().nextInt(200, width - 200), height * 3 / 4, 100));
+//            }
+//            flowersPlaced = true;
+//        }
+//
+//        for(ObjPosition flower:pooArray) {
+//            popMatrix();
+//            pushMatrix();
+//            translate(flower.getX(), flower.getY());
+//            rotateZ(radians(180));
+//            shape(flowerShape);
+//        }
+
+        popMatrix();
+        pushMatrix();
+
+        //scale(16);
         //fill(255);
         //scale((float)1/16);
         //angle += 0.01;
@@ -1775,16 +1798,16 @@ public class UsingProcessing extends PApplet{
 //        scale(86);
 //
 //        shape(cloudShape);
-        
-        popMatrix();
-        pushMatrix();
-        
-        translate(width / 3, height * 3 / 4);
-        //rotateY(radians(90));
-        rotateZ(radians(180));
-        scale(50);
-        
-        shape(flowerShape);
+//
+//        popMatrix();
+//        pushMatrix();
+//
+//        translate(width / 3, height * 3 / 4);
+//        //rotateY(radians(90));
+//        rotateZ(radians(180));
+//        scale(50);
+//
+//        shape(flowerShape);
         
         popMatrix();
     }
@@ -2175,24 +2198,37 @@ public class UsingProcessing extends PApplet{
         pushMatrix();
 
         //TODO: Make the clouds move, but deal with it being multiple scenes
-        //translate(width / 4 +framesIntoScene *3/2, height / 2);
-        translate(width / 4, height / 2);
-        //rotateY(radians(90));
+        translate(width / 4 +framesIntoScene *3/2, height / 2);
         rotateZ(radians(180));
         scale(96);
-
         shape(cloudShape);
 
         popMatrix();
         pushMatrix();
 
-        //TODO: More clouds
-        //translate(width * 3 / 5 + framesIntoScene, height / 3);
-        translate(width * 3 / 5, height / 3);
+        translate(width * 3 / 5 + framesIntoScene, height / 3);
         rotateY(radians(180));
         rotateZ(radians(180));
         scale(86);
+        shape(cloudShape);
 
+        popMatrix();
+        pushMatrix();
+
+        //First off-screen(starting) cloud)
+        translate(-(width / 4) + framesIntoScene*5/3, height / 3);
+        rotateZ(radians(180));
+        scale(86);
+        shape(cloudShape);
+
+        popMatrix();
+        pushMatrix();
+
+        //Second off-screen(starting) cloud)
+        translate(-width/2 + framesIntoScene, height / 3);
+        rotateY(radians(180));
+        rotateZ(radians(180));
+        scale(86);
         shape(cloudShape);
 
         popMatrix();
@@ -2270,21 +2306,58 @@ public class UsingProcessing extends PApplet{
         popMatrix();
         pushMatrix();
 
-        translate(width / 4, height / 2);
-        //rotateY(radians(90));
+//        translate(width / 4, height / 2);
+//        //rotateY(radians(90));
+//        rotateZ(radians(180));
+//        scale(96);
+//
+//        shape(cloudShape);
+//
+//        popMatrix();
+//        pushMatrix();
+//
+//        translate(width * 3 / 5, height / 3);
+//        rotateY(radians(180));
+//        rotateZ(radians(180));
+//        scale(86);
+//
+//        shape(cloudShape);
+
+        //TODO: Figure out why this isn't perfect
+        //There's a bit of a skip to the clouds, here, and it's not clear why.
+        //I tried numbers on both sides of 230 (the math says it should be 230.4 frames)
+        //and it only got worse.
+        translate(width / 4 +(framesIntoScene + 230)*3/2, height / 2);
         rotateZ(radians(180));
         scale(96);
-
         shape(cloudShape);
 
         popMatrix();
         pushMatrix();
 
-        translate(width * 3 / 5, height / 3);
+        translate(width * 3 / 5 + framesIntoScene + 230, height / 3);
         rotateY(radians(180));
         rotateZ(radians(180));
         scale(86);
+        shape(cloudShape);
 
+        popMatrix();
+        pushMatrix();
+
+        //First off-screen(starting) cloud)
+        translate(-(width / 4) + (framesIntoScene + 230)*5/3, height / 3);
+        rotateZ(radians(180));
+        scale(86);
+        shape(cloudShape);
+
+        popMatrix();
+        pushMatrix();
+
+        //Second off-screen(starting) cloud)
+        translate(-width/2 + (framesIntoScene + 230), height / 3);
+        rotateY(radians(180));
+        rotateZ(radians(180));
+        scale(86);
         shape(cloudShape);
 
         popMatrix();
@@ -2401,21 +2474,54 @@ public class UsingProcessing extends PApplet{
         popMatrix();
         pushMatrix();
 
-        translate(width / 4, height / 2);
-        //rotateY(radians(90));
+//        translate(width / 4, height / 2);
+//        //rotateY(radians(90));
+//        rotateZ(radians(180));
+//        scale(96);
+//
+//        shape(cloudShape);
+//
+//        popMatrix();
+//        pushMatrix();
+//
+//        translate(width * 3 / 5, height / 3);
+//        rotateY(radians(180));
+//        rotateZ(radians(180));
+//        scale(86);
+//
+//        shape(cloudShape);
+
+        translate(width / 4 +(framesIntoScene + 461)*3/2, height / 2);
         rotateZ(radians(180));
         scale(96);
-
         shape(cloudShape);
 
         popMatrix();
         pushMatrix();
 
-        translate(width * 3 / 5, height / 3);
+        translate(width * 3 / 5 + framesIntoScene + 461, height / 3);
         rotateY(radians(180));
         rotateZ(radians(180));
         scale(86);
+        shape(cloudShape);
 
+        popMatrix();
+        pushMatrix();
+
+        //First off-screen(starting) cloud)
+        translate(-(width / 4) + (framesIntoScene + 461)*5/3, height / 3);
+        rotateZ(radians(180));
+        scale(86);
+        shape(cloudShape);
+
+        popMatrix();
+        pushMatrix();
+
+        //Second off-screen(starting) cloud)
+        translate(-width/2 + (framesIntoScene + 461), height / 3);
+        rotateY(radians(180));
+        rotateZ(radians(180));
+        scale(86);
         shape(cloudShape);
 
         popMatrix();
@@ -2557,21 +2663,54 @@ public class UsingProcessing extends PApplet{
         popMatrix();
         pushMatrix();
 
-        translate(width / 4, height / 2);
-        //rotateY(radians(90));
+//        translate(width / 4, height / 2);
+//        //rotateY(radians(90));
+//        rotateZ(radians(180));
+//        scale(96);
+//
+//        shape(cloudShape);
+//
+//        popMatrix();
+//        pushMatrix();
+//
+//        translate(width * 3 / 5, height / 3);
+//        rotateY(radians(180));
+//        rotateZ(radians(180));
+//        scale(86);
+//
+//        shape(cloudShape);
+
+        translate(width / 4 +(framesIntoScene + 763)*3/2, height / 2);
         rotateZ(radians(180));
         scale(96);
-
         shape(cloudShape);
 
         popMatrix();
         pushMatrix();
 
-        translate(width * 3 / 5, height / 3);
+        translate(width * 3 / 5 + framesIntoScene + 763, height / 3);
         rotateY(radians(180));
         rotateZ(radians(180));
         scale(86);
+        shape(cloudShape);
 
+        popMatrix();
+        pushMatrix();
+
+        //First off-screen(starting) cloud)
+        translate(-(width / 4) + (framesIntoScene + 763)*5/3, height / 3);
+        rotateZ(radians(180));
+        scale(86);
+        shape(cloudShape);
+
+        popMatrix();
+        pushMatrix();
+
+        //Second off-screen(starting) cloud)
+        translate(-width/2 + (framesIntoScene + 763), height / 3);
+        rotateY(radians(180));
+        rotateZ(radians(180));
+        scale(86);
         shape(cloudShape);
 
         popMatrix();
@@ -2716,21 +2855,53 @@ public class UsingProcessing extends PApplet{
         popMatrix();
         pushMatrix();
 
-        translate(width / 4, height / 2);
-        //rotateY(radians(90));
+//        translate(width / 4, height / 2);
+//        //rotateY(radians(90));
+//        rotateZ(radians(180));
+//        scale(96);
+//
+//        shape(cloudShape);
+//
+//        popMatrix();
+//        pushMatrix();
+//
+//        translate(width * 3 / 5, height / 3);
+//        rotateY(radians(180));
+//        rotateZ(radians(180));
+//        scale(86);
+//
+//        shape(cloudShape);
+        translate(width / 4 +(framesIntoScene + 1065)*3/2, height / 2);
         rotateZ(radians(180));
         scale(96);
-
         shape(cloudShape);
 
         popMatrix();
         pushMatrix();
 
-        translate(width * 3 / 5, height / 3);
+        translate(width * 3 / 5 + framesIntoScene + 1065, height / 3);
         rotateY(radians(180));
         rotateZ(radians(180));
         scale(86);
+        shape(cloudShape);
 
+        popMatrix();
+        pushMatrix();
+
+        //First off-screen(starting) cloud)
+        translate(-(width / 4) + (framesIntoScene + 1065)*5/3, height / 3);
+        rotateZ(radians(180));
+        scale(86);
+        shape(cloudShape);
+
+        popMatrix();
+        pushMatrix();
+
+        //Second off-screen(starting) cloud)
+        translate(-width/2 + (framesIntoScene + 1065), height / 3);
+        rotateY(radians(180));
+        rotateZ(radians(180));
+        scale(86);
         shape(cloudShape);
 
         popMatrix();
@@ -3049,7 +3220,7 @@ public class UsingProcessing extends PApplet{
         popMatrix();
         pushMatrix();
 
-        rainbowRate = 1;
+        int rainbowRate = 1;
         colorMode(RGB, 400);
 
         if(framesIntoScene>40){
